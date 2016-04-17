@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">FYRE</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="nav_label_receipt">Receipts</string>
+    <string name="nav_label_categories">Categories</string>
+    <string name="nav_label_search">Search</string>
+    <string name="nav_label_settings">Settings</string>
+    <string name="nav_label_login">Login</string>
+    <string name="nav_label_logout">Logout</string>
+
+
+    <string name="action_settings">Settings</string>
+</resources>
