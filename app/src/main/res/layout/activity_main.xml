@@ -8,11 +8,18 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <!-- Modifying the app bar? see app/layout/app_bar_main.xml -->
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- Because this did confuse me:
+        Modifying the navbar stuff up top: see app/res/layout/nav_header_main.xml
+        Modifying the text/icons in the menu: see app/res/menu/activity_main_drawer.xml
+        Note that this is for the menu's initial state
+        We will most likely have java code modifying the navbar (e.g. changing login/logout)
+    -->
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"

@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
+            /*
+                TODO: change code within onClick() to make smaller action buttons
+
+             */
             public void onClick(View view) {
                 Snackbar.make(view, "TODO: add smaller action buttons", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -168,6 +172,10 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+        TODO: fill in actions once we implement them (start activity, most likely)
+        TODO: remove @SuppressWarnings once everything's implemented
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -175,7 +183,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_receipt) {
-            // Handle the camera action
+            // Handle the action
         } else if (id == R.id.nav_categories) {
 
         } else if (id == R.id.nav_search) {
