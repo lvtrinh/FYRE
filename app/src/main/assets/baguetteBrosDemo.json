@@ -1,0 +1,28 @@
+{
+  "storeName": "Baguette Bros",
+  "storeNameDetail": null,
+  "storeStreet": "4698 Convoy Street, Suite 105",
+  "storeCityState": "San Diego, CA 92111",
+  "storePhone": "858-256-6251",
+  "storeWebsite": "www.baguettebros.com",
+  "storeDescription": null,
+  "storeCategory": "Food and Drink",
+  "storeFollow": "@baguettebros_sd",
+  "itemList": [
+    {"name": "Wings", "itemDesc": "Honey Sriracha", "price": "6.00", "itemNum": null},
+    {"name": "Bangkok Chicken", "itemDesc": null, "price": "6.50", "itemNum": null}
+  ],
+  "hereGo": "Here",
+  "cardType": "Visa",
+  "cardNum": "2115",
+  "cardMethod": "Swipe",
+  "subtotal": "12.50",
+  "tax": "1.00",
+  "tip": "1.08",
+  "totalPrice": "14.58",
+  "date": "4/13/16",
+  "time": "11:37",
+  "cashier": null,
+  "checkNumber": "5u3c",
+  "orderNumber": "35"
+}

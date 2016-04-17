@@ -14,6 +14,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -42,8 +50,91 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        String jsonString = loadJsonLocal();
+        parseJson(jsonString);
     }
 
+    /**
+     *
+     * @param jsonString
+     */
+    public Receipt parseJson(String jsonString) {
+        try {
+            // create jsonobject
+            JSONObject obj = new JSONObject(jsonString);
+
+            Receipt receipt = new Receipt();
+
+            // set everything since constructors would suck?
+            receipt.setStoreName(obj.get("storeName"));
+            receipt.setStoreNameDetail(obj.get("storeNameDetail"));
+            receipt.setStoreStreet(obj.get("storeStreet"));
+            receipt.setStoreCityState(obj.get("storeCityState"));
+            receipt.setStorePhone(obj.get("storePhone"));
+            receipt.setStoreWebsite(obj.get("storeWebsite"));
+            receipt.setStoreDescription(obj.get("storeDescription"));
+            receipt.setStoreCategory(obj.get("storeCategory"));
+            receipt.setStoreFollow(obj.get("storeFollow"));
+            receipt.setHereGo(obj.get("hereGo"));
+            receipt.setCardType(obj.get("cardType"));
+            receipt.setCardNum(obj.get("cardNum"));
+            receipt.setCardMethod(obj.get("cardMethod"));
+            receipt.setSubtotal(obj.get("subtotal"));
+            receipt.setTax(obj.get("tax"));
+            receipt.setTip(obj.get("tip"));
+            receipt.setTotalPrice(obj.get("totalPrice"));
+            receipt.setDateTime(obj.get("date"), obj.get("time"));
+            receipt.setCashier(obj.get("cashier"));
+            receipt.setCheckNumber(obj.get("checkNumber"));
+            receipt.setOrderNumber(obj.get("orderNumber"));
+
+            // get the itemList array
+            JSONArray arr = obj.getJSONArray("itemList");
+
+            ArrayList<ReceiptItem> indivItemArr = new ArrayList<ReceiptItem>();
+            // print all the data from the array
+            for (int i = 0; i < arr.length(); i++) {
+                JSONObject arrObj = arr.getJSONObject(i);
+                ReceiptItem tmpReceipt = new ReceiptItem();
+                tmpReceipt.setName(arrObj.get("name"));
+                tmpReceipt.setItemDesc(arrObj.get("itemDesc"));
+                tmpReceipt.setPrice(arrObj.get("price"));
+                tmpReceipt.setItemNum(arrObj.get("itemNum"));
+                indivItemArr.add(tmpReceipt);
+            }
+
+            receipt.createItemList(indivItemArr);
+
+            receipt.printReceipt();
+
+            return receipt;
+
+        } catch (JSONException js) {
+            js.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Reads json formatted data into a string from a local assets file
+     * @return String - json data
+     */
+    public String loadJsonLocal() {
+        String json = null;
+        try {
+            InputStream is = getAssets().open("chipotleDemo.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return json;
+    }
 
     @Override
     public void onBackPressed() {
