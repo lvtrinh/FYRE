@@ -3,6 +3,7 @@
     <color name="colorPrimary">#4caf50</color>
     <color name="colorPrimaryDark">#1b5e20</color>
     <color name="colorAccent">#FF9100</color>
-    <color name="colorPrimaryTint">#cc4caf50</color>
-    <color name="colorPrimaryDarkTint">#ff1b5e20</color>
+
+    <!-- add general background color? tan like our money, maybe? -->
+    <!-- add really light green color for new receipts -->
 </resources>

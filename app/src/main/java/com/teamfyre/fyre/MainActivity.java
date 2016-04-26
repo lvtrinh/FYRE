@@ -25,6 +25,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    // TODO create something that can hold/display many receipts, instead of just one
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         String jsonString = loadJsonLocal();
+        // TODO put this into a variable that persists past onCreate
         parseJson(jsonString);
     }
 
@@ -172,6 +175,10 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    // TODO display one receipt
+    // TODO make a button or something (temporary) to get into detailed receipt
+    // TODO make a "detailed receipt" activity (this is probably gonna be permanent
+
     /*
         TODO: fill in actions once we implement them (start activity, most likely)
         TODO: remove @SuppressWarnings once everything's implemented
@@ -190,7 +197,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_settings) {
 
-        } else if (id == R.id.nav_login) {
+        }
+        // only if we're placing logout in the hamburger menu
+        else if (id == R.id.nav_logout) {
 
         }
 

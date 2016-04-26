@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="nav_label_receipt">Receipts</string>
+    <string name="nav_label_receipt">Home</string>
     <string name="nav_label_categories">Categories</string>
     <string name="nav_label_search">Search</string>
     <string name="nav_label_settings">Settings</string>
