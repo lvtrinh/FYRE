@@ -19,7 +19,7 @@ public class Receipt {
     private String storeCategory;     // maybe use an int instead?
     private String storeFollow;
     private ArrayList<ReceiptItem> itemList;
-    private String hereGo;
+    private String hereGo; // should be boolean
     private String cardType;
     private String cardNum;
     private String cardMethod;

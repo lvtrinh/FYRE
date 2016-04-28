@@ -9,8 +9,8 @@
   "storeCategory": null,
   "storeFollow": null,
   "itemList": [
-    {"name": null, "itemDesc": null, "price": null, "itemNum": null},
-    {"name": null, "itemDesc": null, "price": null, "itemNum": null}
+    {"name": null, "itemDesc": null, "price": null, "itemNum": null, "quantity": null, "taxType": null},
+    {"name": null, "itemDesc": null, "price": null, "itemNum": null, "quantity": null, "taxType": null}
   ],
   "hereGo": null,
   "cardType": null,
@@ -24,5 +24,6 @@
   "time": null,
   "cashier": null,
   "checkNumber": null,
-  "orderNumber": null
+  "orderNumber": null,
+  "table": null
 }
