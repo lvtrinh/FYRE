@@ -4,6 +4,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <!-- these two should always be replaced by the login user's info -->
+    <string name="nav_header_main">main mane text</string>
+    <string name="nav_header_sub">sub sandwich text</string>
+
     <string name="nav_label_receipt">Home</string>
     <string name="nav_label_categories">Categories</string>
     <string name="nav_label_search">Search</string>

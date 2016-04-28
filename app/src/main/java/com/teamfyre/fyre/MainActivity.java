@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // TODO create something that can hold/display many receipts, instead of just one
-
+    Receipt receipt;
     private SQLiteHandler db;
     private SessionManager session;
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity
             // create jsonobject
             JSONObject obj = new JSONObject(jsonString);
 
-            Receipt receipt = new Receipt();
+            receipt = new Receipt();
 
             // set everything since constructors would suck?
             receipt.setStoreName(obj.get("storeName"));

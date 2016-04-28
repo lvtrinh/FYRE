@@ -81,6 +81,7 @@ public class LoginActivity extends Activity {
         });
 
         // Link to Register Screen
+
         btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {

@@ -52,7 +52,7 @@
             android:text="@string/btn_login"
             android:textColor="@color/bg_login" />
 
-        <!-- Link to Login Screen -->
+        <!-- Link to Register Screen -->
 
         <Button
             android:id="@+id/btnLinkToRegisterScreen"
