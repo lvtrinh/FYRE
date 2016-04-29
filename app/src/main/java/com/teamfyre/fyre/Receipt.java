@@ -278,6 +278,14 @@ public class Receipt {
 
     public int getOrderNumber() {return this.orderNumber; }
 
+    public String getDate() {
+        return this.dateTime.get(Calendar.MONTH) + "/" + this.dateTime.get(Calendar.DAY_OF_MONTH) + "/" + this.dateTime.get(Calendar.YEAR);
+    }
+
+    public String getTime() {
+        return this.dateTime.get(Calendar.HOUR_OF_DAY) + ":" + this.dateTime.get(Calendar.MINUTE);
+    }
+
     public void printReceipt() {
         System.out.println("Store Name: " + this.storeName);
         System.out.println("Store Name Detail (store number): " + this.storeNameDetail);
