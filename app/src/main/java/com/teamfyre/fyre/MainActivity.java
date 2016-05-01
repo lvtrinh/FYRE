@@ -30,9 +30,11 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // TODO create something that can hold/display many receipts, instead of just one
-    Receipt receipt;
+    private Receipt receipt;
     private SQLiteHandler db;
     private SessionManager session;
+
+    public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,7 +154,7 @@ public class MainActivity extends AppCompatActivity
     public String loadJsonLocal() {
         String json = null;
         try {
-            InputStream is = getAssets().open("chipotleDemo.json");
+            InputStream is = getAssets().open("primosDemo.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -200,6 +202,12 @@ public class MainActivity extends AppCompatActivity
     // TODO display one receipt
     // TODO make a button or something (temporary) to get into detailed receipt
     // TODO make a "detailed receipt" activity (this is probably gonna be permanent
+
+    public void onCardClicked(View view) {
+        Intent detailIntent = new Intent(this, ReceiptDetailActivity.class);
+        detailIntent.putExtra(EXTRA_RECEIPT, receipt);
+        startActivity(detailIntent);
+    }
 
     /*
         TODO: fill in actions once we implement them (start activity, most likely)

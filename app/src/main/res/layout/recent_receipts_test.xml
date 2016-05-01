@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/cv"
         android:paddingBottom="0sp"
+        android:onClick="onCardClicked"
         >
 
         <RelativeLayout
