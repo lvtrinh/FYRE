@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +18,6 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +31,7 @@ public class MainActivity extends AppCompatActivity
     Receipt receipt;
     private SQLiteHandler db;
     private SessionManager session;
+    private String jsonString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,9 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        // set navigation header text
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
 
         db = new SQLiteHandler(getApplicationContext());
@@ -79,9 +80,23 @@ public class MainActivity extends AppCompatActivity
         String name = user.get("name");
         String email = user.get("email");
 
-        String jsonString = loadJsonLocal();
+        View navHeader = navigationView.getHeaderView(0);
+        TextView headerMain = (TextView) navHeader.findViewById(R.id.nav_header_maintext);
+        TextView headerSub = (TextView) navHeader.findViewById(R.id.nav_header_subtext);
+
+        headerMain.setText(name);
+        headerSub.setText(email);
+
+        jsonString = loadJsonLocal();
         // TODO put this into a variable that persists past onCreate
-        parseJson(jsonString);
+        Receipt testReceipt = parseJson(jsonString);
+
+        TextView test = (TextView) findViewById(R.id.store_name);
+        TextView other = (TextView) findViewById(R.id.store_price);
+        TextView date = (TextView) findViewById(R.id.date_test);
+        test.setText(testReceipt.getStoreName());
+        other.setText("$" + testReceipt.getTotalPrice().toString());
+        date.setText(testReceipt.getDate());
     }
 
     /**
@@ -152,7 +167,7 @@ public class MainActivity extends AppCompatActivity
     public String loadJsonLocal() {
         String json = null;
         try {
-            InputStream is = getAssets().open("chipotleDemo.json");
+            InputStream is = getAssets().open("baguetteBrosDemo.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

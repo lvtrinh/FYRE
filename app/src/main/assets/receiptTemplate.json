@@ -24,6 +24,5 @@
   "time": null,
   "cashier": null,
   "checkNumber": null,
-  "orderNumber": null,
-  "table": null
+  "orderNumber": null
 }
