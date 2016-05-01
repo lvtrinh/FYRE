@@ -1,13 +1,18 @@
 package com.teamfyre.fyre;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.*;
 import java.math.BigDecimal;
 
 /**
  * An internal class to create the Receipt object. It has all the basic needs
  * of a receipt.
+ *
+ * Parcelable: used to store Receipt data into an intent
  */
-public class Receipt {
+public class Receipt implements Parcelable{
 
     private String storeName;
     private String storeNameDetail;
@@ -32,6 +37,40 @@ public class Receipt {
     private String checkNumber;
     private int orderNumber;
 
+
+    public Receipt() { }
+    
+    // constructor to construct Receipt from Parcel
+    // FIFO
+    protected Receipt(Parcel in) {
+        storeName = in.readString();
+        storeNameDetail = in.readString();
+        storeStreet = in.readString();
+        storeCityState = in.readString();
+        storePhone = in.readString();
+        storeWebsite = in.readString();
+        storeDescription = in.readString();
+        storeCategory = in.readString();
+        storeFollow = in.readString();
+        if (in.readByte() == 0x01) {
+            itemList = new ArrayList<ReceiptItem>();
+            in.readList(itemList, ReceiptItem.class.getClassLoader());
+        } else {
+            itemList = null;
+        }
+        hereGo = in.readString();
+        cardType = in.readString();
+        cardNum = in.readString();
+        cardMethod = in.readString();
+        subtotal = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
+        tax = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
+        tip = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
+        totalPrice = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
+        dateTime = (GregorianCalendar) in.readValue(GregorianCalendar.class.getClassLoader());
+        cashier = in.readString();
+        checkNumber = in.readString();
+        orderNumber = in.readInt();
+    }
 
     // Setters
     public void setStoreName(Object name) {
@@ -319,4 +358,57 @@ public class Receipt {
         System.out.println(this.dateTime.get(Calendar.MONTH) + "/" + this.dateTime.get(Calendar.DAY_OF_MONTH) + "/" + this.dateTime.get(Calendar.YEAR));
         System.out.println(this.dateTime.get(Calendar.HOUR_OF_DAY) + ":" + this.dateTime.get(Calendar.MINUTE));
     }
+
+    // Parcel stuff
+    //
+
+    // ignore this, hardly ever used
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    // writes contents of Receipt into Parcel
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(storeName);
+        dest.writeString(storeNameDetail);
+        dest.writeString(storeStreet);
+        dest.writeString(storeCityState);
+        dest.writeString(storePhone);
+        dest.writeString(storeWebsite);
+        dest.writeString(storeDescription);
+        dest.writeString(storeCategory);
+        dest.writeString(storeFollow);
+        if (itemList == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(itemList);
+        }
+        dest.writeString(hereGo);
+        dest.writeString(cardType);
+        dest.writeString(cardNum);
+        dest.writeString(cardMethod);
+        dest.writeValue(subtotal);
+        dest.writeValue(tax);
+        dest.writeValue(tip);
+        dest.writeValue(totalPrice);
+        dest.writeValue(dateTime);
+        dest.writeString(cashier);
+        dest.writeString(checkNumber);
+        dest.writeInt(orderNumber);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Receipt> CREATOR = new Parcelable.Creator<Receipt>() {
+        @Override
+        public Receipt createFromParcel(Parcel in) {
+            return new Receipt(in);
+        }
+
+        @Override
+        public Receipt[] newArray(int size) {
+            return new Receipt[size];
+        }
+    };
 }
