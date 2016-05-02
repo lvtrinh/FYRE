@@ -1,13 +1,10 @@
 {
   "storeName": null,
-  "storeNameDetail": null,
   "storeStreet": null,
   "storeCityState": null,
   "storePhone": null,
   "storeWebsite": null,
-  "storeDescription": null,
   "storeCategory": null,
-  "storeFollow": null,
   "itemList": [
     {"name": null, "itemDesc": null, "price": null, "itemNum": null, "quantity": null, "taxType": null},
     {"name": null, "itemDesc": null, "price": null, "itemNum": null, "quantity": null, "taxType": null}
@@ -15,10 +12,9 @@
   "hereGo": null,
   "cardType": null,
   "cardNum": null,
-  "cardMethod": null,
+  "paymentMethod": null,
   "subtotal": null,
   "tax": null,
-  "tip": null,
   "totalPrice": null,
   "date": null,
   "time": null,
