@@ -12,6 +12,8 @@ public class ReceiptItem {
     private BigDecimal price;
     private int itemNum;
     private String itemDesc;
+    private int quantity;
+    private char taxType;
 
     public void setName(Object n) {
         if (n.toString().equals("null")) {
@@ -31,6 +33,7 @@ public class ReceiptItem {
 
     public void setItemNum(Object i) {
         if (i.toString().equals("null")) {
+            itemNum = -1; // -1 INDICATES NULL, MIGHT WANT TO USE THE INTEGER OBJECT
             return;
         }
         itemNum = Integer.parseInt(i.toString());
@@ -42,6 +45,22 @@ public class ReceiptItem {
             return;
         }
         itemDesc = desc.toString();
+    }
+
+    public void setQuantity(Object q) {
+        if (q.toString().equals("null")) {
+            quantity = -1;
+            return;
+        }
+        quantity = Integer.parseInt(q.toString());
+    }
+
+    public void setTaxType(Object tax) {
+        if (tax.toString().equals("null")) {
+            taxType = '\u0000'; // THIS IS THE NULL CHAR
+            return;
+        }
+        taxType = tax.toString().charAt(0);
     }
 
     /**
@@ -71,4 +90,9 @@ public class ReceiptItem {
      * @return the item description on the ReceiptItem
      */
     public String getItemDesc() { return this.itemDesc; }
+
+    public char getTaxType() { return this.taxType; }
+
+    public int getQuantity() { return quantity; }
+
 }
