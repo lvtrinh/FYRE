@@ -1,0 +1,23 @@
+{
+  "storeName": "Santorini",
+  "storeStreet": "9500 Gilman Dr",
+  "storeCityState": "La Jolla, CA 92093",
+  "storePhone": null,
+  "storeWebsite": null,
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "Scrambled Eggs", "itemDesc": null, "price": "4.84", "itemNum": null, "quantity": null, "taxType": null},
+  ],
+  "hereGo": "Here",
+  "cardType": "Visa",
+  "cardNum": "1234",
+  "paymentMethod": "Swipe",
+  "subtotal": "4.49",
+  "tax": "0.35",
+  "totalPrice": "4.84",
+  "date": "4/19/2016",
+  "time": "8:36",
+  "cashier": "Diana B.",
+  "checkNumber": null,
+  "orderNumber": null
+}
