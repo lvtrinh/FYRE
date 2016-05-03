@@ -42,16 +42,13 @@ public class Receipt implements Parcelable{
     // FIFO
     protected Receipt(Parcel in) {
         storeName = in.readString();
-        storeNameDetail = in.readString();
         storeStreet = in.readString();
         storeCityState = in.readString();
         storePhone = in.readString();
         storeWebsite = in.readString();
-        storeDescription = in.readString();
         storeCategory = in.readString();
-        storeFollow = in.readString();
         if (in.readByte() == 0x01) {
-            itemList = new ArrayList<ReceiptItem>();
+            itemList = new ArrayList<>();
             in.readList(itemList, ReceiptItem.class.getClassLoader());
         } else {
             itemList = null;
@@ -59,15 +56,16 @@ public class Receipt implements Parcelable{
         hereGo = in.readString();
         cardType = in.readString();
         cardNum = in.readString();
-        cardMethod = in.readString();
+        paymentMethod = in.readString();
         subtotal = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
         tax = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
-        tip = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
         totalPrice = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
         dateTime = (GregorianCalendar) in.readValue(GregorianCalendar.class.getClassLoader());
         cashier = in.readString();
         checkNumber = in.readString();
         orderNumber = in.readInt();
+        starred = in.readByte() != 0x00;
+        note = in.readString();
     }
 
     // Setters
@@ -324,14 +322,11 @@ public class Receipt implements Parcelable{
     // writes contents of Receipt into Parcel
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(storeName);
-        dest.writeString(storeNameDetail);
         dest.writeString(storeStreet);
         dest.writeString(storeCityState);
         dest.writeString(storePhone);
         dest.writeString(storeWebsite);
-        dest.writeString(storeDescription);
         dest.writeString(storeCategory);
-        dest.writeString(storeFollow);
         if (itemList == null) {
             dest.writeByte((byte) (0x00));
         } else {
@@ -341,15 +336,16 @@ public class Receipt implements Parcelable{
         dest.writeString(hereGo);
         dest.writeString(cardType);
         dest.writeString(cardNum);
-        dest.writeString(cardMethod);
+        dest.writeString(paymentMethod);
         dest.writeValue(subtotal);
         dest.writeValue(tax);
-        dest.writeValue(tip);
         dest.writeValue(totalPrice);
         dest.writeValue(dateTime);
         dest.writeString(cashier);
         dest.writeString(checkNumber);
         dest.writeInt(orderNumber);
+        dest.writeByte((byte) (starred ? 0x01 : 0x00));
+        dest.writeString(note);
     }
 
     @SuppressWarnings("unused")

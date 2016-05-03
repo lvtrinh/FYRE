@@ -15,6 +15,8 @@ public class ReceiptItem implements Parcelable {
     private BigDecimal price;
     private int itemNum;
     private String itemDesc;
+    private int quantity;
+    private char taxType;
 
     public ReceiptItem() { }
 
@@ -94,6 +96,10 @@ public class ReceiptItem implements Parcelable {
      */
     public String getItemDesc() { return this.itemDesc; }
 
+    public char getTaxType() { return this.taxType; }
+
+    public int getQuantity() { return quantity; }
+
     // Parcel Stuff
     //
     protected ReceiptItem(Parcel in) {
@@ -101,6 +107,8 @@ public class ReceiptItem implements Parcelable {
         price = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
         itemNum = in.readInt();
         itemDesc = in.readString();
+        quantity = in.readInt();
+        taxType = (char) in.readValue(char.class.getClassLoader());
     }
 
     @Override
@@ -114,6 +122,8 @@ public class ReceiptItem implements Parcelable {
         dest.writeValue(price);
         dest.writeInt(itemNum);
         dest.writeString(itemDesc);
+        dest.writeInt(quantity);
+        dest.writeValue(taxType);
     }
 
     @SuppressWarnings("unused")
@@ -128,9 +138,5 @@ public class ReceiptItem implements Parcelable {
             return new ReceiptItem[size];
         }
     };
-
-    public char getTaxType() { return this.taxType; }
-
-    public int getQuantity() { return quantity; }
 
 }

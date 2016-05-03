@@ -126,8 +126,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
             paymentType.setText("Paid with: " + receipt.getCardType());
         }
 
-        if (receipt.getCardMethod() != null) {
-            paymentCardMethod.setText("Card method: " + receipt.getCardMethod());
+        if (receipt.getPaymentMethod() != null) {
+            paymentCardMethod.setText("Card method: " + receipt.getPaymentMethod());
         }
 
         if (receipt.getCardNum() != null) {
