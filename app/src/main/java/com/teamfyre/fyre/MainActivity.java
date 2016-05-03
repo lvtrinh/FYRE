@@ -93,18 +93,14 @@ public class MainActivity extends AppCompatActivity
         jsonString = loadJsonLocal();
         // TODO put this into a variable that persists past onCreate
         Receipt testReceipt = parseJson(jsonString);
-
-        TextView test = (TextView) findViewById(R.id.store_name);
-        TextView other = (TextView) findViewById(R.id.store_price);
-        TextView date = (TextView) findViewById(R.id.date_test);
-        test.setText(testReceipt.getStoreName());
-        other.setText("$" + testReceipt.getTotalPrice().toString());
-        date.setText(testReceipt.getDate());
     }
 
     /**
+     * Takes in a json file in the form of a string to make a receipt object with all of the fields
+     * for it filled in if possible.
      *
-     * @param jsonString
+     * @param jsonString a json file in string format that goes in
+     * @return Receipt - a receipt object with all the data input from a json file in it
      */
     public Receipt parseJson(String jsonString) {
         try {
@@ -115,21 +111,17 @@ public class MainActivity extends AppCompatActivity
 
             // set everything since constructors would suck?
             receipt.setStoreName(obj.get("storeName"));
-            receipt.setStoreNameDetail(obj.get("storeNameDetail"));
             receipt.setStoreStreet(obj.get("storeStreet"));
             receipt.setStoreCityState(obj.get("storeCityState"));
             receipt.setStorePhone(obj.get("storePhone"));
             receipt.setStoreWebsite(obj.get("storeWebsite"));
-            receipt.setStoreDescription(obj.get("storeDescription"));
             receipt.setStoreCategory(obj.get("storeCategory"));
-            receipt.setStoreFollow(obj.get("storeFollow"));
             receipt.setHereGo(obj.get("hereGo"));
             receipt.setCardType(obj.get("cardType"));
             receipt.setCardNum(obj.get("cardNum"));
-            receipt.setCardMethod(obj.get("cardMethod"));
+            receipt.setPaymentMethod(obj.get("paymentMethod"));
             receipt.setSubtotal(obj.get("subtotal"));
             receipt.setTax(obj.get("tax"));
-            receipt.setTip(obj.get("tip"));
             receipt.setTotalPrice(obj.get("totalPrice"));
             receipt.setDateTime(obj.get("date"), obj.get("time"));
             receipt.setCashier(obj.get("cashier"));
@@ -257,6 +249,7 @@ public class MainActivity extends AppCompatActivity
     private void logoutUser() {
         session.setLogin(false);
 
+        // delete all the data that was on the phone
         db.deleteUsers();
 
         // Launching the login activity

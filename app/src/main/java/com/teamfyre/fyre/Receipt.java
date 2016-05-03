@@ -15,27 +15,25 @@ import java.math.BigDecimal;
 public class Receipt implements Parcelable{
 
     private String storeName;
-    private String storeNameDetail;
     private String storeStreet;
     private String storeCityState;
     private String storePhone;
     private String storeWebsite;
-    private String storeDescription;
     private String storeCategory;     // maybe use an int instead?
-    private String storeFollow;
     private ArrayList<ReceiptItem> itemList;
-    private String hereGo; // should be boolean
+    private String hereGo; // should be boolean?
     private String cardType;
     private String cardNum;
-    private String cardMethod;
+    private String paymentMethod;
     private BigDecimal subtotal;
     private BigDecimal tax;
-    private BigDecimal tip;
     private BigDecimal totalPrice;
     private GregorianCalendar dateTime;
     private String cashier;
     private String checkNumber;
     private int orderNumber;
+    private boolean starred;
+    private String note;
 
 
     public Receipt() { }
@@ -81,14 +79,6 @@ public class Receipt implements Parcelable{
         storeName = name.toString();
     }
 
-    public void setStoreNameDetail(Object detail) {
-        if (detail.toString().equals("null")) {
-            storeNameDetail = null;
-            return;
-        }
-        storeNameDetail = detail.toString();
-    }
-
     public void setStoreStreet(Object location) {
         if (location.toString().equals("null")) {
             storeStreet = null;
@@ -121,28 +111,12 @@ public class Receipt implements Parcelable{
         storeWebsite = website.toString();
     }
 
-    public void setStoreDescription(Object description) {
-        if (description.toString().equals("null")) {
-            storeDescription = null;
-            return;
-        }
-        storeDescription = description.toString();
-    }
-
     public void setStoreCategory(Object category) {
         if (category.toString().equals("null")) {
             storeCategory = null;
             return;
         }
         storeCategory = category.toString();
-    }
-
-    public void setStoreFollow(Object follow) {
-        if (follow.toString().equals("null")) {
-            storeFollow = null;
-            return;
-        }
-        storeFollow = follow.toString();
     }
 
     public void createItemList(ArrayList<ReceiptItem> items) {
@@ -173,12 +147,12 @@ public class Receipt implements Parcelable{
         cardNum = num.toString();
     }
 
-    public void setCardMethod(Object meth) {
+    public void setPaymentMethod(Object meth) {
         if (meth.toString().equals("null")) {
-            cardMethod = null;
+            paymentMethod = null;
             return;
         }
-        cardMethod = meth.toString();
+        paymentMethod = meth.toString();
     }
 
     public void setSubtotal(Object sub) {
@@ -195,14 +169,6 @@ public class Receipt implements Parcelable{
             return;
         }
         tax = new BigDecimal(t.toString().replaceAll(",",""));
-    }
-
-    public void setTip(Object t) {
-        if (t.toString().equals("null")) {
-            tip = null;
-            return;
-        }
-        tip = new BigDecimal(t.toString().replaceAll(",",""));
     }
 
     public void setTotalPrice(Object total) {
@@ -267,8 +233,6 @@ public class Receipt implements Parcelable{
         return this.storeName;
     }
 
-    public String getStoreNameDetail() { return this.storeNameDetail; }
-
     public String getStoreStreet() {
         return this.storeStreet;
     }
@@ -283,13 +247,7 @@ public class Receipt implements Parcelable{
         return this.storeWebsite;
     }
 
-    public String getStoreDescription() {
-        return this.storeDescription;
-    }
-
     public String getStoreCategory() { return this.storeCategory; }
-
-    public String getStoreFollow() { return this.storeFollow; }
 
     public ArrayList<ReceiptItem> getItemList() { return this.itemList; }
 
@@ -299,11 +257,9 @@ public class Receipt implements Parcelable{
 
     public String getCardNum() { return this.cardNum; }
 
-    public String getCardMethod() { return this.cardMethod; }
+    public String getPaymentMethod() { return this.paymentMethod; }
 
     public BigDecimal getSubtotal() { return this.subtotal; }
-
-    public BigDecimal getTip() { return this.tip; }
 
     public BigDecimal getTax() { return this.tax; }
 
@@ -327,14 +283,11 @@ public class Receipt implements Parcelable{
 
     public void printReceipt() {
         System.out.println("Store Name: " + this.storeName);
-        System.out.println("Store Name Detail (store number): " + this.storeNameDetail);
         System.out.println("Store Street: " + this.storeStreet);
         System.out.println("Store City, State, ZIP: " + this.storeCityState);
         System.out.println("Store Phone: " + this.storePhone);
         System.out.println("Store Website: " + this.storeWebsite);
-        System.out.println("Store Description: " + this.storeDescription);
         System.out.println("Store Category: " + this.storeCategory);
-        System.out.println("Store Follow: " + this.storeFollow);
         System.out.println("========THE ITEM LIST IS BELOW=========");
         for (int i = 0; i < itemList.size(); i++) {
             System.out.println("Item Name: " + itemList.get(i).getName() + " Item Description: " + itemList.get(i).getItemDesc() + " Item Price " + itemList.get(i).getPrice() + " Item Number " + itemList.get(i).getItemNum());
@@ -342,9 +295,8 @@ public class Receipt implements Parcelable{
         System.out.println("========END ITEM LIST=========");
         System.out.println("For " + this.hereGo);
         System.out.println(this.cardType + " " + this.cardNum);
-        System.out.println("Card Method: " + this.cardMethod);
+        System.out.println("Card Method: " + this.paymentMethod);
         System.out.println("Subtotal: " + this.subtotal);
-        System.out.println("Tip: " + this.tip);
         System.out.println("Tax: " + this.tax);
         System.out.println("Total: " + this.totalPrice);
         printDateTime();

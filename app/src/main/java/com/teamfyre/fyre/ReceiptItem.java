@@ -36,6 +36,7 @@ public class ReceiptItem implements Parcelable {
 
     public void setItemNum(Object i) {
         if (i.toString().equals("null")) {
+            itemNum = -1; // -1 INDICATES NULL, MIGHT WANT TO USE THE INTEGER OBJECT
             return;
         }
         itemNum = Integer.parseInt(i.toString());
@@ -47,6 +48,22 @@ public class ReceiptItem implements Parcelable {
             return;
         }
         itemDesc = desc.toString();
+    }
+
+    public void setQuantity(Object q) {
+        if (q.toString().equals("null")) {
+            quantity = -1;
+            return;
+        }
+        quantity = Integer.parseInt(q.toString());
+    }
+
+    public void setTaxType(Object tax) {
+        if (tax.toString().equals("null")) {
+            taxType = '\u0000'; // THIS IS THE NULL CHAR
+            return;
+        }
+        taxType = tax.toString().charAt(0);
     }
 
     /**
@@ -111,4 +128,9 @@ public class ReceiptItem implements Parcelable {
             return new ReceiptItem[size];
         }
     };
+
+    public char getTaxType() { return this.taxType; }
+
+    public int getQuantity() { return quantity; }
+
 }
