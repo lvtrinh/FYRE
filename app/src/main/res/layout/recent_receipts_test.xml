@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="0dp"
     android:orientation="vertical"
     android:gravity="left">
 
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/store_name"
                 android:layout_alignParentTop="true"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:text="Los Primos"
                 android:textStyle="bold" />
 
@@ -44,7 +44,8 @@
                 android:id="@+id/store_price"
                 android:layout_alignParentRight="true"
                 android:textSize="20sp"
-                android:hint="$10.00"
+                android:text="$10.00"
+                android:textColor="@color/price"
                 android:layout_centerInParent="true" />
 
         </RelativeLayout>
@@ -52,8 +53,8 @@
     </android.support.v7.widget.CardView>
 
     <Space
-        android:layout_width="20px"
-        android:layout_height="20px" />
+        android:layout_width="5dp"
+        android:layout_height="5dp" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -74,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/store_name2"
                 android:layout_alignParentTop="true"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:text="Costco"
                 android:textStyle="bold" />
 
@@ -93,7 +94,8 @@
                 android:id="@+id/store_price2"
                 android:layout_alignParentRight="true"
                 android:textSize="20sp"
-                android:hint="$253.63"
+                android:text="$253.63"
+                android:textColor="@color/price"
                 android:layout_centerInParent="true" />
 
         </RelativeLayout>
@@ -101,8 +103,8 @@
     </android.support.v7.widget.CardView>
 
     <Space
-        android:layout_width="20px"
-        android:layout_height="20px" />
+        android:layout_width="5dp"
+        android:layout_height="5dp" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -123,8 +125,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/store_name3"
                 android:layout_alignParentTop="true"
-                android:textSize="16sp"
-                android:text=""
+                android:textSize="18sp"
+                android:text="Vietnamese Restaurant 999"
                 android:textStyle="bold" />
 
             <TextView
@@ -142,7 +144,8 @@
                 android:id="@+id/store_price3"
                 android:layout_alignParentRight="true"
                 android:textSize="20sp"
-                android:hint="$10.00"
+                android:text="$10.00"
+                android:textColor="@color/price"
                 android:layout_centerInParent="true" />
 
         </RelativeLayout>

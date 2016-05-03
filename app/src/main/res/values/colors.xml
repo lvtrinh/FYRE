@@ -3,6 +3,7 @@
     <color name="colorPrimary">#4caf50</color>
     <color name="colorPrimaryDark">#1b5e20</color>
     <color name="colorAccent">#FF9100</color>
+    <color name="background">#ffecb3</color>
 
     <color name="bg_login">#4caf50</color>
     <color name="bg_register">#2e3237</color>
@@ -18,6 +19,7 @@
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
 
+    <color name="price">#c62828</color>
     <!-- add general background color? tan like our money, maybe? -->
     <!-- add really light green color for new receipts -->
 </resources>
