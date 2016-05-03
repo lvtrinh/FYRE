@@ -6,7 +6,7 @@
   "storeWebsite": "www.target.com",
   "storeCategory": "Groceries",
   "itemList": [
-    {"name": "Oxi Clean", "itemDesc": "null, "price": "3.99", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "Oxi Clean", "itemDesc": null, "price": "3.99", "itemNum": null, "quantity": null, "taxType": null},
     {"name": "Dannon", "itemDesc": null, "price": "2.00", "itemNum": null, "quantity": null, "taxType": null}
     {"name": "Right Guard", "itemDesc": null, "price": "3.40", "itemNum": null, "quantity": null, "taxType": null}
     {"name": "Lighter", "itemDesc": null, "price": "1.20", "itemNum": null, "quantity": null, "taxType": null}
