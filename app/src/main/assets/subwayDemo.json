@@ -1,0 +1,24 @@
+{
+  "storeName": "Subway",
+  "storeStreet": "9450 Gilman Drive",
+  "storeCityState": "La Jolla, CA 92092",
+  "storePhone": "858-252-1242",
+  "storeWebsite": "www.subway.com",
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "6 Inch Chicken Bacon Ranch", "itemDesc": null, "price": "4.75", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "6 Inch Turkey Breast", "itemDesc": null, "price": "4.50", "itemNum": null, "quantity": null, "taxType": null}
+  ],
+  "hereGo": "Here",
+  "cardType": "Mastercard",
+  "cardNum": "1634",
+  "paymentMethod": "Swipe",
+  "subtotal": "9.25",
+  "tax": "1.00",
+  "totalPrice": "10.25",
+  "date": "5/02/16",
+  "time": "15:37",
+  "cashier": "Surya",
+  "checkNumber": null,
+  "orderNumber": null
+}

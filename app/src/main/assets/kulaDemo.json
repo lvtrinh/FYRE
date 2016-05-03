@@ -1,0 +1,25 @@
+{
+  "storeName": "Kula Revolving Sushi Bar",
+  "storeStreet": "4609 Convoy St",
+  "storeCityState": "San Diego, CA 92111",
+  "storePhone": "858-715-4605",
+  "storeWebsite": null,
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "FAIR ITEMS", "itemDesc": "MATCHA PUDDING@3.80", "price": "3.80", "itemNum": null, "quantity": "1", "taxType": null},
+    {"name": "PLATE", "itemDesc": "$2.25 PLATE@2.25", "price": "45.00", "itemNum": null, "quantity": "20", "taxType": null},
+    {"name": "SOFT DRINK", "itemDesc": "WATER", "price": "0.00", "itemNum": null, "quantity": "2", "taxType": null}
+  ],
+  "hereGo": null,
+  "cardType": null,
+  "cardNum": "7457",
+  "paymentMethod": null,
+  "subtotal": "48.80",
+  "tax": "3.90",
+  "totalPrice": "52.70",
+  "date": "4/17/2016",
+  "time": "11:35:33",
+  "cashier": "100",
+  "checkNumber": null,
+  "orderNumber": null
+}

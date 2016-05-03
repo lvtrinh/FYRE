@@ -1,0 +1,23 @@
+{
+  "storeName": "Popeyes Louisiana Kitchen #9938",
+  "storeStreet": "9045 Mira Mesa Blvd",
+  "storeCityState": "San Diego, CA 92126",
+  "storePhone": "858-530-1664",
+  "storeWebsite": null,
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "$5 Big Box 2pc Mix", "itemDesc": "2 Mild Biscuit Fries Mashed Potatoes & Gravy", "price": "5.00", "itemNum": null, "quantity": null, "taxType": null}
+  ],
+  "hereGo": "Go",
+  "cardType": "American Express",
+  "cardNum": "1018",
+  "paymentMethod": null,
+  "subtotal": "5.00",
+  "tax": "0.40",
+  "totalPrice": "5.40",
+  "date": "4/28/2016",
+  "time": "6:34 PM",
+  "cashier": null,
+  "checkNumber": "484",
+  "orderNumber": null
+}
