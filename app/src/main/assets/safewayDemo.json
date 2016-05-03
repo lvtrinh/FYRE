@@ -6,7 +6,7 @@
   "storeWebsite": "www.safeway.com",
   "storeCategory": "Groceries",
   "itemList": [
-    {"name": "Sfy Black Beans", "itemDesc": "null, "price": "1.49", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "Sfy Black Beans", "itemDesc": null, "price": "1.49", "itemNum": null, "quantity": null, "taxType": null},
     {"name": "Raisin Bran", "itemDesc": null, "price": "2.18", "itemNum": null, "quantity": null, "taxType": null}
     {"name": "Kelogg Cereal", "itemDesc": null, "price": "2.99", "itemNum": null, "quantity": null, "taxType": null}
     {"name": "Pam Veg Oil Spray", "itemDesc": null, "price": "1.59", "itemNum": null, "quantity": null, "taxType": null}
