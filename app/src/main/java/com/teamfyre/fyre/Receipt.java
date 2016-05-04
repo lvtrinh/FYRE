@@ -360,4 +360,16 @@ public class Receipt implements Parcelable{
             return new Receipt[size];
         }
     };
+
+    public int getColumnCount() {
+        int columnCount = 0;
+
+        if (itemList.get(0).getTaxType() != '\u0000') columnCount++;
+        if (itemList.get(0).getItemNum() != -1) columnCount++;
+        if (itemList.get(0).getName() != null) columnCount++;
+        if (itemList.get(0).getPrice() != null) columnCount++;
+        if (itemList.get(0).getQuantity() != -1) columnCount++;
+
+        return columnCount;
+    }
 }

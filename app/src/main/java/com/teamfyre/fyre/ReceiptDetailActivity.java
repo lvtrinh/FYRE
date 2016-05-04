@@ -1,14 +1,22 @@
 package com.teamfyre.fyre;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ReceiptDetailActivity extends AppCompatActivity {
     private Receipt receipt;
+    private GridLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +32,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         /* Test */
         //System.out.println("ReceiptDetailActivity: ");
         //receipt.printReceipt();
+        layout = (GridLayout) findViewById(R.id.itemized_layout);
         fillReceipt();
     }
 
@@ -51,8 +60,6 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         TextView purchaseDateTime = (TextView) findViewById(R.id.rec_detail_purchase_date_time);
         TextView purchaseCashier = (TextView) findViewById(R.id.rec_detail_purchase_cashier);
         TextView purchaseOrderNum = (TextView) findViewById(R.id.rec_detail_purchase_order_number);
-
-        // TODO itemlist
 
         TextView purchaseSubtotal = (TextView) findViewById(R.id.rec_detail_purchase_subtotal);
         TextView purchaseTax = (TextView) findViewById(R.id.rec_detail_purchase_tax);
@@ -114,6 +121,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
             purchaseOrderNum.setText("Order Number: " + receipt.getOrderNumber());
         }
 
+        fillItemList();
+
         if (receipt.getSubtotal() != null) {
             purchaseSubtotal.setText("$" + receipt.getSubtotal().toString());
         }
@@ -135,6 +144,78 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         }
 
         // TODO if memo has data in it, populate the memo
+    }
+
+    /** TODO COMMENT THIS PLS **/
+    private void fillItemList() {
+        ArrayList<ReceiptItem> itemList = receipt.getItemList();
+        // this will get the number of rows we need to insert
+        int rowCounter = itemList.size();
+        ArrayList<ReceiptItem> hasDesc = new ArrayList<ReceiptItem>();
+
+        // if the receipt item has a description add a row because we will need it
+        for (int i = 0; i < itemList.size(); i++) {
+            if (itemList.get(i).getItemDesc() != null) {
+                rowCounter++;
+                hasDesc.add(itemList.get(i));
+            }
+        }
+        layout.setColumnCount(5);
+        layout.setRowCount(rowCounter);
+
+        int j = -1;
+        for (int i = 0; i < itemList.size(); i++) {
+            j++;
+            if (itemList.get(i).getTaxType() != '\u0000') {
+                addTextView(String.valueOf(itemList.get(i).getTaxType()), j, 0, 1);
+            }
+            if (itemList.get(i).getItemNum() != -1) {
+                addTextView(String.valueOf(itemList.get(i).getItemNum()), j, 1, 1);
+            }
+            if (itemList.get(i).getQuantity() != -1) {
+                addTextView(String.valueOf(itemList.get(i).getQuantity()), j, 2, 1);
+            }
+            if (itemList.get(i).getName() != null) {
+                addTextView(itemList.get(i).getName(), j, 3, 4);
+            }
+            if (itemList.get(i).getPrice() != null) {
+                addTextViewPrice(itemList.get(i).getPrice().toString(), j, 4);
+            }
+            if (itemList.get(i).getItemDesc() != null) {
+                j++;
+                addTextViewDesc("    " + itemList.get(i).getItemDesc(), j, 3, 1);
+            }
+        }
+    }
+
+    private void addTextView(String text, int row, int col, float weight) {
+        TextView toAdd = new TextView(this);
+        GridLayout.Spec columnSpec = GridLayout.spec(col, GridLayout.LEFT, weight);
+        GridLayout.Spec rowSpec = GridLayout.spec(row);
+
+        toAdd.setText(text);
+        toAdd.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Medium);
+        layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
+    }
+
+    private void addTextViewPrice(String text, int row, int col) {
+        TextView toAdd = new TextView(this);
+        GridLayout.Spec columnSpec = GridLayout.spec(col, GridLayout.RIGHT);
+        GridLayout.Spec rowSpec = GridLayout.spec(row);
+
+        toAdd.setText(text);
+        toAdd.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Medium);
+        layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
+    }
+
+    private void addTextViewDesc(String text, int row, int col, float weight) {
+        TextView toAdd = new TextView(this);
+        GridLayout.Spec columnSpec = GridLayout.spec(col, GridLayout.LEFT, weight);
+        GridLayout.Spec rowSpec = GridLayout.spec(row);
+
+        toAdd.setText(text);
+        toAdd.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Small);
+        layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
     }
 
 

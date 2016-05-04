@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             /*
@@ -140,6 +141,8 @@ public class MainActivity extends AppCompatActivity
                 tmpReceipt.setItemDesc(arrObj.get("itemDesc"));
                 tmpReceipt.setPrice(arrObj.get("price"));
                 tmpReceipt.setItemNum(arrObj.get("itemNum"));
+                tmpReceipt.setQuantity(arrObj.get("quantity"));
+                tmpReceipt.setTaxType(arrObj.get("taxType"));
                 indivItemArr.add(tmpReceipt);
             }
 
@@ -162,7 +165,7 @@ public class MainActivity extends AppCompatActivity
     public String loadJsonLocal() {
         String json = null;
         try {
-            InputStream is = getAssets().open("chipotleDemo.json");
+            InputStream is = getAssets().open("baguetteBrosDemo.json");
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
