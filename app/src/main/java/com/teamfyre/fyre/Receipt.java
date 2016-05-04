@@ -23,12 +23,13 @@ public class Receipt {
     private BigDecimal subtotal;
     private BigDecimal tax;
     private BigDecimal totalPrice;
+    private BigDecimal cashBack;
     private GregorianCalendar dateTime;
     private String cashier;
     private String checkNumber;
     private int orderNumber;
-    private boolean starred;
-    private String note;
+    private boolean starred = false;
+    private String memo = "";
 
 
     // Setters
@@ -140,6 +141,14 @@ public class Receipt {
         totalPrice = new BigDecimal(total.toString().replaceAll(",",""));
     }
 
+    public void setCashBack(Object cash) {
+        if (cash.toString().equals("null")) {
+            cashBack = null;
+            return;
+        }
+        cashBack = new BigDecimal(cash.toString().replaceAll(",",""));
+    }
+
     /**
      *
      * @param date the incoming string for the date
@@ -183,9 +192,32 @@ public class Receipt {
 
     public void setOrderNumber(Object number) {
         if (number.toString().equals("null")) {
+            orderNumber = -1;
             return;
         }
         orderNumber = Integer.parseInt(number.toString());
+    }
+
+    public void setStarred(Object star) {
+        if (star.toString().equals("null")) {
+            this.starred = false;
+            return;
+        }
+        if (star.toString().equals("1")) starred = true;
+        else if (star.toString().equals("0")) starred = false;
+    }
+
+    public void setMemo(Object m) {
+        if (m.toString().equals("null")) {
+            this.memo = null;
+            return;
+        }
+        memo = m.toString();
+    }
+
+    // set via string
+    public void setMemo(String m) {
+        memo = m;
     }
 
 
@@ -220,6 +252,8 @@ public class Receipt {
 
     public String getPaymentMethod() { return this.paymentMethod; }
 
+    public BigDecimal getCashBack() { return this.cashBack; }
+
     public BigDecimal getSubtotal() { return this.subtotal; }
 
     public BigDecimal getTax() { return this.tax; }
@@ -233,6 +267,10 @@ public class Receipt {
     public String getCheckNumber() { return this.checkNumber; }
 
     public int getOrderNumber() {return this.orderNumber; }
+
+    public boolean getStarred() { return this.starred; }
+
+    public String getMemo() { return this.memo; }
 
     public void printReceipt() {
         System.out.println("Store Name: " + this.storeName);
