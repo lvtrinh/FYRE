@@ -1,0 +1,28 @@
+{
+  "storeName": "Ralphs",
+  "storeStreet": "8657 Villa La Jolla Dr.",
+  "storeCityState": null,
+  "storePhone": "(858)587-1550",
+  "storeWebsite": "www.ralphs.com",
+  "storeCategory": "Groceries",
+    "itemList": [
+        {"name": "KRO LENTIL BEANS", "itemDesc": null, "price": "1.39", "itemNum": null, "quantity": null, "taxType": null},
+        {"name": "KRO POPCORN", "itemDesc": null, "price": "1.50", "itemNum": null, "quantity": "1", "taxType": null},
+        {"name": "CONC GUACMLE", "itemDesc": null, "price": "0.79", "itemNum": null, "quantity": null, "taxType": null},
+        {"name": "BANANAS", "itemDesc": null, "price": "1.51", "itemNum": null, "quantity": null, "taxType": null},
+        {"name": "AVOCADO HASS", "itemDesc": null, "price": "1.98", "itemNum": null, "quantity": "2", "taxType": null},
+        {"name": "CHKN BRST TENDER", "itemDesc": null, "price": "5.26", "itemNum": null, "quantity": null, "taxType": null}
+  ],
+  "hereGo": null,
+  "cardType": null,
+  "cardNum": "1922",
+  "paymentMethod": "DEBIT",
+  "subtotal": "12.43",
+  "tax": "0.00",
+  "totalPrice": "12.43",
+  "date": "04/03/16",
+  "time": "18:26",
+  "cashier": null,
+  "checkNumber": null,
+  "orderNumber": null
+}
