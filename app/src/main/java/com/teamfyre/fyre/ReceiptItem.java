@@ -1,3 +1,11 @@
+/******************************************************************************
+ * ReceiptItem.java
+ *
+ * An internal class that gives each item of the receipt a home.
+ * It is the basic structure of an item that would be on a receipt.
+ *
+ * Parcelable: we'll need to parcel this too.
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.os.Parcel;
@@ -5,10 +13,6 @@ import android.os.Parcelable;
 
 import java.math.BigDecimal;
 
-/**
- * An internal class that gives each item of the receipt a home.
- * It is the basic structure of an item that would be on a receipt.
- */
 public class ReceiptItem implements Parcelable {
 
     private String name;

@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Receipt.java
+ *
+ * An internal class to create the Receipt object. It has all the basic needs
+ * of a receipt.
+ *
+ * Parcelable: used to store Receipt data into an intent
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.os.Parcel;
@@ -6,12 +14,6 @@ import android.os.Parcelable;
 import java.util.*;
 import java.math.BigDecimal;
 
-/**
- * An internal class to create the Receipt object. It has all the basic needs
- * of a receipt.
- *
- * Parcelable: used to store Receipt data into an intent
- */
 public class Receipt implements Parcelable{
 
     private String storeName;
@@ -35,11 +37,28 @@ public class Receipt implements Parcelable{
     private boolean starred;
     private String note;
 
-
+    /**************************************************************************
+     * Receipt()
+     *
+     * Empty constructor. If you use this, don't forget to fill out some fields!
+     * (Or don't. Not like I care or anything.)
+     **************************************************************************/
     public Receipt() { }
 
     // constructor to construct Receipt from Parcel
     // FIFO
+
+    /**************************************************************************
+     * Receipt()
+     *
+     * This constructor takes in a Parcel containing the receipt's data and
+     * "remakes" the receipt.
+     *
+     * This should only be used when a Receipt has been parceled (i.e. when we
+     * pass it into an Intent and want to get it back).
+     *
+     * @param in The Parcel with the receipt's data
+     **************************************************************************/
     protected Receipt(Parcel in) {
         storeName = in.readString();
         storeStreet = in.readString();

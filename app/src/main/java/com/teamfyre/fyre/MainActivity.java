@@ -1,3 +1,17 @@
+/******************************************************************************
+ * MainActivity.java
+ *
+ * This is the main activity, if you couldn't tell. This is the activity that
+ * the user is taken to once they log in (if they're already logged in, they
+ * go directly to this screen). This screen, by default, shows a list of the
+ * user's receipts in order from newest to oldest (X number of receipts are
+ * loaded at a time).
+ *
+ * The hamburger menu is accessible from this menu.
+ * From the hamburger menu, the user can access this page, the search page,
+ * the settings page, and TODO other things we really should finalize soon
+ *
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.content.Intent;
@@ -36,6 +50,19 @@ public class MainActivity extends AppCompatActivity
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
 
+    /**************************************************************************
+     * onCreate()
+     *
+     * This function sets up the activity. It produces and populates the list
+     * of receipts, as well as enabling the hamburger menu for use.
+     *
+     * This function is called when the activity starts. For more on what this
+     * means, see:
+     * http://developer.android.com/training/basics/activity-lifecycle/starting.html
+     * (protip: ctrl/cmd-click in android studio to open the link!)
+     *
+     * @param savedInstanceState The saved instance state
+     **************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,13 +123,15 @@ public class MainActivity extends AppCompatActivity
         Receipt testReceipt = parseJson(jsonString);
     }
 
-    /**
-     * Takes in a json file in the form of a string to make a receipt object with all of the fields
-     * for it filled in if possible.
+    /**************************************************************************
+     * parseJson()
+     *
+     * Takes in a json file in the form of a string to make a receipt object
+     * with all of the fields for it filled in if possible.
      *
      * @param jsonString a json file in string format that goes in
      * @return Receipt - a receipt object with all the data input from a json file in it
-     */
+     **************************************************************************/
     public Receipt parseJson(String jsonString) {
         try {
             // create jsonobject
@@ -158,10 +187,12 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    /**
+    /**************************************************************************
+     * loadJsonLocal()
+     *
      * Reads json formatted data into a string from a local assets file
      * @return String - json data
-     */
+     **************************************************************************/
     public String loadJsonLocal() {
         String json = null;
         try {
@@ -214,6 +245,17 @@ public class MainActivity extends AppCompatActivity
     // TODO make a button or something (temporary) to get into detailed receipt
     // TODO make a "detailed receipt" activity (this is probably gonna be permanent
 
+    /**************************************************************************
+     * onCardClicked()
+     *
+     * This method opens up the receipt's info (ReceiptDetailActivity.java).
+     *
+     * This method is called when the CardView is clicked
+     * (via xml:onClick)
+     * Don't use this method on non-CardViews.
+     *
+     * @param view The CardView that was clicked
+     **************************************************************************/
     public void onCardClicked(View view) {
         Intent detailIntent = new Intent(this, ReceiptDetailActivity.class);
         detailIntent.putExtra(EXTRA_RECEIPT, receipt);
@@ -249,6 +291,12 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**************************************************************************
+     * logoutUser()
+     *
+     * Logs out the user. Also deletes the database data, because we shouldn't
+     * be keeping that if the user logged out, right?
+     **************************************************************************/
     private void logoutUser() {
         session.setLogin(false);
 

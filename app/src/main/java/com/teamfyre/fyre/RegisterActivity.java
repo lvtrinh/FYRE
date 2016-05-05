@@ -1,3 +1,8 @@
+/******************************************************************************
+ * RegisterActivity.java
+ *
+ * ThisActivity handles a user's registration.
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.app.Activity;

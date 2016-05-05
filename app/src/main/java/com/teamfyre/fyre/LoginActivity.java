@@ -1,3 +1,8 @@
+/******************************************************************************
+ * LoginActivity.java
+ *
+ * This activity handles the logging in of a user.
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.app.Activity;
