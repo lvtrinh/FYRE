@@ -1,0 +1,23 @@
+{
+  "storeName": "IN-N-OUT BURGER KEARNY MESA",
+  "storeStreet": "4375 KEARNY MESA RD",
+  "storeCityState": "SAN DIEGO, CA 92111",
+  "storePhone": "800-786-2222",
+  "storeWebsite": null,
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "Counter-Eat In", "itemDesc": null, "price": "5.09", "itemNum": null, "quantity": null, "taxType": null}
+  ],
+  "hereGo": "Here",
+  "cardType": "Visa",
+  "cardNum": null,
+  "paymentMethod": null,
+  "subtotal": "5.09",
+  "tax": ".48",
+  "totalPrice": "5.50",
+  "date": "2015-10-17",
+  "time": "9:00 PM",
+  "cashier": "KEITH KR",
+  "checkNumber": null,
+  "orderNumber": "31"
+}
