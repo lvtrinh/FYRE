@@ -80,12 +80,13 @@ public class Receipt implements Parcelable{
         subtotal = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
         tax = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
         totalPrice = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
+        cashBack = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
         dateTime = (GregorianCalendar) in.readValue(GregorianCalendar.class.getClassLoader());
         cashier = in.readString();
         checkNumber = in.readString();
         orderNumber = in.readInt();
         starred = in.readByte() != 0x00;
-        note = in.readString();
+        memo = in.readString();
     }
 
     // Setters
@@ -356,6 +357,7 @@ public class Receipt implements Parcelable{
         System.out.println("Subtotal: " + this.subtotal);
         System.out.println("Tax: " + this.tax);
         System.out.println("Total: " + this.totalPrice);
+        System.out.println("Cash back: " + this.cashBack);
         printDateTime();
         System.out.println("Cashier: " + this.cashier);
         System.out.println("Check Number: " + this.checkNumber);
@@ -379,6 +381,7 @@ public class Receipt implements Parcelable{
     }
 
     // writes contents of Receipt into Parcel
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(storeName);
         dest.writeString(storeStreet);
@@ -399,12 +402,13 @@ public class Receipt implements Parcelable{
         dest.writeValue(subtotal);
         dest.writeValue(tax);
         dest.writeValue(totalPrice);
+        dest.writeValue(cashBack);
         dest.writeValue(dateTime);
         dest.writeString(cashier);
         dest.writeString(checkNumber);
         dest.writeInt(orderNumber);
         dest.writeByte((byte) (starred ? 0x01 : 0x00));
-        dest.writeString(note);
+        dest.writeString(memo);
     }
 
     @SuppressWarnings("unused")

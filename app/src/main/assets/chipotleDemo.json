@@ -13,6 +13,7 @@
   "cardType": "Amex",
   "cardNum": "1023",
   "paymentMethod": "Swipe",
+  "cashBack": "1.09",
   "subtotal": "10.00",
   "tax": "0.54",
   "totalPrice": "10.54",
