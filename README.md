@@ -1,4 +1,10 @@
 # FYRE
 FYRE - Free Your Receipts Electronically
 
-to do: add stuff to this readme
+
+####Server Deets:
+IP: 13.93.202.168
+
+User: fyre
+
+Pass: 20Fyre@09
