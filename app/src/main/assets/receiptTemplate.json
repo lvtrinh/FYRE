@@ -13,6 +13,7 @@
   "cardType": null,
   "cardNum": null,
   "paymentMethod": null,
+  "cashBack": null,
   "subtotal": null,
   "tax": null,
   "totalPrice": null,
