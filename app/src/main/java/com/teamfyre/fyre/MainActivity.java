@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.math.BigDecimal;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -94,6 +95,34 @@ public class MainActivity extends AppCompatActivity
         jsonString = loadJsonLocal();
         // TODO put this into a variable that persists past onCreate
         Receipt testReceipt = parseJson(jsonString);
+        int userId = Integer.parseInt(user.get("id"));
+        System.out.println(userId);
+        String storeName = testReceipt.getStoreName();
+        String storeStreet = testReceipt.getStoreStreet();
+        String storeCityState = testReceipt.getStoreCityState();
+        String storePhone = testReceipt.getStorePhone();
+        String storeWebsite = testReceipt.getStoreWebsite();
+        String storeCategory = testReceipt.getStoreCategory();
+        Integer hereGo = testReceipt.getHereGo();
+        String cardType = testReceipt.getCardType();
+        int cardNum = testReceipt.getCardNum();
+        String paymentMethod = testReceipt.getPaymentMethod();
+        BigDecimal subtotal = testReceipt.getSubtotal();
+        BigDecimal tax = testReceipt.getTax();
+        BigDecimal totalPrice = testReceipt.getTotalPrice();
+        String date = testReceipt.getDate();
+        String time = testReceipt.getTime();
+        String cashier = testReceipt.getCashier();
+        String checkNumber = testReceipt.getCheckNumber();
+        int orderNumber = testReceipt.getOrderNumber();
+        ArrayList<ReceiptItem> itemList = testReceipt.getItemList();
+
+        ReceiptActivity add = new ReceiptActivity();
+        add.addReceipt(userId, storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, hereGo, cardType, cardNum, paymentMethod, subtotal, tax, totalPrice, date, time, cashier, checkNumber, orderNumber);
+
+        for (int j = 0; j < itemList.size(); j++) {
+            add.addItem(itemList.get(j));
+        }
     }
 
     /**

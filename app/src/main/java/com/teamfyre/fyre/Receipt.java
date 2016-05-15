@@ -21,17 +21,17 @@ public class Receipt implements Parcelable{
     private String storeWebsite;
     private String storeCategory;     // maybe use an int instead?
     private ArrayList<ReceiptItem> itemList;
-    private String hereGo; // should be boolean?
+    private Integer hereGo; // should be boolean?
     private String cardType;
-    private String cardNum;
+    private Integer cardNum;
     private String paymentMethod;
     private BigDecimal subtotal;
     private BigDecimal tax;
     private BigDecimal totalPrice;
     private GregorianCalendar dateTime;
     private String cashier;
-    private String checkNumber;
-    private int orderNumber;
+    private String checkNumber; //Are we changing this type in the database?
+    private Integer orderNumber;
     private boolean starred;
     private String note;
 
@@ -53,9 +53,9 @@ public class Receipt implements Parcelable{
         } else {
             itemList = null;
         }
-        hereGo = in.readString();
+        hereGo = in.readInt();
         cardType = in.readString();
-        cardNum = in.readString();
+        cardNum = in.readInt();
         paymentMethod = in.readString();
         subtotal = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
         tax = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
@@ -123,10 +123,9 @@ public class Receipt implements Parcelable{
 
     public void setHereGo(Object go) {
         if (go.toString().equals("null")) {
-            hereGo = null;
             return;
         }
-        hereGo = go.toString();
+        hereGo = Integer.parseInt(go.toString());
     }
 
     public void setCardType(Object type) {
@@ -139,10 +138,9 @@ public class Receipt implements Parcelable{
 
     public void setCardNum(Object num) {
         if (num.toString().equals("null")) {
-            cardNum = null;
             return;
         }
-        cardNum = num.toString();
+        cardNum = Integer.parseInt(num.toString());
     }
 
     public void setPaymentMethod(Object meth) {
@@ -249,11 +247,11 @@ public class Receipt implements Parcelable{
 
     public ArrayList<ReceiptItem> getItemList() { return this.itemList; }
 
-    public String getHereGo() { return this.hereGo; }
+    public Integer getHereGo() { return this.hereGo; }
 
     public String getCardType() { return this.cardType; }
 
-    public String getCardNum() { return this.cardNum; }
+    public Integer getCardNum() { return this.cardNum; }
 
     public String getPaymentMethod() { return this.paymentMethod; }
 
@@ -269,10 +267,10 @@ public class Receipt implements Parcelable{
 
     public String getCheckNumber() { return this.checkNumber; }
 
-    public int getOrderNumber() {return this.orderNumber; }
+    public Integer getOrderNumber() {return this.orderNumber; }
 
     public String getDate() {
-        return this.dateTime.get(Calendar.MONTH) + "/" + this.dateTime.get(Calendar.DAY_OF_MONTH) + "/" + this.dateTime.get(Calendar.YEAR);
+        return this.dateTime.get(Calendar.YEAR) + "-" + this.dateTime.get(Calendar.MONTH) + "-" + this.dateTime.get(Calendar.DAY_OF_MONTH);
     }
 
     public String getTime() {
@@ -333,9 +331,9 @@ public class Receipt implements Parcelable{
             dest.writeByte((byte) (0x01));
             dest.writeList(itemList);
         }
-        dest.writeString(hereGo);
+        dest.writeInt(hereGo);
         dest.writeString(cardType);
-        dest.writeString(cardNum);
+        dest.writeInt(cardNum);
         dest.writeString(paymentMethod);
         dest.writeValue(subtotal);
         dest.writeValue(tax);
