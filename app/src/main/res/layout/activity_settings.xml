@@ -52,32 +52,43 @@
 
 
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
         android:text="Privacy Policy"
+        android:textAllCaps="false"
         android:textSize="20dp"
-        android:fontFamily="sans-serif bold"
-        android:layout_marginTop="160dp"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="10dp"
+        android:background="#FFFFFFF"
+        android:padding="10dp"
   />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
         android:text="About Us"
+        android:textAllCaps="false"
         android:textSize="20dp"
         android:fontFamily="sans-serif bold"
+        android:background="#FFFFFFF"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"
 />
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
         android:text="Contact Us"
+        android:textAllCaps="false"
         android:textSize="20dp"
         android:fontFamily="sans-serif bold"
+        android:background="#FFFFFFF"
+        android:padding="10dp"
 />
 
     <!-- Logout Button -->
