@@ -42,7 +42,7 @@ public class Receipt implements Parcelable{
     private String checkNumber; //Are we changing this type in the database?
     private Integer orderNumber;
     private boolean starred;
-    private String note;
+    private String memo;
 
     /**************************************************************************
      * Receipt()
