@@ -5,7 +5,27 @@
     android:background="@color/bg_register"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="5dp" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FYRE"
+        android:fontFamily="sans-serif-thin"
+        android:id="@+id/textView"
+        android:textSize="100dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#ffffff"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Free Yourself"
+        android:fontFamily="sans-serif-thin"
+        android:textColor="@color/white"
+        android:paddingBottom="20dp"
+        android:textSize="25dp"/>
+
+
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -69,14 +89,15 @@
 
         <Button
             android:id="@+id/btnLinkToLoginScreen"
-            android:layout_width="fill_parent"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dip"
+            android:layout_marginTop="5dp"
             android:background="@null"
             android:text="@string/btn_link_to_login"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 
 </LinearLayout>
