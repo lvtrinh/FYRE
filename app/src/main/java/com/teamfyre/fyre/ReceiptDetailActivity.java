@@ -1,3 +1,9 @@
+/******************************************************************************
+ * ReceiptDetailActivity.java
+ *
+ * This activity shows the full details of a particular receipt. A receipt is
+ * passed in with the intent starting this activity.
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.content.Context;
@@ -72,7 +78,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
 
         // replace data
-        // for now, let's say everything's required and we can implement removing fields later
+        // for now, let's say everything's required and we can implement removing null fields later
 
         if (receipt.getStoreName() != null) {
             merchantName_header.setText(receipt.getStoreName());
@@ -146,7 +152,16 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         // TODO if memo has data in it, populate the memo
     }
 
-    /** TODO COMMENT THIS PLS **/
+    /**************************************************************************
+     * fillItemList()
+     *
+     * This method handles the generation and display of a Receipt's item list.
+     * The name and price of each ReceiptItem is inserted into a separate row.
+     * An additional row is inserted for each ReceiptItem that contains
+     * additional data, such as a description.
+     *
+     * This method is called within fillReceipt().
+     **************************************************************************/
     private void fillItemList() {
         ArrayList<ReceiptItem> itemList = receipt.getItemList();
         // this will get the number of rows we need to insert
@@ -188,6 +203,20 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         }
     }
 
+    /**************************************************************************
+     * addTextView()
+     *
+     * This method creates a TextView to display ReceiptItem data.
+     * This method inserts the TextView into the GridLayout.
+     * This method should not be used to display price, use addTextViewPrice for that.
+     *
+     * This method is called within fillItemList().
+     *
+     * @param text The text to insert into the TextView
+     * @param row The row the TextView should be in the GridLayout
+     * @param col The column the TextView should be in the GridLayout
+     * @param weight The weight of the TextView
+     ***************************************************************************/
     private void addTextView(String text, int row, int col, float weight) {
         TextView toAdd = new TextView(this);
         GridLayout.Spec columnSpec = GridLayout.spec(col, GridLayout.LEFT, weight);
@@ -198,6 +227,18 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
     }
 
+    /**************************************************************************
+     * addTextViewPrice()
+     *
+     * This method creates a TextView to display a ReceiptItem's price and
+     * inserts it into the GridLayout.
+     *
+     * This method is called within fillItemList().
+     *
+     * @param text The price to display
+     * @param row The row the TextView should be in the GridLayout
+     * @param col The column the TextView should be in the GridLayout
+     **************************************************************************/
     private void addTextViewPrice(String text, int row, int col) {
         TextView toAdd = new TextView(this);
         GridLayout.Spec columnSpec = GridLayout.spec(col, GridLayout.RIGHT);
@@ -208,6 +249,20 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
     }
 
+    /**************************************************************************
+     * addTextViewDesc()
+     *
+     * This method creates a TextView containing the ReceiptItem's description,
+     * and adds it to the GridLayout. I dunno why we need a separate function
+     * call for this, but ¯\_(ツ)_/¯
+     *
+     * This method is called from within fillItemList().
+     *
+     * @param text The description to display
+     * @param row The row the TextView should be in
+     * @param col The column the TextView should be in
+     * @param weight The TextView's weight
+     **************************************************************************/
     private void addTextViewDesc(String text, int row, int col, float weight) {
         TextView toAdd = new TextView(this);
         GridLayout.Spec columnSpec = GridLayout.spec(col, GridLayout.LEFT, weight);
@@ -219,6 +274,12 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     }
 
 
+    /**************************************************************************
+     * onStop()
+     *
+     * This function override saves the memo data to the local SQLite database
+     * and the online SQL database before closing the activity normally.
+     **************************************************************************/
     @Override
     protected void onStop() {
         super.onStop();

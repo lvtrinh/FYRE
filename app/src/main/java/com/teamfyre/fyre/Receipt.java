@@ -1,3 +1,11 @@
+/******************************************************************************
+ * Receipt.java
+ *
+ * An internal class to create the Receipt object. It has all the basic needs
+ * of a receipt.
+ *
+ * Parcelable: used to store Receipt data into an intent
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.os.Parcel;
@@ -28,6 +36,7 @@ public class Receipt implements Parcelable{
     private BigDecimal subtotal;
     private BigDecimal tax;
     private BigDecimal totalPrice;
+    private BigDecimal cashBack;
     private GregorianCalendar dateTime;
     private String cashier;
     private String checkNumber; //Are we changing this type in the database?
@@ -35,11 +44,28 @@ public class Receipt implements Parcelable{
     private boolean starred;
     private String note;
 
-
+    /**************************************************************************
+     * Receipt()
+     *
+     * Empty constructor. If you use this, don't forget to fill out some fields!
+     * (Or don't. Not like I care or anything.)
+     **************************************************************************/
     public Receipt() { }
 
     // constructor to construct Receipt from Parcel
     // FIFO
+
+    /**************************************************************************
+     * Receipt()
+     *
+     * This constructor takes in a Parcel containing the receipt's data and
+     * "remakes" the receipt.
+     *
+     * This should only be used when a Receipt has been parceled (i.e. when we
+     * pass it into an Intent and want to get it back).
+     *
+     * @param in The Parcel with the receipt's data
+     **************************************************************************/
     protected Receipt(Parcel in) {
         storeName = in.readString();
         storeStreet = in.readString();
@@ -60,12 +86,13 @@ public class Receipt implements Parcelable{
         subtotal = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
         tax = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
         totalPrice = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
+        cashBack = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
         dateTime = (GregorianCalendar) in.readValue(GregorianCalendar.class.getClassLoader());
         cashier = in.readString();
         checkNumber = in.readString();
         orderNumber = in.readInt();
         starred = in.readByte() != 0x00;
-        note = in.readString();
+        memo = in.readString();
     }
 
     // Setters
@@ -123,6 +150,7 @@ public class Receipt implements Parcelable{
 
     public void setHereGo(Object go) {
         if (go.toString().equals("null")) {
+            hereGo = null;
             return;
         }
         hereGo = Integer.parseInt(go.toString());
@@ -138,6 +166,7 @@ public class Receipt implements Parcelable{
 
     public void setCardNum(Object num) {
         if (num.toString().equals("null")) {
+            cardNum = null;
             return;
         }
         cardNum = Integer.parseInt(num.toString());
@@ -173,6 +202,14 @@ public class Receipt implements Parcelable{
             return;
         }
         totalPrice = new BigDecimal(total.toString().replaceAll(",",""));
+    }
+
+    public void setCashBack(Object cash) {
+        if (cash.toString().equals("null")) {
+            cashBack = null;
+            return;
+        }
+        cashBack = new BigDecimal(cash.toString().replaceAll(",",""));
     }
 
     /**
@@ -218,9 +255,32 @@ public class Receipt implements Parcelable{
 
     public void setOrderNumber(Object number) {
         if (number.toString().equals("null")) {
+            orderNumber = -1;
             return;
         }
         orderNumber = Integer.parseInt(number.toString());
+    }
+
+    public void setStarred(Object star) {
+        if (star.toString().equals("null")) {
+            this.starred = false;
+            return;
+        }
+        if (star.toString().equals("1")) starred = true;
+        else if (star.toString().equals("0")) starred = false;
+    }
+
+    public void setMemo(Object m) {
+        if (m.toString().equals("null")) {
+            this.memo = null;
+            return;
+        }
+        memo = m.toString();
+    }
+
+    // set via string
+    public void setMemo(String m) {
+        memo = m;
     }
 
 
@@ -255,6 +315,8 @@ public class Receipt implements Parcelable{
 
     public String getPaymentMethod() { return this.paymentMethod; }
 
+    public BigDecimal getCashBack() { return this.cashBack; }
+
     public BigDecimal getSubtotal() { return this.subtotal; }
 
     public BigDecimal getTax() { return this.tax; }
@@ -277,6 +339,12 @@ public class Receipt implements Parcelable{
         return this.dateTime.get(Calendar.HOUR_OF_DAY) + ":" + this.dateTime.get(Calendar.MINUTE);
     }
 
+    public boolean getStarred() { return this.starred; }
+
+    public String getMemo() { return this.memo; }
+
+
+
     public void printReceipt() {
         System.out.println("Store Name: " + this.storeName);
         System.out.println("Store Street: " + this.storeStreet);
@@ -295,6 +363,7 @@ public class Receipt implements Parcelable{
         System.out.println("Subtotal: " + this.subtotal);
         System.out.println("Tax: " + this.tax);
         System.out.println("Total: " + this.totalPrice);
+        System.out.println("Cash back: " + this.cashBack);
         printDateTime();
         System.out.println("Cashier: " + this.cashier);
         System.out.println("Check Number: " + this.checkNumber);
@@ -318,6 +387,7 @@ public class Receipt implements Parcelable{
     }
 
     // writes contents of Receipt into Parcel
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(storeName);
         dest.writeString(storeStreet);
@@ -338,12 +408,13 @@ public class Receipt implements Parcelable{
         dest.writeValue(subtotal);
         dest.writeValue(tax);
         dest.writeValue(totalPrice);
+        dest.writeValue(cashBack);
         dest.writeValue(dateTime);
         dest.writeString(cashier);
         dest.writeString(checkNumber);
         dest.writeInt(orderNumber);
         dest.writeByte((byte) (starred ? 0x01 : 0x00));
-        dest.writeString(note);
+        dest.writeString(memo);
     }
 
     @SuppressWarnings("unused")

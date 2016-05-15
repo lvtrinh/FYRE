@@ -1,0 +1,28 @@
+{
+  "storeName": "Marukai",
+  "storeStreet": "8125 Balboa Ave",
+  "storeCityState": "San Diego, CA 92111",
+  "storePhone": "858-384-0245",
+  "storeWebsite": "www.marukai.com",
+  "storeCategory": "Grocery",
+  "itemList": [
+    {"name": "SANUKIYA UDON", "itemDesc": null, "price": "4.58", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "SHIRAKIKU GYOZA PORK", "itemDesc": null, "price": "4.48", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "MAGURO DON 7OZ", "itemDesc": null, "price": "5.98", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "TUNA MAGURO", "itemDesc": null, "price": "5.78", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "KUROBUTA DON", "itemDesc": null, "price": "3.99", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "SLICED BEEF", "itemDesc": null, "price": "6.88", "itemNum": null, "quantity": null, "taxType": null}
+  ],
+  "hereGo": null,
+  "cardType": "American Ecpress",
+  "cardNum": "1023",
+  "paymentMethod": null,
+  "subtotal": "31.69",
+  "tax": null,
+  "totalPrice": "31.69",
+  "date": "05/06/2016",
+  "time": "11:19",
+  "cashier": "Gil",
+  "checkNumber": "332053",
+  "orderNumber": null
+}

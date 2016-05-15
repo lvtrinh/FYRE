@@ -1,0 +1,23 @@
+{
+  "storeName": "THE BISTRO AT THE STRAND",
+  "storeStreet": null,
+  "storeCityState": null,
+  "storePhone": null,
+  "storeWebsite": null,
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "Pork & Chix Stir Fry", "itemDesc": "Mild", "price": "11.00", "itemNum": null, "quantity": null, "taxType": null}, {"name": "Banana Turons", "itemDesc": null, "price": "7.00", "itemNum": null, "quantity": null, "taxType": null}  
+  ],
+  "hereGo": null,
+  "cardType": null,
+  "cardNum": null,
+  "paymentMethod": "Dining Dollars",
+  "subtotal": "18.00",
+  "tax": null,
+  "totalPrice": "18.00",
+  "date": "10/16/2015",
+  "time": "19:10",
+  "cashier": "Keh, Andrew",
+  "checkNumber": null,
+  "orderNumber": null
+}

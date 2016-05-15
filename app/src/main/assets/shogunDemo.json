@@ -1,0 +1,23 @@
+{
+  "storeName": "Shogun of La Jolla",
+  "storeStreet": "9500 Gilman Dr.",
+  "storeCityState": "La Jolla, CA 92093",
+  "storePhone": "858-453-0220",
+  "storeWebsite": null,
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "Chicken Katsu Bowl", "itemDesc": "10% (Emp) Disc", "price": "4.73", "itemNum": null, "quantity": "1", "taxType": null}
+  ],
+  "hereGo": "Go",
+  "cardType": null,
+  "cardNum": null,
+  "paymentMethod": "Cash",
+  "subtotal": "4.73",
+  "tax": "0.38",
+  "totalPrice": "5.11",
+  "date": "2/1/2016",
+  "time": "6:39:37 PM",
+  "cashier": null,
+  "checkNumber": "20160201-10503",
+  "orderNumber": null
+}
