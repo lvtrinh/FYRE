@@ -38,6 +38,26 @@
         android:textColor="@color/input_login"
         android:textColorHint="@color/input_login_hint" />
 
+
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dip"
+        android:background="@color/btn_login_bg"
+        android:text="SAVE"
+        android:textColor="@color/bg_login" />
+
+    <ImageView
+        android:paddingTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher_fyre"
+        android:layout_gravity="center_horizontal"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +65,7 @@
         android:text="Privacy Policy"
         android:textSize="20dp"
         android:fontFamily="sans-serif bold"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
   />
 
     <TextView
