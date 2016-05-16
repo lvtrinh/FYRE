@@ -12,6 +12,7 @@
   "cardType": "American Express",
   "cardNum": "1018",
   "paymentMethod": null,
+  "cashBack": "0.00",
   "subtotal": "8.38",
   "tax": "0.67",
   "totalPrice": "9.05",
