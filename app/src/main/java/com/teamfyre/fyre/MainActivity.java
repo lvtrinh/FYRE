@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     private String jsonString;
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
+    public static final String DEMO_JSON_FILENAME = "baguetteBrosDemo.json";
 
     /**************************************************************************
      * onCreate()
@@ -226,7 +227,7 @@ public class MainActivity extends AppCompatActivity
     public String loadJsonLocal() {
         String json = null;
         try {
-            InputStream is = getAssets().open("baguetteBrosDemo.json");
+            InputStream is = getAssets().open(DEMO_JSON_FILENAME);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

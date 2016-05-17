@@ -6,7 +6,7 @@
   "storeWebsite": "www.baguettebros.com",
   "storeCategory": "Food and Drink",
   "itemList": [
-    {"name": "Wings", "itemDesc": "Honey Sriracha", "price": "6.00", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "Wings", "itemDesc": "Honey Sriracha", "price": "6.00", "itemNum": "-1", "quantity": "1", "taxType": null},
     {"name": "Bangkok Chicken", "itemDesc": null, "price": "6.50", "itemNum": null, "quantity": null, "taxType": null}
   ],
   "hereGo": "1",

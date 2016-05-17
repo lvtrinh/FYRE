@@ -42,7 +42,7 @@ public class ReceiptItem implements Parcelable {
 
     public void setItemNum(Object i) {
         if (i.toString().equals("null")) {
-            itemNum = null; // -1 INDICATES NULL, MIGHT WANT TO USE THE INTEGER OBJECT
+            itemNum = -1; // -1 means null/not applicable
             return;
         }
         itemNum = Integer.parseInt(i.toString());
@@ -58,15 +58,18 @@ public class ReceiptItem implements Parcelable {
 
     public void setQuantity(Object q) {
         if (q.toString().equals("null")) {
-            quantity = null;
+            quantity = -1; // -1 means null/not applicable
             return;
         }
         quantity = Integer.parseInt(q.toString());
     }
 
+    // TODO decide which letter is best for "null"
+    // we need a non-null Character object for parceling
+    // I'm just using Z because nobody uses Z. Ever.
     public void setTaxType(Object tax) {
         if (tax.toString().equals("null")) {
-            taxType = null; // THIS IS THE NULL CHAR
+            taxType = 'Z';
             return;
         }
         taxType = tax.toString().charAt(0);

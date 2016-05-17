@@ -3,6 +3,11 @@
  *
  * This activity shows the full details of a particular receipt. A receipt is
  * passed in with the intent starting this activity.
+ *
+ * TODO populate memo data on load
+ * TODO save memo data on close (in onClose() method)
+ * TODO format date/time string in case of missing fields
+ * TODO format phone/web string in case of missing fields
  ******************************************************************************/
 package com.teamfyre.fyre;
 
