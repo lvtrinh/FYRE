@@ -21,28 +21,6 @@
         possibly use the upper portion for important info with receipts below"
         android:id="@+id/textView2" />
     -->
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="MERCHANT"
-            android:id="@+id/rec_merchant_name" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="MONEY"
-            android:id="@+id/rec_price"
-            android:textColor="#d50000" />
-    </LinearLayout>
-
     <include
         layout="@layout/recent_receipts_test"
         android:layout_width="match_parent"
