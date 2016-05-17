@@ -17,15 +17,14 @@
 
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
-    <string name="hint_name">Fullname</string>
+    <string name="hint_name">Full Name</string>
     <string name="btn_login">LOGIN</string>
+    <string name="btn_signup">SIGN UP</string>
     <string name="btn_register">REGISTER</string>
-    <string name="btn_link_to_register">Sign Up</string>
-    <string name="btn_link_to_login">Login Here</string>
+    <string name="btn_link_to_login">LOGIN HERE</string>
     <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
-    <string name="name">Fullname</string>
-
+    <string name="name">Full Name</string>
 
     <string name="action_settings">Settings</string>
     <string name="fyre">FYRE</string>
