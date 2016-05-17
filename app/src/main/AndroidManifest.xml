@@ -10,11 +10,12 @@
         android:icon="@mipmap/ic_launcher_fyre_hd"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:theme="@style/AppTheme"
         >
         <activity
             android:name=".LoginActivity"
             android:label="FYRE"
-            android:theme="@style/AppTheme" >
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +23,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:label="FYRE"
+             />
         <activity
             android:name=".RegisterActivity"
             android:label="Join FYRE"

@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -38,7 +40,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity
                 TODO: change code within onClick() to make smaller action buttons
 
              */
-            public void onClick(View view) {
+           public void onClick(View view) {
                 Snackbar.make(view, "TODO: add smaller action buttons", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity
 
         jsonString = loadJsonLocal();
         // TODO put this into a variable that persists past onCreate
+        // TODO and basically its own file, and thread
         Receipt testReceipt = parseJson(jsonString);
     }
 
