@@ -12,6 +12,7 @@
   "cardType": null,
   "cardNum": null,
   "paymentMethod": "Cash",
+  "cashBack": "0.00",
   "subtotal": "4.73",
   "tax": "0.38",
   "totalPrice": "5.11",

@@ -1,89 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/bg_login"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="5dp" >
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FYRE"
-        android:fontFamily="sans-serif-thin"
-        android:id="@+id/textView"
-        android:textSize="100dp"
-        android:layout_gravity="center_horizontal"
-        android:textColor="#ffffff"/>
-
-
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="180dp"
-        android:src="@mipmap/ic_launcher_fyre"
-        android:scaleType="fitCenter"/>
-
-
+    tools:context=".LoginActivity">
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="56dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
 
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="fill_parent"
+        <ImageView
+            android:layout_width = "175dp"
+            android:layout_height= "175dp"
+            android:id="@+id/logo"
+            android:src="@mipmap/ic_launcher_fyre_hd"
+            android:layout_gravity="center_horizontal" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:hint="@string/hint_email"
-            android:inputType="textEmailAddress"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/input_login"
-            android:textColorHint="@color/input_login_hint" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/emailLayout">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:id="@+id/email"
+                android:hint="@string/hint_email" />
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="fill_parent"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@color/white"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:padding="10dp"
-            android:singleLine="true"
-            android:textColor="@color/input_login"
-            android:textColorHint="@color/input_login_hint" />
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/passwordLayout">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:id="@+id/password"
+                android:hint="@string/hint_password" />
+        </android.support.design.widget.TextInputLayout>
 
-        <!-- Login Button -->
-
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnLogin"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:background="@color/btn_login_bg"
+            android:background="@color/white"
             android:text="@string/btn_login"
-            android:textColor="@color/bg_login" />
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:layout_gravity="center" />
 
-        <!-- Link to Register Screen -->
-
-        <Button
+        <android.support.v7.widget.AppCompatButton
             android:id="@+id/btnLinkToRegisterScreen"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@null"
-            android:text="@string/btn_link_to_register"
-            android:textAllCaps="false"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/btn_signup"
             android:textColor="@color/white"
-            android:textSize="15dp"
-            android:layout_gravity="center_horizontal"/>
-    </LinearLayout>
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:layout_gravity="center" />
 
+        </LinearLayout>
 </LinearLayout>

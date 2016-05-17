@@ -21,6 +21,7 @@
   "cardType": "Visa",
   "cardNum": "9962",
   "paymentMethod": "swiped",
+  "cashBack": "0.00",
   "subtotal": "304.00",
   "tax": "26.60",
   "totalPrice": "330.60",
