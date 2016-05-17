@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="Welcome to FYRE" >
+            android:label="FYRE" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
