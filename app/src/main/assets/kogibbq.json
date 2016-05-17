@@ -12,6 +12,7 @@
   "cardType": "Visa",
   "cardNum": "0347",
   "paymentMethod": "Swiped",
+  "cashBack": "0.00",
   "subtotal": "27.69",
   "tax": null,
   "totalPrice": "27.69",

@@ -14,6 +14,7 @@
   "cardType": "Visa",
   "cardNum": "1234",
   "paymentMethod": "Swipe",
+  "cashBack": "0.00",
   "subtotal": "13.55",
   "tax": "1.08",
   "totalPrice": "14.63",

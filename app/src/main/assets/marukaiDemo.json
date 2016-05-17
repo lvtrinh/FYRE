@@ -17,6 +17,7 @@
   "cardType": "American Ecpress",
   "cardNum": "1023",
   "paymentMethod": null,
+  "cashBack": "0.00",
   "subtotal": "31.69",
   "tax": null,
   "totalPrice": "31.69",
