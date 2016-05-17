@@ -7,7 +7,6 @@
  * TODO populate memo data on load
  * TODO save memo data on close (in onClose() method)
  * TODO format date/time string in case of missing fields
- * TODO format phone/web string in case of missing fields
  ******************************************************************************/
 package com.teamfyre.fyre;
 
@@ -22,6 +21,8 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -65,7 +66,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         TextView merchantName = (TextView) findViewById(R.id.rec_detail_merchant_name);
         TextView merchantAddress = (TextView) findViewById(R.id.rec_detail_merchant_address);
         TextView merchantCityState = (TextView) findViewById(R.id.rec_detail_merchant_city_state);
-        TextView merchantPhoneWeb = (TextView) findViewById(R.id.rec_detail_merchant_phone_web);
+        TextView merchantPhone = (TextView) findViewById(R.id.rec_detail_merchant_phone);
+        TextView merchantWeb = (TextView) findViewById(R.id.rec_deatil_merchant_web);
         TextView merchantCategory = (TextView) findViewById(R.id.rec_detail_merchant_category);
 
         TextView purchaseDateTime = (TextView) findViewById(R.id.rec_detail_purchase_date_time);
@@ -113,12 +115,11 @@ public class ReceiptDetailActivity extends AppCompatActivity {
             merchantCityState.setText(receipt.getStoreCityState());
         }
 
-        // TODO build a string for phone | web first, replace view
         if (receipt.getStorePhone() != null) {
-            merchantPhoneWeb.setText(receipt.getStorePhone());
+            merchantPhone.setText(receipt.getStorePhone());
         }
         if (receipt.getStoreWebsite() != null) {
-            merchantPhoneWeb.append(" | " + receipt.getStoreWebsite());
+            merchantWeb.setText(receipt.getStoreWebsite());
         }
         if (receipt.getStoreCategory() != null) {
             merchantCategory.setText("Category: " + receipt.getStoreCategory());
