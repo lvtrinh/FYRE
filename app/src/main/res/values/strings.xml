@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">FYRE</string>
+    <string name="app_tagline">Free Your Receipts Electronically</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

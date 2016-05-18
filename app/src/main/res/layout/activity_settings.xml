@@ -107,7 +107,7 @@
         android:paddingTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_fyre"
+        android:src="@mipmap/ic_launcher_fyre_hd"
         android:layout_gravity="center_horizontal"
         />
 

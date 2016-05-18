@@ -38,11 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final TextInputLayout emailLayout = (TextInputLayout) findViewById(R.id.emailLayout);
-        final TextInputLayout passwordLayout = (TextInputLayout) findViewById(R.id.passwordLayout);
-        emailLayout.setHint("Email");
-        passwordLayout.setHint("Password");
-
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         btnLogin = (Button) findViewById(R.id.btnLogin);

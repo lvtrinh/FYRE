@@ -19,14 +19,14 @@
             android:layout_height= "175dp"
             android:id="@+id/logo"
             android:src="@mipmap/ic_launcher_fyre_hd"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:id="@+id/emailLayout">
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp" >
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,13 +38,13 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:id="@+id/passwordLayout">
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp" >
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:fontFamily="sans-serif"
                 android:id="@+id/password"
                 android:hint="@string/hint_password" />
         </android.support.design.widget.TextInputLayout>
@@ -56,7 +56,7 @@
             android:background="@color/white"
             android:text="@string/btn_login"
             android:textColor="@color/colorPrimaryDark"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
             android:layout_gravity="center" />
