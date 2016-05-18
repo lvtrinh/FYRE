@@ -64,7 +64,7 @@
         android:layout_marginBottom="10dp"
         android:background="#FFFFFF"
         android:padding="10dp"
-  />
+        />
 
     <Button
         android:layout_width="wrap_content"
@@ -77,7 +77,7 @@
         android:background="#FFFFFF"
         android:padding="10dp"
         android:layout_marginBottom="10dp"
-/>
+        />
 
     <Button
         android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
         android:fontFamily="sans-serif bold"
         android:background="#FFFFFF"
         android:padding="10dp"
-/>
+        />
 
     <!-- Logout Button -->
 
