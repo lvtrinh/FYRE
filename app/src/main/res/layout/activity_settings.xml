@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
 
@@ -38,8 +39,6 @@
         android:textColor="@color/input_login"
         android:textColorHint="@color/input_login_hint" />
 
-
-
     <Button
         android:id="@+id/btn"
         android:layout_width="wrap_content"
@@ -49,8 +48,6 @@
         android:background="@color/btn_login_bg"
         android:text="SAVE"
         android:textColor="@color/bg_login" />
-
-
 
     <Button
         android:layout_width="wrap_content"
@@ -63,8 +60,12 @@
         android:layout_marginTop="70dp"
         android:layout_marginBottom="10dp"
         android:background="#FFFFFF"
+<<<<<<< HEAD
         android:padding="10dp"
         />
+=======
+        android:padding="10dp" />
+>>>>>>> 9c14474c42934a1ac73079b69ad8c0991499af35
 
     <Button
         android:layout_width="wrap_content"
@@ -76,8 +77,12 @@
         android:fontFamily="sans-serif bold"
         android:background="#FFFFFF"
         android:padding="10dp"
+<<<<<<< HEAD
         android:layout_marginBottom="10dp"
         />
+=======
+        android:layout_marginBottom="10dp" />
+>>>>>>> 9c14474c42934a1ac73079b69ad8c0991499af35
 
     <Button
         android:layout_width="wrap_content"
@@ -88,11 +93,14 @@
         android:textSize="20dp"
         android:fontFamily="sans-serif bold"
         android:background="#FFFFFF"
+<<<<<<< HEAD
         android:padding="10dp"
         />
+=======
+        android:padding="10dp" />
+>>>>>>> 9c14474c42934a1ac73079b69ad8c0991499af35
 
     <!-- Logout Button -->
-
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
@@ -108,8 +116,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher_fyre_hd"
-        android:layout_gravity="center_horizontal"
-        />
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>
 
