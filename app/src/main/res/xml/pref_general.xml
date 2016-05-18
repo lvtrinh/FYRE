@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:title="Email"
+        android:summary="Modify Your Email"
+        android:key="prefUserEmail"/>
+
+    <EditTextPreference
+        android:title="Password"
+        android:summary="Modify Your Password"
+        android:key="prefUserPassword"/>
+
+    <Preference android:title="Privacy Policy">
+        <intent android:action="android.settings.PRIVACY_POLICY" />
+    </Preference>
+
+    <Preference android:title="About Us">
+        <intent android:action="android.settings.ABOUT_US" />
+    </Preference>
+
+    <Preference android:title="Contact Us">
+        <intent android:action="android.settings.CONTACT_US" />
+    </Preference>
+
+
+
+</PreferenceScreen>
