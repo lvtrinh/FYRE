@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/store_name"
+                android:id="@+id/store_name2"
                 android:layout_alignParentTop="true"
                 android:textSize="16sp"
                 android:text="Los Pri"
@@ -33,7 +33,7 @@
                 android:id="@+id/date_test"
                 android:text="05/15/16"
                 android:paddingTop="2dp"
-                android:layout_below="@id/store_name"
+                android:layout_below="@id/store_name2"
                 android:layout_alignParentBottom="false" />
 
             <TextView
@@ -89,8 +89,8 @@
         android:layout_gravity="center_horizontal">
 
         <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:id="@+id/imageButton"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -101,7 +101,10 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:padding="12dp"
             android:text="Save Receipt"
+            android:textColor="@color/white"
             android:id="@+id/button"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
