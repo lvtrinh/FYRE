@@ -15,6 +15,8 @@
 package com.teamfyre.fyre;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -79,15 +81,12 @@ public class MainActivity extends AppCompatActivity
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
+        // manual addition for a receipt
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            /*
-                TODO: change code within onClick() to make smaller action buttons
-
-             */
            public void onClick(View view) {
-                Snackbar.make(view, "TODO: add smaller action buttons", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, ReceiptManualActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -109,7 +108,22 @@ public class MainActivity extends AppCompatActivity
         session = new SessionManager(getApplicationContext());
 
         if (!session.isLoggedIn()) {
-            logoutUser();
+                new AlertDialog.Builder(MainActivity.this) //changed to MainActivity.this from context
+                        .setTitle("Logout")
+                        .setMessage("Are you sure you want to logout??")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                logoutUser();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
         }
 
         // Fetching user details from SQLite
@@ -316,11 +330,29 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_search) {
 
         } else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+            //finish();
 
         }
         // only if we're placing logout in the hamburger menu
         else if (id == R.id.nav_logout) {
-            logoutUser();
+            new AlertDialog.Builder(MainActivity.this) //changed to MainActivity.this from context
+                    .setTitle("Logout")
+                    .setMessage("Are you sure you want to logout?")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            logoutUser();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

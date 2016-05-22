@@ -10,10 +10,10 @@
     {"name": "PLATE", "itemDesc": "$2.25 PLATE@2.25", "price": "45.00", "itemNum": null, "quantity": "20", "taxType": null},
     {"name": "SOFT DRINK", "itemDesc": "WATER", "price": "0.00", "itemNum": null, "quantity": "2", "taxType": null}
   ],
-  "hereGo": null,
-  "cardType": null,
+  "hereGo": "1",
+  "cardType": "Discover",
   "cardNum": "7457",
-  "paymentMethod": null,
+  "paymentMethod": "Chip",
   "cashBack": "0.00",
   "subtotal": "48.80",
   "tax": "3.90",

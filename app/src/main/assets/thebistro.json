@@ -8,7 +8,7 @@
   "itemList": [
     {"name": "Pork & Chix Stir Fry", "itemDesc": "Mild", "price": "11.00", "itemNum": null, "quantity": null, "taxType": null}, {"name": "Banana Turons", "itemDesc": null, "price": "7.00", "itemNum": null, "quantity": null, "taxType": null}  
   ],
-  "hereGo": null,
+  "hereGo": "0",
   "cardType": null,
   "cardNum": null,
   "paymentMethod": "Dining Dollars",

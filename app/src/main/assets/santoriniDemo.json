@@ -8,7 +8,7 @@
   "itemList": [
     {"name": "Scrambled Eggs", "itemDesc": null, "price": "4.84", "itemNum": null, "quantity": null, "taxType": null},
   ],
-  "hereGo": "Here",
+  "hereGo": "1",
   "cardType": "Visa",
   "cardNum": "1234",
   "paymentMethod": "Swipe",

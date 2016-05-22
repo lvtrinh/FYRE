@@ -12,7 +12,7 @@
     {"name": "Lighter", "itemDesc": null, "price": "1.20", "itemNum": null, "quantity": null, "taxType": null},
     {"name": "Magnet Set", "itemDesc": null, "price": "5.23", "itemNum": null, "quantity": null, "taxType": null}
   ],
-  "hereGo": "Here",
+  "hereGo": "0",
   "cardType": "Visa",
   "cardNum": "5263",
   "paymentMethod": "Swipe",

@@ -8,7 +8,7 @@
   "itemList": [
     {"name": "MT BOBA", "itemDesc": null, "price": "3.00", "itemNum": null, "quantity": "1", "taxType": null}
   ],
-  "hereGo": "Here",
+  "hereGo": "1",
   "cardType": null,
   "cardNum": null,
   "paymentMethod": "Cash",
