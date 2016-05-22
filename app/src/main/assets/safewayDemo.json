@@ -14,7 +14,7 @@
     {"name": "Red Roma Tomatoes", "itemDesc": null, "price": "0.99", "itemNum": null, "quantity": null, "taxType": null}
     {"name": "Broccoli Crowns", "itemDesc": null, "price": "0.97", "itemNum": null, "quantity": null, "taxType": null}
   ],
-  "hereGo": "Here",
+  "hereGo": "0",
   "cardType": "Visa",
   "cardNum": "5677",
   "paymentMethod": "Swipe",

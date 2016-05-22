@@ -17,7 +17,7 @@
     {"name": "Out of This World SS BIDO/BLK/6", "itemDesc": null, "price": "19.00", "itemNum": "3569768", "quantity":"1", "taxType": null},
     {"name": "Sculp Short BCHR/6", "itemDesc": null, "price": "14.00", "itemNum": "3601535", "quantity":"1", "taxType": null}
   ],
-  "hereGo": null,
+  "hereGo": "1",
   "cardType": "Visa",
   "cardNum": "9962",
   "paymentMethod": "swiped",

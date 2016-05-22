@@ -9,7 +9,7 @@
     {"name": "6 Inch Chicken Bacon Ranch", "itemDesc": null, "price": "4.75", "itemNum": null, "quantity": null, "taxType": null},
     {"name": "6 Inch Turkey Breast", "itemDesc": null, "price": "4.50", "itemNum": null, "quantity": null, "taxType": null}
   ],
-  "hereGo": "Here",
+  "hereGo": "0",
   "cardType": "Mastercard",
   "cardNum": "1634",
   "paymentMethod": "Swipe",

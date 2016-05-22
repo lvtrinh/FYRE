@@ -10,7 +10,7 @@
     {"name": "DIP Miso Ton Pk", "itemDesc": null, "price": "13.75", "itemNum": null, "quantity": "1", "taxType": null},
     {"name": "Sp Miso Ton UB", "itemDesc": "Akadama Hot", "price": "14.20", "itemNum": null, "quantity": "1", "taxType": null}
   ],
-  "hereGo": "Here",
+  "hereGo": "0",
   "cardType": null,
   "cardNum": null,
   "paymentMethod": null,

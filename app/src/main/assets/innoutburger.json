@@ -8,10 +8,10 @@
   "itemList": [
     {"name": "Counter-Eat In", "itemDesc": null, "price": "5.09", "itemNum": null, "quantity": null, "taxType": null}
   ],
-  "hereGo": "Here",
+  "hereGo": "0",
   "cardType": "Visa",
-  "cardNum": null,
-  "paymentMethod": null,
+  "cardNum": "1247",
+  "paymentMethod": "Swipe",
   "cashBack": "0.00",
   "subtotal": "5.09",
   "tax": ".48",

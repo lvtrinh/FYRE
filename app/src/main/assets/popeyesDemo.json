@@ -8,7 +8,7 @@
   "itemList": [
     {"name": "$5 Big Box 2pc Mix", "itemDesc": "2 Mild Biscuit Fries Mashed Potatoes & Gravy", "price": "5.00", "itemNum": null, "quantity": null, "taxType": null}
   ],
-  "hereGo": "Go",
+  "hereGo": "1",
   "cardType": "American Express",
   "cardNum": "1018",
   "paymentMethod": null,
