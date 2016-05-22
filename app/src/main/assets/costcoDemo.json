@@ -18,7 +18,7 @@
     {"name": "KS SALMON", "itemDesc": null, "price": "19.99", "itemNum": "7070", "quantity": null, "taxType": null},
     {"name": "BOUNCE 320CT", "itemDesc": null, "price": "9.99", "itemNum": "1006152", "quantity": null, "taxType": null}
   ],
-  "hereGo": null,
+  "hereGo": "0",
   "cardType": "American Express",
   "cardNum": "1023",
   "paymentMethod": "Swipe",

@@ -8,7 +8,7 @@
   "itemList": [
     {"name": "Monster Baja Carnitas", "itemDesc": null, "price": "6.00", "itemNum": null, "quantity": null, "taxType": null}
   ],
-  "hereGo": "Go",
+  "hereGo": "1",
   "cardType": "Amex",
   "cardNum": "1023",
   "paymentMethod": "Swipe",

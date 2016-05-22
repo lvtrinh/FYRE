@@ -13,7 +13,7 @@
         {"name": "AVOCADO HASS", "itemDesc": null, "price": "1.98", "itemNum": null, "quantity": "2", "taxType": null},
         {"name": "CHKN BRST TENDER", "itemDesc": null, "price": "5.26", "itemNum": null, "quantity": null, "taxType": null}
   ],
-  "hereGo": null,
+  "hereGo": "0",
   "cardType": null,
   "cardNum": "1922",
   "paymentMethod": "DEBIT",

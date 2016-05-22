@@ -8,7 +8,7 @@
   "itemList": [
     {"name": "Hamburger", "itemDesc": null, "price": "4.20", "itemNum": null, "quantity": null, "taxType": null}, {"name": "Bacon", "itemDesc": null, "price": "1.00", "itemNum": null, "quantity": null, "taxType": null}, {"name": "Swiss Cheese", "itemDesc": null, "price": "1.00", "itemNum": null, "quantity": null, "taxType": null}, {"name": "Brioche Bun", "itemDesc": "Ketchup Mayo Shredded Lettuce Tomato", "price": "0.00", "itemNum": null, "quantity": null, "taxType": null}  
   ],
-  "hereGo": null,
+  "hereGo": "1",
   "cardType": null,
   "cardNum": null,
   "paymentMethod": "Dining Dollars",

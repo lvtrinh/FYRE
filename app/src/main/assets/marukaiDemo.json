@@ -13,7 +13,7 @@
     {"name": "KUROBUTA DON", "itemDesc": null, "price": "3.99", "itemNum": null, "quantity": null, "taxType": null},
     {"name": "SLICED BEEF", "itemDesc": null, "price": "6.88", "itemNum": null, "quantity": null, "taxType": null}
   ],
-  "hereGo": null,
+  "hereGo": "0",
   "cardType": "American Ecpress",
   "cardNum": "1023",
   "paymentMethod": null,
