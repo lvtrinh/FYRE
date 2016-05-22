@@ -67,7 +67,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + KEY_CREATED_AT + " TEXT" + ")";
 
         String CREATE_RECEIPT_TABLE = "CREATE TABLE " + TABLE_RECEIPT + "("
-                + KEY_ID + " INTEGER," + KEY_RECEIPTID + " INTEGER PRIMARY KEY,"
+                + KEY_RECEIPTID + " INTEGER PRIMARY KEY,"
                 + KEY_STORENAME + " TEXT," + KEY_STORESTREET + " TEXT,"
                 + KEY_STORECITYSTATE + " TEXT," + KEY_STOREPHONE + " TEXT,"
                 + KEY_STOREWEBSITE + " TEXT," + KEY_STORECATEGORY + " TEXT," + KEY_HEREGO + " INTEGER,"
@@ -76,6 +76,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + KEY_TAX + " REAL," + KEY_TOTALPRICE + " REAL,"
                 + KEY_DATE + " TEXT," + KEY_TIME + " TEXT," + KEY_CASHIER + " TEXT,"
                 + KEY_CHECKNUM + " TEXT," + KEY_ORDERNUM + " INTEGER)";
+
+
 
         db.execSQL(CREATE_LOGIN_TABLE);
         db.execSQL(CREATE_RECEIPT_TABLE);
@@ -140,7 +142,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     }
 
 
-    public void addReceiptLite(String id, String receipt_id, String store_name, String store_street,
+    public void addReceiptLite(String receipt_id, String store_name, String store_street,
                            String store_city_state, String store_phone, String store_website,
                            String store_category, String here_go, String card_type,
                            String card_num, String payment_method, String subtotal,
@@ -150,7 +152,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID, id);
         values.put(KEY_RECEIPTID, receipt_id);
         values.put(KEY_STORENAME, store_name);
         values.put(KEY_STORESTREET, store_street);

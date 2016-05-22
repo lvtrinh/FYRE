@@ -9,7 +9,7 @@
     {"name": "Chips & Guac", "itemDesc": null, "price": "3.30", "itemNum": null, "quantity": null, "taxType": null},
     {"name": "Chicken Bowl", "itemDesc": null, "price": "6.70", "itemNum": null, "quantity": null, "taxType": null}
   ],
-  "hereGo": "Go",
+  "hereGo": "1",
   "cardType": "Amex",
   "cardNum": "1023",
   "paymentMethod": "Swipe",

@@ -36,21 +36,15 @@ public class ReceiptActivity extends Activity {
     private SQLiteHandler db;
     int receiptId;
 
-    public ReceiptActivity() { }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Progress dialog
+    public ReceiptActivity(SQLiteHandler database, SessionManager currSession) {
         //pDialog = new ProgressDialog(this);
         //pDialog.setCancelable(false);
 
         // Session manager
-        //session = new SessionManager(getApplicationContext());
+        session = currSession;
 
         // SQLite database handler
-        //db = new SQLiteHandler(getApplicationContext());
+        db = database;
     }
 
 
@@ -79,11 +73,29 @@ public class ReceiptActivity extends Activity {
                         Log.d("SUCCESS", "Receipt was succesfully added.");
 
                         //Get the MySQL receipt id
-                        //JSONObject receipt = jObj.getJSONObject("receipt");
-                        //int id = receipt.getInt("receiptId");
-                        //setReceiptId(id);
-                        //System.out.println(getReceiptId());
-                        //System.out.println("The receipt was inserted at index" + String.valueOf(receipt.getInt("receiptId")));
+                        JSONObject receipt = jObj.getJSONObject("receipt");
+                        String id = receipt.getString("receiptId");
+                        String storeName = receipt.getString("storeName");
+                        String storeStreet = receipt.getString("storeStreet");
+                        String storeCityState = receipt.getString("storeCityState");
+                        String storePhone = receipt.getString("storePhone");
+                        String storeWebsite = receipt.getString("storeWebsite");
+                        String storeCategory = receipt.getString("storeCategory");
+                        String hereGo = receipt.getString("hereGo");
+                        String cardType = receipt.getString("cardType");
+                        String cardNum = receipt.getString("cardNum");
+                        String subtotal = receipt.getString("subtotal");
+                        String tax = receipt.getString("tax");
+                        String totalPrice = receipt.getString("totalPrice");
+                        String paymentMethod = receipt.getString("paymentMethod");
+                        String date = receipt.getString("date");
+                        String time = receipt.getString("time");
+                        String cashier = receipt.getString("cashier");
+                        String checkNumber = receipt.getString("checkNumber");
+                        String orderNumber = receipt.getString("orderNumber");
+
+                        db.addReceiptLite(id, storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, hereGo, cardType, cardNum, paymentMethod, subtotal, tax, totalPrice, date, time, cashier, checkNumber, orderNumber);
+                        System.out.println("On response receipt was added!");
                     } else {
 
                         // Error occurred in registration. Get the error

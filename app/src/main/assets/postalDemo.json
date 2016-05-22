@@ -9,7 +9,7 @@
   {"name": "101-10019", "itemDesc": "LARGE MAILING TUBE 3 FT ", "price": "2.89", "itemNum": null, "quantity": "1", "taxType": null},
     {"name": "101-10021", "itemDesc": "BOOK OF 10 STAMPS", "price": "6.11", "itemNum": null, "quantity": "1", "taxType": null}
   ],
-  "hereGo": null,
+  "hereGo": "0",
   "cardType": null,
   "cardNum": null,
   "paymentMethod": null,

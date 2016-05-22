@@ -8,13 +8,13 @@
   "itemList": [
     {"name": "16OZ Caramel", "itemDesc": null, "price": "4.75", "itemNum": null, "quantity": "1", "taxType": null}
   ],
-  "hereGo": null,
+  "hereGo": "1",
   "cardType": "Visa",
   "cardNum": "0347",
-  "paymentMethod": null,
+  "paymentMethod": "Android Pay",
   "cashBack": "0.00",
   "subtotal": "4.75",
-  "tax": null,
+  "tax": "0.00",
   "totalPrice": "4.75",
   "date": "Mar13' 16",
   "time": "05:25PM",
