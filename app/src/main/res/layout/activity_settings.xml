@@ -60,12 +60,8 @@
         android:layout_marginTop="70dp"
         android:layout_marginBottom="10dp"
         android:background="#FFFFFF"
-<<<<<<< HEAD
         android:padding="10dp"
         />
-=======
-        android:padding="10dp" />
->>>>>>> 9c14474c42934a1ac73079b69ad8c0991499af35
 
     <Button
         android:layout_width="wrap_content"
@@ -77,12 +73,8 @@
         android:fontFamily="sans-serif bold"
         android:background="#FFFFFF"
         android:padding="10dp"
-<<<<<<< HEAD
         android:layout_marginBottom="10dp"
         />
-=======
-        android:layout_marginBottom="10dp" />
->>>>>>> 9c14474c42934a1ac73079b69ad8c0991499af35
 
     <Button
         android:layout_width="wrap_content"
@@ -93,12 +85,8 @@
         android:textSize="20dp"
         android:fontFamily="sans-serif bold"
         android:background="#FFFFFF"
-<<<<<<< HEAD
         android:padding="10dp"
         />
-=======
-        android:padding="10dp" />
->>>>>>> 9c14474c42934a1ac73079b69ad8c0991499af35
 
     <!-- Logout Button -->
     <Button
