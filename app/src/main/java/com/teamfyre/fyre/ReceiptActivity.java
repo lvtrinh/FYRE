@@ -79,11 +79,11 @@ public class ReceiptActivity extends Activity {
                         Log.d("SUCCESS", "Receipt was succesfully added.");
 
                         //Get the MySQL receipt id
-                        JSONObject receipt = jObj.getJSONObject("receipt");
-                        int id = receipt.getInt("receiptId");
-                        setReceiptId(id);
-                        System.out.println(getReceiptId());
-                        System.out.println("The receipt was inserted at index" + String.valueOf(receipt.getInt("receiptId")));
+                        //JSONObject receipt = jObj.getJSONObject("receipt");
+                        //int id = receipt.getInt("receiptId");
+                        //setReceiptId(id);
+                        //System.out.println(getReceiptId());
+                        //System.out.println("The receipt was inserted at index" + String.valueOf(receipt.getInt("receiptId")));
                     } else {
 
                         // Error occurred in registration. Get the error
@@ -163,6 +163,7 @@ public class ReceiptActivity extends Activity {
     public void addItem(ReceiptItem item) {
         // Tag used to cancel the request
         String tag_string_req = "req_additem";
+
         final int id = this.getReceiptId();
         final String name = item.getName();
         final String itemDesc = item.getItemDesc();

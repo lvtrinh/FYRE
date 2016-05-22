@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -112,6 +113,7 @@ public class MainActivity extends AppCompatActivity
 
         // Fetching user details from SQLite
         HashMap<String, String> user = db.getUserDetails();
+        HashMap<String,String> receipt = db.getReceiptDetails();
 
         String name = user.get("name");
         String email = user.get("email");
@@ -150,8 +152,11 @@ public class MainActivity extends AppCompatActivity
         ArrayList<ReceiptItem> itemList = testReceipt.getItemList();
 
         ReceiptActivity add = new ReceiptActivity();
+        int receiptId = 144;
         add.addReceipt(userId, storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, hereGo, cardType, cardNum, paymentMethod, subtotal, tax, totalPrice, date, time, cashier, checkNumber, orderNumber);
+        db.addReceiptLite(Integer.toString(userId), Integer.toString(receiptId), storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, Integer.toString(hereGo), cardType, Integer.toString(cardNum), paymentMethod, subtotal.toString(), tax.toString(), totalPrice.toString(), date, time, cashier, checkNumber, Integer.toString(orderNumber));
 
+        System.out.println("HERE:" + receipt.get("store_category"));
         for (int j = 0; j < itemList.size(); j++) {
             add.addItem(itemList.get(j));
         }
