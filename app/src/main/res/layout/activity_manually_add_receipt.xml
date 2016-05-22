@@ -48,39 +48,47 @@
 
     </android.support.v7.widget.CardView>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/store"
-        android:layout_gravity="center_horizontal"
-        android:hint="Store Name"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
-        android:text="" />
 
-    <EditText
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="date"
-        android:ems="10"
-        android:id="@+id/date"
-        android:layout_gravity="center_horizontal"
-        android:hint="Date"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:text="" />
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp" >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType= "text"
+            android:id="@+id/store"
+            android:hint="Store Name" />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/price"
-        android:layout_gravity="center_horizontal"
-        android:hint="Price"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        android:text="" />
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp" >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType= "date"
+            android:id="@+id/date"
+            android:hint="Date" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp" >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType= "numberDecimal"
+            android:id="@+id/price"
+            android:hint="Price" />
+    </android.support.design.widget.TextInputLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -90,7 +98,7 @@
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/imageButton"
+            android:id="@+id/image_button"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
