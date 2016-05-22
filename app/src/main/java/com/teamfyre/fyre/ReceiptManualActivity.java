@@ -136,7 +136,7 @@ public class ReceiptManualActivity extends Activity {
                     receipt.setTotalPrice(price);
 
                     Toast.makeText(getApplicationContext(),
-                            "Saved receipt",
+                            "Function not yet implemented",
                             Toast.LENGTH_LONG).show();
                 }
 
