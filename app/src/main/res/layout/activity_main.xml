@@ -7,7 +7,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/background"
     tools:openDrawer="start">
 
     <!-- Modifying the app bar? see app/layout/app_bar_main.xml -->
