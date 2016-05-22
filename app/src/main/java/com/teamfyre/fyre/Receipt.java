@@ -222,7 +222,7 @@ public class Receipt implements Parcelable{
             dateTime = null;
             return;
         }
-        String[] dateArrTmp = date.toString().split("/");
+        String[] dateArrTmp = date.toString().split("-");
         int[] dateArr = new int[dateArrTmp.length];
 
         for (int i = 0; i < dateArrTmp.length; i++) {
