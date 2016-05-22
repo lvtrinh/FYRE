@@ -111,6 +111,18 @@ public class ReceiptManualActivity extends Activity {
                 String date = inputDate.getText().toString().trim();
                 String price = inputPrice.getText().toString().trim();
 
+                // fixes input for price
+                boolean decimalFound = false;
+                for (int x = 0; x < price.length(); x++) {
+                    if (price.charAt(x) == '.') {
+                        decimalFound = true;
+                    }
+                }
+
+                if (!decimalFound) {
+                    price += ".00";
+                }
+
                 // user properly added information, begin receipt addition process
                 if (!store.isEmpty() && !date.isEmpty() && !price.isEmpty()) {
                     // hides keyboard after user entry complete
