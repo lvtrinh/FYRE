@@ -18,7 +18,10 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/cv" >
+        android:id="@+id/cv"
+        android:paddingBottom="0sp"
+        android:onClick="onCardClicked"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -51,7 +54,8 @@
                 android:id="@+id/store_price"
                 android:layout_alignParentRight="true"
                 android:textSize="20sp"
-                android:hint="$10.00"
+                android:text="$10.00"
+                android:textColor="@color/price"
                 android:layout_centerInParent="true" />
 
         </RelativeLayout>
@@ -100,7 +104,8 @@
                 android:id="@+id/store_price2"
                 android:layout_alignParentRight="true"
                 android:textSize="20sp"
-                android:hint="$253.63"
+                android:text="$253.63"
+                android:textColor="@color/price"
                 android:layout_centerInParent="true" />
 
         </RelativeLayout>
@@ -149,7 +154,8 @@
                 android:id="@+id/store_price3"
                 android:layout_alignParentRight="true"
                 android:textSize="20sp"
-                android:hint="$2000.00"
+                android:text="$10000.00"
+                android:textColor="@color/price"
                 android:layout_centerInParent="true" />
 
         </RelativeLayout>

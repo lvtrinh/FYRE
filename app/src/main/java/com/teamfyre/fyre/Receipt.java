@@ -1,4 +1,15 @@
+/******************************************************************************
+ * Receipt.java
+ *
+ * An internal class to create the Receipt object. It has all the basic needs
+ * of a receipt.
+ *
+ * Parcelable: used to store Receipt data into an intent
+ ******************************************************************************/
 package com.teamfyre.fyre;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.*;
 import java.math.BigDecimal;
@@ -6,8 +17,10 @@ import java.math.BigDecimal;
 /**
  * An internal class to create the Receipt object. It has all the basic needs
  * of a receipt.
+ *
+ * Parcelable: used to store Receipt data into an intent
  */
-public class Receipt {
+public class Receipt implements Parcelable{
 
     private String storeName;
     private String storeStreet;
@@ -16,9 +29,9 @@ public class Receipt {
     private String storeWebsite;
     private String storeCategory;     // maybe use an int instead?
     private ArrayList<ReceiptItem> itemList;
-    private String hereGo; // should be boolean?
+    private Integer hereGo; // should be boolean?
     private String cardType;
-    private String cardNum;
+    private Integer cardNum;
     private String paymentMethod;
     private BigDecimal subtotal;
     private BigDecimal tax;
@@ -26,11 +39,61 @@ public class Receipt {
     private BigDecimal cashBack;
     private GregorianCalendar dateTime;
     private String cashier;
-    private String checkNumber;
-    private int orderNumber;
-    private boolean starred = false;
-    private String memo = "";
+    private String checkNumber; //Are we changing this type in the database?
+    private Integer orderNumber;
+    private boolean starred;
+    private String memo;
 
+    /**************************************************************************
+     * Receipt()
+     *
+     * Empty constructor. If you use this, don't forget to fill out some fields!
+     * (Or don't. Not like I care or anything.)
+     **************************************************************************/
+    public Receipt() { }
+
+    // constructor to construct Receipt from Parcel
+    // FIFO
+
+    /**************************************************************************
+     * Receipt()
+     *
+     * This constructor takes in a Parcel containing the receipt's data and
+     * "remakes" the receipt.
+     *
+     * This should only be used when a Receipt has been parceled (i.e. when we
+     * pass it into an Intent and want to get it back).
+     *
+     * @param in The Parcel with the receipt's data
+     **************************************************************************/
+    protected Receipt(Parcel in) {
+        storeName = in.readString();
+        storeStreet = in.readString();
+        storeCityState = in.readString();
+        storePhone = in.readString();
+        storeWebsite = in.readString();
+        storeCategory = in.readString();
+        if (in.readByte() == 0x01) {
+            itemList = new ArrayList<>();
+            in.readList(itemList, ReceiptItem.class.getClassLoader());
+        } else {
+            itemList = null;
+        }
+        hereGo = in.readInt();
+        cardType = in.readString();
+        cardNum = in.readInt();
+        paymentMethod = in.readString();
+        subtotal = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
+        tax = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
+        totalPrice = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
+        cashBack = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
+        dateTime = (GregorianCalendar) in.readValue(GregorianCalendar.class.getClassLoader());
+        cashier = in.readString();
+        checkNumber = in.readString();
+        orderNumber = in.readInt();
+        starred = in.readByte() != 0x00;
+        memo = in.readString();
+    }
 
     // Setters
     public void setStoreName(Object name) {
@@ -90,7 +153,7 @@ public class Receipt {
             hereGo = null;
             return;
         }
-        hereGo = go.toString();
+        hereGo = Integer.parseInt(go.toString());
     }
 
     public void setCardType(Object type) {
@@ -106,7 +169,7 @@ public class Receipt {
             cardNum = null;
             return;
         }
-        cardNum = num.toString();
+        cardNum = Integer.parseInt(num.toString());
     }
 
     public void setPaymentMethod(Object meth) {
@@ -244,11 +307,11 @@ public class Receipt {
 
     public ArrayList<ReceiptItem> getItemList() { return this.itemList; }
 
-    public String getHereGo() { return this.hereGo; }
+    public Integer getHereGo() { return this.hereGo; }
 
     public String getCardType() { return this.cardType; }
 
-    public String getCardNum() { return this.cardNum; }
+    public Integer getCardNum() { return this.cardNum; }
 
     public String getPaymentMethod() { return this.paymentMethod; }
 
@@ -266,11 +329,21 @@ public class Receipt {
 
     public String getCheckNumber() { return this.checkNumber; }
 
-    public int getOrderNumber() {return this.orderNumber; }
+    public Integer getOrderNumber() {return this.orderNumber; }
+
+    public String getDate() {
+        return this.dateTime.get(Calendar.YEAR) + "-" + this.dateTime.get(Calendar.MONTH) + "-" + this.dateTime.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public String getTime() {
+        return this.dateTime.get(Calendar.HOUR_OF_DAY) + ":" + this.dateTime.get(Calendar.MINUTE);
+    }
 
     public boolean getStarred() { return this.starred; }
 
     public String getMemo() { return this.memo; }
+
+
 
     public void printReceipt() {
         System.out.println("Store Name: " + this.storeName);
@@ -290,6 +363,7 @@ public class Receipt {
         System.out.println("Subtotal: " + this.subtotal);
         System.out.println("Tax: " + this.tax);
         System.out.println("Total: " + this.totalPrice);
+        System.out.println("Cash back: " + this.cashBack);
         printDateTime();
         System.out.println("Cashier: " + this.cashier);
         System.out.println("Check Number: " + this.checkNumber);
@@ -302,8 +376,69 @@ public class Receipt {
         System.out.println(this.dateTime.get(Calendar.HOUR_OF_DAY) + ":" + this.dateTime.get(Calendar.MINUTE));
     }
 
-    public String getDate() {
-        if (this.dateTime == null) return null;
-        return (this.dateTime.get(Calendar.MONTH) + "/" + this.dateTime.get(Calendar.DAY_OF_MONTH) + "/" + this.dateTime.get(Calendar.YEAR));
+
+    // Parcel stuff
+    //
+
+    // ignore this, hardly ever used
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    // writes contents of Receipt into Parcel
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(storeName);
+        dest.writeString(storeStreet);
+        dest.writeString(storeCityState);
+        dest.writeString(storePhone);
+        dest.writeString(storeWebsite);
+        dest.writeString(storeCategory);
+        if (itemList == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(itemList);
+        }
+        dest.writeInt(hereGo);
+        dest.writeString(cardType);
+        dest.writeInt(cardNum);
+        dest.writeString(paymentMethod);
+        dest.writeValue(subtotal);
+        dest.writeValue(tax);
+        dest.writeValue(totalPrice);
+        dest.writeValue(cashBack);
+        dest.writeValue(dateTime);
+        dest.writeString(cashier);
+        dest.writeString(checkNumber);
+        dest.writeInt(orderNumber);
+        dest.writeByte((byte) (starred ? 0x01 : 0x00));
+        dest.writeString(memo);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Receipt> CREATOR = new Parcelable.Creator<Receipt>() {
+        @Override
+        public Receipt createFromParcel(Parcel in) {
+            return new Receipt(in);
+        }
+
+        @Override
+        public Receipt[] newArray(int size) {
+            return new Receipt[size];
+        }
+    };
+
+    public int getColumnCount() {
+        int columnCount = 0;
+
+        if (itemList.get(0).getTaxType() != '\u0000') columnCount++;
+        if (itemList.get(0).getItemNum() != -1) columnCount++;
+        if (itemList.get(0).getName() != null) columnCount++;
+        if (itemList.get(0).getPrice() != null) columnCount++;
+        if (itemList.get(0).getQuantity() != -1) columnCount++;
+
+        return columnCount;
     }
 }

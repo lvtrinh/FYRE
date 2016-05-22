@@ -1,19 +1,28 @@
+/******************************************************************************
+ * ReceiptItem.java
+ *
+ * An internal class that gives each item of the receipt a home.
+ * It is the basic structure of an item that would be on a receipt.
+ *
+ * Parcelable: we'll need to parcel this too.
+ ******************************************************************************/
 package com.teamfyre.fyre;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.math.BigDecimal;
 
-/**
- * An internal class that gives each item of the receipt a home.
- * It is the basic structure of an item that would be on a receipt.
- */
-public class ReceiptItem {
+public class ReceiptItem implements Parcelable {
 
     private String name;
     private BigDecimal price;
-    private int itemNum;
+    private Integer itemNum;
     private String itemDesc;
-    private int quantity;
-    private char taxType;
+    private Integer quantity;
+    private Character taxType;
+
+    public ReceiptItem() { }
 
     public void setName(Object n) {
         if (n.toString().equals("null")) {
@@ -33,7 +42,7 @@ public class ReceiptItem {
 
     public void setItemNum(Object i) {
         if (i.toString().equals("null")) {
-            itemNum = -1; // -1 INDICATES NULL, MIGHT WANT TO USE THE INTEGER OBJECT
+            itemNum = -1; // -1 means null/not applicable
             return;
         }
         itemNum = Integer.parseInt(i.toString());
@@ -49,15 +58,18 @@ public class ReceiptItem {
 
     public void setQuantity(Object q) {
         if (q.toString().equals("null")) {
-            quantity = -1;
+            quantity = -1; // -1 means null/not applicable
             return;
         }
         quantity = Integer.parseInt(q.toString());
     }
 
+    // TODO decide which letter is best for "null"
+    // we need a non-null Character object for parceling
+    // I'm just using Z because nobody uses Z. Ever.
     public void setTaxType(Object tax) {
         if (tax.toString().equals("null")) {
-            taxType = '\u0000'; // THIS IS THE NULL CHAR
+            taxType = 'Z';
             return;
         }
         taxType = tax.toString().charAt(0);
@@ -83,7 +95,7 @@ public class ReceiptItem {
      *
      * @return the specific item number of the ReceiptItem
      */
-    public int getItemNum() { return this.itemNum; }
+    public Integer getItemNum() { return this.itemNum; }
 
     /**
      *
@@ -91,8 +103,47 @@ public class ReceiptItem {
      */
     public String getItemDesc() { return this.itemDesc; }
 
-    public char getTaxType() { return this.taxType; }
+    public Character getTaxType() { return this.taxType; }
 
-    public int getQuantity() { return quantity; }
+    public Integer getQuantity() { return quantity; }
+
+    // Parcel Stuff
+    //
+    protected ReceiptItem(Parcel in) {
+        name = in.readString();
+        price = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());
+        itemNum = in.readInt();
+        itemDesc = in.readString();
+        quantity = in.readInt();
+        taxType = (char) in.readValue(char.class.getClassLoader());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeValue(price);
+        dest.writeInt(itemNum);
+        dest.writeString(itemDesc);
+        dest.writeInt(quantity);
+        dest.writeValue(taxType);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<ReceiptItem> CREATOR = new Parcelable.Creator<ReceiptItem>() {
+        @Override
+        public ReceiptItem createFromParcel(Parcel in) {
+            return new ReceiptItem(in);
+        }
+
+        @Override
+        public ReceiptItem[] newArray(int size) {
+            return new ReceiptItem[size];
+        }
+    };
 
 }

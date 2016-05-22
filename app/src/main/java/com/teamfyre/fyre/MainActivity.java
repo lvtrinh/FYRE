@@ -1,3 +1,17 @@
+/******************************************************************************
+ * MainActivity.java
+ *
+ * This is the main activity, if you couldn't tell. This is the activity that
+ * the user is taken to once they log in (if they're already logged in, they
+ * go directly to this screen). This screen, by default, shows a list of the
+ * user's receipts in order from newest to oldest (X number of receipts are
+ * loaded at a time).
+ *
+ * The hamburger menu is accessible from this menu.
+ * From the hamburger menu, the user can access this page, the search page,
+ * the settings page, and TODO other things we really should finalize soon
+ *
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.app.Activity;
@@ -5,6 +19,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -26,16 +41,33 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.math.BigDecimal;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // TODO create something that can hold/display many receipts, instead of just one
-    Receipt receipt;
+    private Receipt receipt;
     private SQLiteHandler db;
     private SessionManager session;
     private String jsonString;
 
+    public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
+    public static final String DEMO_JSON_FILENAME = "baguetteBrosDemo.json";
+
+    /**************************************************************************
+     * onCreate()
+     *
+     * This function sets up the activity. It produces and populates the list
+     * of receipts, as well as enabling the hamburger menu for use.
+     *
+     * This function is called when the activity starts. For more on what this
+     * means, see:
+     * http://developer.android.com/training/basics/activity-lifecycle/starting.html
+     * (protip: ctrl/cmd-click in android studio to open the link!)
+     *
+     * @param savedInstanceState The saved instance state
+     **************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +76,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             /*
@@ -94,15 +127,45 @@ public class MainActivity extends AppCompatActivity
         // TODO put this into a variable that persists past onCreate
         // TODO and basically its own file, and thread
         Receipt testReceipt = parseJson(jsonString);
+        int userId = Integer.parseInt(user.get("id"));
+        System.out.println(userId);
+        String storeName = testReceipt.getStoreName();
+        String storeStreet = testReceipt.getStoreStreet();
+        String storeCityState = testReceipt.getStoreCityState();
+        String storePhone = testReceipt.getStorePhone();
+        String storeWebsite = testReceipt.getStoreWebsite();
+        String storeCategory = testReceipt.getStoreCategory();
+        Integer hereGo = testReceipt.getHereGo();
+        String cardType = testReceipt.getCardType();
+        int cardNum = testReceipt.getCardNum();
+        String paymentMethod = testReceipt.getPaymentMethod();
+        BigDecimal subtotal = testReceipt.getSubtotal();
+        BigDecimal tax = testReceipt.getTax();
+        BigDecimal totalPrice = testReceipt.getTotalPrice();
+        String date = testReceipt.getDate();
+        String time = testReceipt.getTime();
+        String cashier = testReceipt.getCashier();
+        String checkNumber = testReceipt.getCheckNumber();
+        int orderNumber = testReceipt.getOrderNumber();
+        ArrayList<ReceiptItem> itemList = testReceipt.getItemList();
+
+        ReceiptActivity add = new ReceiptActivity();
+        add.addReceipt(userId, storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, hereGo, cardType, cardNum, paymentMethod, subtotal, tax, totalPrice, date, time, cashier, checkNumber, orderNumber);
+
+        for (int j = 0; j < itemList.size(); j++) {
+            add.addItem(itemList.get(j));
+        }
     }
 
-    /**
-     * Takes in a json file in the form of a string to make a receipt object with all of the fields
-     * for it filled in if possible.
+    /**************************************************************************
+     * parseJson()
+     *
+     * Takes in a json file in the form of a string to make a receipt object
+     * with all of the fields for it filled in if possible.
      *
      * @param jsonString a json file in string format that goes in
      * @return Receipt - a receipt object with all the data input from a json file in it
-     */
+     **************************************************************************/
     public Receipt parseJson(String jsonString) {
         try {
             // create jsonobject
@@ -142,6 +205,8 @@ public class MainActivity extends AppCompatActivity
                 tmpReceipt.setItemDesc(arrObj.get("itemDesc"));
                 tmpReceipt.setPrice(arrObj.get("price"));
                 tmpReceipt.setItemNum(arrObj.get("itemNum"));
+                tmpReceipt.setQuantity(arrObj.get("quantity"));
+                tmpReceipt.setTaxType(arrObj.get("taxType"));
                 indivItemArr.add(tmpReceipt);
             }
 
@@ -157,14 +222,16 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    /**
+    /**************************************************************************
+     * loadJsonLocal()
+     *
      * Reads json formatted data into a string from a local assets file
      * @return String - json data
-     */
+     **************************************************************************/
     public String loadJsonLocal() {
         String json = null;
         try {
-            InputStream is = getAssets().open("baguetteBrosDemo.json");
+            InputStream is = getAssets().open(DEMO_JSON_FILENAME);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -213,6 +280,23 @@ public class MainActivity extends AppCompatActivity
     // TODO make a button or something (temporary) to get into detailed receipt
     // TODO make a "detailed receipt" activity (this is probably gonna be permanent
 
+    /**************************************************************************
+     * onCardClicked()
+     *
+     * This method opens up the receipt's info (ReceiptDetailActivity.java).
+     *
+     * This method is called when the CardView is clicked
+     * (via xml:onClick)
+     * Don't use this method on non-CardViews.
+     *
+     * @param view The CardView that was clicked
+     **************************************************************************/
+    public void onCardClicked(View view) {
+        Intent detailIntent = new Intent(this, ReceiptDetailActivity.class);
+        detailIntent.putExtra(EXTRA_RECEIPT, receipt);
+        startActivity(detailIntent);
+    }
+
     /*
         TODO: fill in actions once we implement them (start activity, most likely)
         TODO: remove @SuppressWarnings once everything's implemented
@@ -242,6 +326,12 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**************************************************************************
+     * logoutUser()
+     *
+     * Logs out the user. Also deletes the database data, because we shouldn't
+     * be keeping that if the user logged out, right?
+     **************************************************************************/
     private void logoutUser() {
         session.setLogin(false);
 
