@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity
 
         // Fetching user details from SQLite
         HashMap<String, String> user = db.getUserDetails();
-        //HashMap<String,String> receipt = db.getReceiptDetails();
 
         String name = user.get("name");
         String email = user.get("email");
@@ -152,22 +151,12 @@ public class MainActivity extends AppCompatActivity
         int orderNumber = testReceipt.getOrderNumber();
         ArrayList<ReceiptItem> itemList = testReceipt.getItemList();
 
-        ReceiptActivity add = new ReceiptActivity(db, session);
+        //ReceiptActivity add = new ReceiptActivity(db, session);
         int receiptId = 144;
-        add.addReceipt(userId, storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, hereGo, cardType, cardNum, paymentMethod, subtotal, tax, totalPrice, date, time, cashier, checkNumber, orderNumber);
-        //db.addReceiptLite(Integer.toString(userId), Integer.toString(receiptId), storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, Integer.toString(hereGo), cardType, Integer.toString(cardNum), paymentMethod, subtotal.toString(), tax.toString(), totalPrice.toString(), date, time, cashier, checkNumber, Integer.toString(orderNumber));
+        //add.addReceipt(userId, testReceipt);
 
-        /*Iterator it = receipt.entrySet().iterator();
-        while (it.hasNext()) {
-            HashMap.Entry pair = (HashMap.Entry)it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
-            //it.remove();
-        }
-
-        System.out.println("HERE:" + receipt.get("store_name"));*/
-        for (int j = 0; j < itemList.size(); j++) {
-            add.addItem(itemList.get(j));
-        }
+        HashMap<String,String> receipt = db.getReceiptDetails();
+        HashMap<String,String> items = db.getReceiptItemDetails();
     }
 
     /**************************************************************************

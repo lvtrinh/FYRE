@@ -48,9 +48,7 @@ public class ReceiptActivity extends Activity {
     }
 
 
-    public void addReceipt(final int userId, final String storeName, final String storeStreet, final String storeCityState, final String storePhone, final String storeWebsite, final String storeCategory,
-                            final Integer hereGo, final String cardType, final Integer cardNum, final String paymentMethod, final BigDecimal subtotal, final BigDecimal tax, final BigDecimal totalPrice,
-                            final String date, final String time, final String cashier, final String checkNumber, final Integer orderNumber) {
+    public void addReceipt(final int userId, final Receipt r) {
         // Tag used to cancel the request
         String tag_string_req = "req_addreceipt";
 
@@ -75,26 +73,12 @@ public class ReceiptActivity extends Activity {
                         //Get the MySQL receipt id
                         JSONObject receipt = jObj.getJSONObject("receipt");
                         String id = receipt.getString("receiptId");
-                        String storeName = receipt.getString("storeName");
-                        String storeStreet = receipt.getString("storeStreet");
-                        String storeCityState = receipt.getString("storeCityState");
-                        String storePhone = receipt.getString("storePhone");
-                        String storeWebsite = receipt.getString("storeWebsite");
-                        String storeCategory = receipt.getString("storeCategory");
-                        String hereGo = receipt.getString("hereGo");
-                        String cardType = receipt.getString("cardType");
-                        String cardNum = receipt.getString("cardNum");
-                        String subtotal = receipt.getString("subtotal");
-                        String tax = receipt.getString("tax");
-                        String totalPrice = receipt.getString("totalPrice");
-                        String paymentMethod = receipt.getString("paymentMethod");
-                        String date = receipt.getString("date");
-                        String time = receipt.getString("time");
-                        String cashier = receipt.getString("cashier");
-                        String checkNumber = receipt.getString("checkNumber");
-                        String orderNumber = receipt.getString("orderNumber");
 
-                        db.addReceiptLite(id, storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, hereGo, cardType, cardNum, paymentMethod, subtotal, tax, totalPrice, date, time, cashier, checkNumber, orderNumber);
+
+                        db.addReceiptLite(id, r);
+                        for (int i = 0; i < r.getItemList().size(); i++) {
+                            addItem(r.getItemList().get(i), Integer.parseInt(id));
+                        }
                         System.out.println("On response receipt was added!");
                     } else {
 
@@ -124,24 +108,24 @@ public class ReceiptActivity extends Activity {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", String.valueOf(userId));
-                params.put("storeName", storeName);
-                params.put("storeStreet", storeStreet);
-                params.put("storeCityState", storeCityState);
-                params.put("storePhone", storePhone);
-                params.put("storeWebsite", storeWebsite);
-                params.put("storeCategory", storeCategory);
-                params.put("hereGo", String.valueOf(hereGo));
-                params.put("cardType", cardType);
-                params.put("cardNum", String.valueOf(cardNum));
-                params.put("paymentMethod", paymentMethod);
-                params.put("subtotal", String.valueOf(subtotal));
-                params.put("tax", String.valueOf(tax));
-                params.put("totalPrice", String.valueOf(totalPrice));
-                params.put("date", date);
-                params.put("time", time);
-                params.put("cashier", cashier);
-                params.put("checkNumber", checkNumber);
-                params.put("orderNumber", String.valueOf(orderNumber));
+                params.put("storeName", r.getStoreName());
+                params.put("storeStreet", r.getStoreStreet());
+                params.put("storeCityState", r.getStoreCityState());
+                params.put("storePhone", r.getStorePhone());
+                params.put("storeWebsite", r.getStoreWebsite());
+                params.put("storeCategory", r.getStoreCategory());
+                params.put("hereGo", String.valueOf(r.getHereGo()));
+                params.put("cardType", r.getCardType());
+                params.put("cardNum", String.valueOf(r.getCardNum()));
+                params.put("paymentMethod", r.getPaymentMethod());
+                params.put("subtotal", String.valueOf(r.getSubtotal()));
+                params.put("tax", String.valueOf(r.getTax()));
+                params.put("totalPrice", String.valueOf(r.getTotalPrice()));
+                params.put("date", r.getDate());
+                params.put("time", r.getTime());
+                params.put("cashier", r.getCashier());
+                params.put("checkNumber", r.getCheckNumber());
+                params.put("orderNumber", String.valueOf(r.getOrderNumber()));
 
                 Iterator it = params.entrySet().iterator();
                 while (it.hasNext()) {
@@ -154,17 +138,6 @@ public class ReceiptActivity extends Activity {
                 return params;
             }
 
-            /*private Map<String, String> checkParams(Map<String, String> map){
-                Iterator it = map.entrySet().iterator();
-                while (it.hasNext()) {
-                    Map.Entry pair = (Map.Entry)it.next();
-                    if(pair.getValue()==null){
-                        map.put((pair.getKey()).toString(), "");
-                    }
-                }
-                return map;
-            }*/
-
         };
 
         // Adding request to request queue
@@ -172,11 +145,11 @@ public class ReceiptActivity extends Activity {
     }
 
 
-    public void addItem(ReceiptItem item) {
+    public void addItem(final ReceiptItem item, final int receiptId) {
         // Tag used to cancel the request
         String tag_string_req = "req_additem";
 
-        final int id = this.getReceiptId();
+        final int id = receiptId;
         final String name = item.getName();
         final String itemDesc = item.getItemDesc();
         final BigDecimal price = item.getPrice();
@@ -208,6 +181,12 @@ public class ReceiptActivity extends Activity {
                     boolean error = jObj.getBoolean("error");
                     if (!error) {
                         Log.d("SUCCESS", "Item was succesfully added.");
+
+                        JSONObject receipt = jObj.getJSONObject("item");
+                        String itemId = receipt.getString("itemId");
+
+                        // TODO ADD FUCKING SQLLITE SHIT HERE FUCK U
+                        db.addReceiptItem(String.valueOf(receiptId), itemId, item);
                     } else {
 
                         // Error occurred in registration. Get the error
