@@ -81,15 +81,12 @@ public class MainActivity extends AppCompatActivity
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
+        // manual addition for a receipt
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            /*
-                TODO: change code within onClick() to make smaller action buttons
-
-             */
            public void onClick(View view) {
-                Snackbar.make(view, "TODO: add smaller action buttons", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, ReceiptManualActivity.class);
+                startActivity(intent);
             }
         });
 
