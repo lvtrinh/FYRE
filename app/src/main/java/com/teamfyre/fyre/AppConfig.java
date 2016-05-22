@@ -12,4 +12,10 @@ public class AppConfig {
 
     // Server add items url
     public static String URL_ADDITEM = "http://13.93.202.168/android_login_api/additem.php";
+
+    // Server get receipts url
+    public static String URL_GETRECEIPTS = "http://13.93.202.168/android_login_api/getreceipt.php";
+
+    // Server get items url
+    public static String URL_GETITEMS = "http://13.93.202.168/android_login_api/getitems.php";
 }
