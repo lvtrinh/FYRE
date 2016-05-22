@@ -1,5 +1,6 @@
 package com.teamfyre.fyre;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,8 +36,8 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.RViewHol
 
     @Override
     public RViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.receipt_card_layout, parent, false);
+        Context context = parent.getContext();
+        View itemView = View.inflate(context, R.layout.receipt_card_layout, null);
         return new RViewHolder(itemView);
     }
 

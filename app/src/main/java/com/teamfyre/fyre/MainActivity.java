@@ -19,6 +19,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -44,6 +46,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.math.BigDecimal;
 import java.util.Iterator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,6 +56,10 @@ public class MainActivity extends AppCompatActivity
     private SQLiteHandler db;
     private SessionManager session;
     private String jsonString;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
     public static final String DEMO_JSON_FILENAME = "baguetteBrosDemo.json";
@@ -126,7 +133,20 @@ public class MainActivity extends AppCompatActivity
         headerMain.setText(name);
         headerSub.setText(email);
 
-        jsonString = loadJsonLocal();
+        /////////////////////////////////////////////////////
+        //  recycler view stuff
+        /////////////////////////////////////////////////////
+        mRecyclerView = (RecyclerView) findViewById(R.id.receipts_recycler_view);
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        List<Receipt> demoList = generateDemoList();
+
+        mAdapter = new ReceiptAdapter(demoList);
+        mRecyclerView.setAdapter(mAdapter);
+
+        jsonString = loadJsonLocal(DEMO_JSON_FILENAME);
         // TODO put this into a variable that persists past onCreate
         // TODO and basically its own file, and thread
         Receipt testReceipt = parseJson(jsonString);
@@ -241,10 +261,10 @@ public class MainActivity extends AppCompatActivity
      * Reads json formatted data into a string from a local assets file
      * @return String - json data
      **************************************************************************/
-    public String loadJsonLocal() {
+    public String loadJsonLocal(String rawJSON) {
         String json = null;
         try {
-            InputStream is = getAssets().open(DEMO_JSON_FILENAME);
+            InputStream is = getAssets().open(rawJSON);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -255,6 +275,42 @@ public class MainActivity extends AppCompatActivity
             return null;
         }
         return json;
+    }
+
+    private List<Receipt> generateDemoList(){
+        List<Receipt> recList = new ArrayList<>();
+
+        Receipt demo1 = parseJson(loadJsonLocal(DEMO_JSON_FILENAME));
+        recList.add(demo1);
+
+        Receipt demo2 = parseJson(loadJsonLocal("chipotleDemo.json"));
+        recList.add(demo2);
+
+        Receipt demo3 = parseJson(loadJsonLocal("popeyesDemo.json"));
+        recList.add(demo3);
+
+        Receipt demo4 = parseJson(loadJsonLocal("dlush.json"));
+        recList.add(demo4);
+
+        Receipt demo5 = parseJson(loadJsonLocal("primosDemo.json"));
+        recList.add(demo5);
+
+        Receipt demo6 = parseJson(loadJsonLocal("innoutburger.json"));
+        recList.add(demo6);
+
+        Receipt demo7 = parseJson(loadJsonLocal("costcoDemo.json"));
+        recList.add(demo7);
+
+        Receipt demo8 = parseJson(loadJsonLocal("pandaexpress.json"));
+        recList.add(demo8);
+
+        Receipt demo9 = parseJson(loadJsonLocal("safewayDemo.json"));
+        recList.add(demo9);
+
+        Receipt demo10 = parseJson(loadJsonLocal("tastyGardenDemo.json"));
+        recList.add(demo10);
+
+        return recList;
     }
 
     @Override
