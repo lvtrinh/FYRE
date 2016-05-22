@@ -14,6 +14,7 @@
   "cardType": null,
   "cardNum": "7457",
   "paymentMethod": null,
+  "cashBack": "0.00",
   "subtotal": "48.80",
   "tax": "3.90",
   "totalPrice": "52.70",

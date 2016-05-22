@@ -17,6 +17,7 @@
   "cardType": null,
   "cardNum": "1922",
   "paymentMethod": "DEBIT",
+  "cashBack": "0.00",
   "subtotal": "12.43",
   "tax": "0.00",
   "totalPrice": "12.43",

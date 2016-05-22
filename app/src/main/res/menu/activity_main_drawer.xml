@@ -3,7 +3,8 @@
 
     <!-- one item within this group will appear "selected" when we're in its page -->
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_receipt"
+        <item
+            android:id="@+id/nav_receipt"
             android:icon="@drawable/ic_menu_receipt"
             android:title="@string/nav_label_receipt" />
         <item

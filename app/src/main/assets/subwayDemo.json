@@ -13,6 +13,7 @@
   "cardType": "Mastercard",
   "cardNum": "1634",
   "paymentMethod": "Swipe",
+  "cashBack": "0.00",
   "subtotal": "9.25",
   "tax": "1.00",
   "totalPrice": "10.25",

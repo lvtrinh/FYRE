@@ -12,6 +12,7 @@
   "cardType": null,
   "cardNum": null,
   "paymentMethod": "Dining Dollars",
+  "cashBack": "0.00",
   "subtotal": "18.00",
   "tax": null,
   "totalPrice": "18.00",
