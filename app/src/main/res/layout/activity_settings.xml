@@ -15,13 +15,20 @@
         android:layout_margin="10dp" />
 
     <TextView
-        android:layout_width="266dp"
-        android:layout_height="40dp"
+        android:layout_width="286dp"
+        android:layout_height="wrap_content"
         android:text="New Text"
         android:id="@+id/EMAIL"
-        android:layout_gravity="center_horizontal"
         android:textSize="20dp"
-        android:textStyle="bold" />
+        android:layout_margin="10dp" />
+
+    <TextView
+        android:layout_width="238dp"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView"
+        android:textSize="20dp"
+        android:layout_margin="10dp" />
 
     <Button
         android:id="@+id/btn"
