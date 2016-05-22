@@ -1,6 +1,6 @@
 {
   "storeName": "UC San Diego Bookstore",
-  "storeStreet": "9500 Gilman Dr,
+  "storeStreet": "9500 Gilman Dr,",
   "storeCityState": "La Jolla, CA 92093",
   "storePhone": "858-534-7323",
   "storeWebsite": "www.ucsandiegobookstore.com",
@@ -8,7 +8,7 @@
   "itemList": [
     {"name": "Scissors 3M Precision", "itemDesc": null, "price": "5.99", "itemNum": null, "quantity": null, "taxType": null}
   ],
-  "hereGo": null,
+  "hereGo": "0",
   "cardType": "Visa",
   "cardNum": "0347",
   "paymentMethod": "Swipe",

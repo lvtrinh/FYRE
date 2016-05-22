@@ -10,7 +10,7 @@
     {"name": "Stone IPA Pint", "itemDesc": null, "price": "5.56", "itemNum": null, "quantity": null, "taxType": null},
 
   ],
-  "hereGo": "Here",
+  "hereGo": "0",
   "cardType": "Visa",
   "cardNum": "1234",
   "paymentMethod": "Swipe",

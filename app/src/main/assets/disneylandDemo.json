@@ -8,10 +8,10 @@
   "itemList": [
     {"name": "Dole Whip", "itemDesc": null, "price": "4.19", "itemNum": null, "quantity": "2", "taxType": null}
   ],
-  "hereGo": null,
+  "hereGo": "1",
   "cardType": "American Express",
   "cardNum": "1018",
-  "paymentMethod": null,
+  "paymentMethod": "Swipe",
   "cashBack": "0.00",
   "subtotal": "8.38",
   "tax": "0.67",

@@ -10,7 +10,7 @@
     {"name": "Beef and Egg Chow FUN", "itemDesc": "滑蛋牛肉炒河", "price": "10.50", "itemNum": null, "quantity": "1", "taxType": null},
     {"name": "Beef Chow Fun w/ Roasted Grlc", "itemDesc": "避風塘干炒牛河", "price": "10.50", "itemNum": null, "quantity": "1", "taxType": null}
   ],
-  "hereGo": null,
+  "hereGo": "1",
   "cardType": null,
   "cardNum": null,
   "paymentMethod": null,
