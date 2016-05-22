@@ -8,7 +8,7 @@
   "itemList": [
     {"name": "Chicken Katsu Bowl", "itemDesc": "10% (Emp) Disc", "price": "4.73", "itemNum": null, "quantity": "1", "taxType": null}
   ],
-  "hereGo": "Go",
+  "hereGo": "1",
   "cardType": null,
   "cardNum": null,
   "paymentMethod": "Cash",

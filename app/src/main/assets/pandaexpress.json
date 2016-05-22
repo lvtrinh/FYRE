@@ -8,7 +8,7 @@
   "itemList": [
     {"name": "1 Plate", "itemDesc": "CHOW MEIN-1/2 WHITE FRIED RICE-1/2 ORANGE CKN BEIJING BEEF", "price": "6.80", "itemNum": null, "quantity": null, "taxType": null}
   ],
-  "hereGo": "TO GO",
+  "hereGo": "1",
   "cardType": "Visa",
   "cardNum": "0347",
   "paymentMethod": null,
