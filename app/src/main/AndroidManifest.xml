@@ -33,6 +33,10 @@
             android:label="Settings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".ReceiptManualActivity"
+            android:label="ReceiptManual"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ReceiptDetailActivity"
             android:label="@string/title_activity_receipt_detail"
             android:parentActivityName=".MainActivity"

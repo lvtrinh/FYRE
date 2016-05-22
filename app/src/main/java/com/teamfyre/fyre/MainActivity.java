@@ -84,8 +84,11 @@ public class MainActivity extends AppCompatActivity
 
              */
            public void onClick(View view) {
-                Snackbar.make(view, "TODO: add smaller action buttons", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "TODO: add smaller action buttons", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
+
+                Intent intent = new Intent(MainActivity.this, ReceiptManualActivity.class);
+                startActivity(intent);
             }
         });
 
