@@ -18,7 +18,7 @@
             android:layout_width = "175dp"
             android:layout_height= "175dp"
             android:id="@+id/logo"
-            android:src="@mipmap/ic_launcher_fyre_hd"
+            android:src="@drawable/ic_logo_fyre"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="8dp" />
 
@@ -26,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp" >
+            android:layout_marginBottom="6dp"
+            android:theme="@style/TextLabel">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,7 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp" >
+            android:layout_marginBottom="6dp"
+            android:theme="@style/TextLabel" >
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
