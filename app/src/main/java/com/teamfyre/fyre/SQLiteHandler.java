@@ -282,10 +282,10 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 if (cursor.getString(14) == null || cursor.getString(15) == null) {}
                 else currReceipt.setDateTime(cursor.getString(14), cursor.getString(15));
 
-                if (cursor.getString(15) == null) {}
+                if (cursor.getString(16) == null) {}
                 else currReceipt.setCashier(cursor.getString(16));
 
-                if (cursor.getString(16) == null) {}
+                if (cursor.getString(17) == null) {}
                 else currReceipt.setCheckNumber(cursor.getString(17));
 
                 if (cursor.getString(18) == null) {}

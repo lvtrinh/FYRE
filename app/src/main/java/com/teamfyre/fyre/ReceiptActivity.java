@@ -31,7 +31,6 @@ import java.util.Iterator;
  */
 public class ReceiptActivity extends Activity {
     private static final String TAG = ReceiptActivity.class.getSimpleName();
-    private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
     int receiptId;
@@ -76,8 +75,10 @@ public class ReceiptActivity extends Activity {
 
 
                         db.addReceiptLite(id, r);
-                        for (int i = 0; i < r.getItemList().size(); i++) {
-                            addItem(r.getItemList().get(i), Integer.parseInt(id));
+                        if (r.getItemList() != null && r.getItemList().size() != 0) {
+                            for (int i = 0; i < r.getItemList().size(); i++) {
+                                addItem(r.getItemList().get(i), Integer.parseInt(id));
+                            }
                         }
                         System.out.println("On response receipt was added!");
                     } else {
@@ -269,4 +270,3 @@ public class ReceiptActivity extends Activity {
 
 
 }
-
