@@ -187,7 +187,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         int j = -1;
         for (int i = 0; i < itemList.size(); i++) {
             j++;
-            if (itemList.get(i).getTaxType() != '\u0000') {
+            if (itemList.get(i).getTaxType() != 'Z') {
                 addTextView(String.valueOf(itemList.get(i).getTaxType()), j, 0, 1);
             }
             if (itemList.get(i).getItemNum() != -1) {

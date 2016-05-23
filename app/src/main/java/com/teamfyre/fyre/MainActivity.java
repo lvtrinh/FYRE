@@ -34,6 +34,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -145,6 +147,10 @@ public class MainActivity extends AppCompatActivity
 
         mAdapter = new ReceiptAdapter(demoList);
         mRecyclerView.setAdapter(mAdapter);
+
+        ///////////////////////////////////////////////////
+        // end recycler view stuff
+        ///////////////////////////////////////////////////
 
         jsonString = loadJsonLocal(DEMO_JSON_FILENAME);
         // TODO put this into a variable that persists past onCreate
