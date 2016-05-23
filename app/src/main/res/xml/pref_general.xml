@@ -1,11 +1,15 @@
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context=".SettingsActivity">
 
     <EditTextPreference
+        android:id="@+id/EMAIL"
         android:title="Email"
         android:summary="Modify Your Email"
         android:key="prefUserEmail"/>
 
     <EditTextPreference
+        android:id="@+id/PASSWORD"
         android:title="Password"
         android:summary="Modify Your Password"
         android:key="prefUserPassword"/>
