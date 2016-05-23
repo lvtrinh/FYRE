@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:inputType= "date"
             android:id="@+id/date"
-            android:hint="Date" />
+            android:hint="Date (mm/dd/yyyy)" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout

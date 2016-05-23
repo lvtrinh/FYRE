@@ -1,6 +1,7 @@
 package com.teamfyre.fyre;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +22,7 @@ public class ReceiptManualActivity extends Activity {
 
     private Receipt receipt;
     private SQLiteHandler db;
+    private SessionManager session;
 
     private EditText inputStore;
     private EditText inputDate;
@@ -30,7 +32,6 @@ public class ReceiptManualActivity extends Activity {
     private TextView txtPrice;
     private Button btnSaveReceipt;
     private ImageButton btnTakePicture;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,10 +50,9 @@ public class ReceiptManualActivity extends Activity {
         btnSaveReceipt = (Button) findViewById(R.id.save);
         btnTakePicture = (ImageButton) findViewById(R.id.image_button);
 
-        // gathers user ID from database
+        // Session manager
+        session = new SessionManager(getApplicationContext());
         db = new SQLiteHandler(getApplicationContext());
-        HashMap<String, String> user = db.getUserDetails();
-        String id = user.get("id");
 
         // live update for receipt details fields
         inputStore.addTextChangedListener(new TextWatcher() {
@@ -100,7 +100,7 @@ public class ReceiptManualActivity extends Activity {
                 Toast.makeText(getApplicationContext(),
                         "Function not yet implemented",
                         Toast.LENGTH_LONG).show();
-           }
+            }
         });
 
         // save button
@@ -108,7 +108,7 @@ public class ReceiptManualActivity extends Activity {
             public void onClick(View view) {
 
                 String store = inputStore.getText().toString().trim();
-                String date = inputDate.getText().toString().trim();
+                StringBuilder date = new StringBuilder(inputDate.getText().toString().trim());
                 String price = inputPrice.getText().toString().trim();
 
                 // fixes input for price
@@ -123,30 +123,65 @@ public class ReceiptManualActivity extends Activity {
                     price += ".00";
                 }
 
+                // fixes input for date
+                boolean correctDate = true;
+                int count = 0;
+
+                for (int x = 0; x < date.toString().length(); x++) {
+                    if (date.toString().charAt(x) == '/') {
+                        date.setCharAt(x, '-');
+
+                        count++;
+                    }
+
+                    else if (date.toString().charAt(x) == '-') {
+                        count++;
+                    }
+                }
+
+                System.out.println(count);
+                if (count != 2 || date.toString().charAt(0) == '-' || date.toString().charAt(0) == '/') {
+                    correctDate = false;
+                }
+
+                // user did not properly insert info, display warning
+                if (store.isEmpty() || date.toString().isEmpty() || price.isEmpty()) {
+                    Toast.makeText(getApplicationContext(),
+                            "Please fill out all fields",
+                            Toast.LENGTH_LONG).show();
+                }
+
+                // user had incorrect date format
+                else if (!correctDate) {
+                    Toast.makeText(getApplicationContext(),
+                            "Incorrect date format",
+                            Toast.LENGTH_LONG).show();
+                }
+
                 // user properly added information, begin receipt addition process
-                if (!store.isEmpty() && !date.isEmpty() && !price.isEmpty()) {
+                else {
                     // hides keyboard after user entry complete
                     InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
                     // creates receipt object from information
-                    //receipt = new Receipt();
-                    //receipt.setStoreName(store);
-                    //receipt.setDateTime(date, "00:00");
-                    //receipt.setTotalPrice(price);
+                    receipt = new Receipt();
+                    receipt.setStoreName(store);
+                    receipt.setDateTime(date.toString(), "00:00");
+                    receipt.setTotalPrice(price);
+
+                    HashMap<String, String> user = db.getUserDetails();
+                    String id = user.get("id");
+
+                    ReceiptActivity receiptActivity = new ReceiptActivity(db, session);
+                    receiptActivity.addReceipt(Integer.parseInt(id), receipt);
 
                     Toast.makeText(getApplicationContext(),
-                            "Function not yet implemented",
-                            Toast.LENGTH_LONG).show();
-                }
-
-                // user did not properly insert info, display warning
-                else {
-                    Toast.makeText(getApplicationContext(),
-                            "Please fill out all fields",
+                            "Receipt saved",
                             Toast.LENGTH_LONG).show();
                 }
             }
         });
+
     }
 }
