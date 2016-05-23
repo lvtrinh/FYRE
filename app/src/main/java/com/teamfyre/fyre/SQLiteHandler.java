@@ -3,6 +3,7 @@ package com.teamfyre.fyre;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -190,73 +191,6 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "New receipt inserted into sqlite: " + receipt);
     }
 
-    //Get receipt details from SQLite database
-    public HashMap<String, String> getReceiptDetails() {
-        HashMap<String, String> receipt = new HashMap<String, String>();
-        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        // Move to first row
-        cursor.moveToFirst();
-        if (cursor.moveToFirst()) {
-            do {
-
-
-                System.out.println("Id: " + cursor.getString(0));
-                System.out.println("Receipt Id: " + cursor.getString(1));
-                System.out.println("Store Name: " + cursor.getString(2));
-                System.out.println("Store Street: " + cursor.getString(3));
-                System.out.println("Store City State: " + cursor.getString(4));
-                System.out.println("Item Number: " + cursor.getString(5));
-                System.out.println("Quantity: " + cursor.getString(6));
-                System.out.println("Tax Type: " + cursor.getString(7));
-                System.out.println("Tax Type: " + cursor.getString(8));
-                System.out.println("Tax Type: " + cursor.getString(9));
-                System.out.println("Tax Type: " + cursor.getString(10));
-                System.out.println("Tax Type: " + cursor.getString(11));
-                System.out.println("Tax Type: " + cursor.getString(12));
-                System.out.println("Tax Type: " + cursor.getString(13));
-                System.out.println("Tax Type: " + cursor.getString(14));
-                System.out.println("Tax Type: " + cursor.getString(15));
-                System.out.println("Tax Type: " + cursor.getString(16));
-                System.out.println("Tax Type: " + cursor.getString(17));
-                System.out.println("Tax Type: " + cursor.getString(18));
-                //System.out.println("Tax Type: " + cursor.getString(19));
-            } while (cursor.moveToNext());
-        }
-        /*if (cursor.getCount() > 0) {
-            receipt.put("id", cursor.getString(0));
-            receipt.put("receipt_id", cursor.getString(1));
-            receipt.put("store_name", cursor.getString(2));
-            receipt.put("store_street", cursor.getString(3));
-            receipt.put("store_city_state", cursor.getString(4));
-            receipt.put("store_phone", cursor.getString(5));
-            receipt.put("store_website", cursor.getString(6));
-            receipt.put("store_category", cursor.getString(7));
-            receipt.put("here_go", cursor.getString(8));
-            receipt.put("card_type", cursor.getString(9));
-            receipt.put("card_num", cursor.getString(10));
-            receipt.put("payment_method", cursor.getString(11));
-            receipt.put("subtotal", cursor.getString(12));
-            receipt.put("tax", cursor.getString(13));
-            receipt.put("total_price", cursor.getString(14));
-            receipt.put("date", cursor.getString(15));
-            receipt.put("time", cursor.getString(16));
-            receipt.put("cashier", cursor.getString(17));
-            receipt.put("check_number", cursor.getString(18));
-            receipt.put("order_number", cursor.getString(19));
-        }*/
-
-        cursor.close();
-
-        db.close();
-        // return user
-        Log.d(TAG, "Fetching receipt from Sqlite: " + receipt.toString());
-
-        return receipt;
-    }
-
     public void addReceiptItem(String receipt_id, String item_id, ReceiptItem r) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -271,52 +205,16 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_QUANTITY, r.getQuantity());
         values.put(KEY_TAXTYPE, String.valueOf(r.getTaxType()));
 
-        long receipt = db.insert(TABLE_RECEIPT_ITEM, null, values);
+        try {
+            long receipt = db.insertOrThrow(TABLE_RECEIPT_ITEM, null, values);
+        } catch (SQLiteConstraintException e) {
+
+        }
         db.close(); // Closing database connection
 
-        Log.d(TAG, "New receiptItem inserted into sqlite: " + receipt);
+        //Log.d(TAG, "New receiptItem inserted into sqlite: " + receipt);
     }
 
-    //Get receipt details from SQLite database
-    //TODO RETURN ARRAYLIST OF RECEIPTS INSTEAD?
-    public HashMap<String, String> getReceiptItemDetails() {
-        HashMap<String, String> receipt = new HashMap<String, String>();
-        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT_ITEM;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        // Move to first row
-        if (cursor.moveToFirst()) {
-            do {
-                System.out.println("Receipt Id: " + cursor.getString(0));
-                System.out.println("Item Id: " + cursor.getString(1));
-                System.out.println("Item Name: " + cursor.getString(2));
-                System.out.println("Item Description: " + cursor.getString(3));
-                System.out.println("Price: " + cursor.getString(4));
-                System.out.println("Item Number: " + cursor.getString(5));
-                System.out.println("Quantity: " + cursor.getString(6));
-                System.out.println("Tax Type: " + cursor.getString(7));
-            } while (cursor.moveToNext());
-        }
-        /*if (cursor.getCount() > 0) {
-            receipt.put("receipt_id", cursor.getString(0));
-            receipt.put("item_id", cursor.getString(1));
-            receipt.put("item_name", cursor.getString(2));
-            receipt.put("item_description", cursor.getString(3));
-            receipt.put("price",cursor.getString(4));
-            receipt.put("item_num",cursor.getString(5));
-            receipt.put("quantity",cursor.getString(6));
-            receipt.put("tax_type",cursor.getString(7));
-        }*/
-
-        cursor.close();
-
-        db.close();
-        // return user
-        Log.d(TAG, "Fetching receipt from Sqlite: " + receipt.toString());
-
-        return receipt;
-    }
 
     public ArrayList<Receipt> getAllReceipts() {
         ArrayList<Receipt> receipts = new ArrayList<Receipt>();
@@ -328,28 +226,61 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Receipt currReceipt = new Receipt();
-                System.out.println("Id: " + cursor.getString(0));
-                currReceipt.setStoreName(cursor.getString(1));
-                currReceipt.setStoreStreet(cursor.getString(2));
-                currReceipt.setStoreCityState(cursor.getString(3));
-                currReceipt.setStorePhone(cursor.getString(4));
-                currReceipt.setStoreWebsite(cursor.getString(5));
-                currReceipt.setStoreCategory(cursor.getString(6));
-                currReceipt.setHereGo(cursor.getString(7));
-                currReceipt.setCardType(cursor.getString(8));
-                currReceipt.setCardNum(cursor.getString(9));
 
-                if (cursor.getString(10) == null) System.out.print("NULL");
-                //System.out.println("GOGOGOGOGO: " + cursor.getString(10));
-                //currReceipt.setPaymentMethod(cursor.getString(10));
-                currReceipt.setSubtotal(cursor.getString(11));
-                currReceipt.setTax(cursor.getString(12));
-                currReceipt.setTotalPrice(cursor.getString(13));
-                currReceipt.setDateTime(cursor.getString(14), cursor.getString(15));
-                currReceipt.setCashier(cursor.getString(16));
-                currReceipt.setCheckNumber(cursor.getString(17));
-                currReceipt.setOrderNumber(cursor.getString(18));
-                currReceipt.createItemList(getAllItemsID(cursor.getString(0)));
+                if (cursor.getString(1) == null) {}
+                else currReceipt.setStoreName(cursor.getString(1));
+
+                if (cursor.getString(2) == null) {}
+                else currReceipt.setStoreStreet(cursor.getString(2));
+
+                if (cursor.getString(3) == null) {}
+                else currReceipt.setStoreCityState(cursor.getString(3));
+
+                if (cursor.getString(4) == null) {}
+                else currReceipt.setStorePhone(cursor.getString(4));
+
+                if (cursor.getString(5) == null) {}
+                else currReceipt.setStoreWebsite(cursor.getString(5));
+
+                if (cursor.getString(6) == null) {}
+                else currReceipt.setStoreCategory(cursor.getString(6));
+
+                if (cursor.getString(7) == null) {}
+                else currReceipt.setHereGo(cursor.getString(7));
+
+                if (cursor.getString(8) == null) {}
+                else currReceipt.setCardType(cursor.getString(8));
+
+                if (cursor.getString(9) == null) {}
+                else currReceipt.setCardNum(cursor.getString(9));
+
+                if (cursor.getString(10) == null) {}
+                else currReceipt.setPaymentMethod(cursor.getString(10));
+
+                if (cursor.getString(11) == null) {}
+                else currReceipt.setSubtotal(cursor.getString(11));
+
+                if (cursor.getString(12) == null) {}
+                else currReceipt.setTax(cursor.getString(12));
+
+                if (cursor.getString(13) == null) {}
+                else currReceipt.setTotalPrice(cursor.getString(13));
+
+                if (cursor.getString(14) == null || cursor.getString(15) == null) {}
+                else currReceipt.setDateTime(cursor.getString(14), cursor.getString(15));
+
+                if (cursor.getString(15) == null) {}
+                else currReceipt.setCashier(cursor.getString(16));
+
+                if (cursor.getString(16) == null) {}
+                else currReceipt.setCheckNumber(cursor.getString(17));
+
+                if (cursor.getString(18) == null) {}
+                else currReceipt.setOrderNumber(cursor.getString(18));
+
+                if (cursor.getString(0) == null) {}
+                else currReceipt.createItemList(getAllItemsID(cursor.getString(0)));
+
                 receipts.add(currReceipt);
             } while (cursor.moveToNext());
         }
@@ -370,15 +301,25 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 ReceiptItem currItem = new ReceiptItem();
-                System.out.println("Receipt Id: " + cursor.getString(0));
-                System.out.println("Item Id: " + cursor.getString(1));
-                currItem.setName(cursor.getString(2));
-                if (cursor.getString(3) == null) System.out.println("NULL");
-                //currItem.setItemDesc(cursor.getString(3));
-                currItem.setPrice(cursor.getString(4));
-                currItem.setItemNum(cursor.getString(5));
-                currItem.setQuantity(cursor.getString(6));
-                currItem.setTaxType(cursor.getString(7));
+
+                if (cursor.getString(2) == null) {}
+                else currItem.setName(cursor.getString(2));
+
+                if (cursor.getString(3) == null) {}
+                else currItem.setItemDesc(cursor.getString(3));
+
+                if (cursor.getString(4) == null) {}
+                else currItem.setPrice(cursor.getString(4));
+
+                if (cursor.getString(5) == null) {}
+                else currItem.setItemNum(cursor.getString(5));
+
+                if (cursor.getString(6) == null) {}
+                else currItem.setQuantity(cursor.getString(6));
+
+                if (cursor.getString(7) == null) {}
+                else currItem.setTaxType(cursor.getString(7));
+
                 receiptItem.add(currItem);
             } while (cursor.moveToNext());
         }
