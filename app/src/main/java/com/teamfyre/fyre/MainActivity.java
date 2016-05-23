@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mLayoutManager;
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
-    public static final String DEMO_JSON_FILENAME = "baguetteBrosDemo.json";
+    public static final String DEMO_JSON_FILENAME = "costcoDemo.json";
 
     /**************************************************************************
      * onCreate()
@@ -178,8 +178,8 @@ public class MainActivity extends AppCompatActivity
         ArrayList<ReceiptItem> itemList = testReceipt.getItemList();
 
         ReceiptActivity add = new ReceiptActivity(db, session);
-        int receiptId = 144;
-        //add.addReceipt(userId, testReceipt);
+        int receiptId = 145;
+        add.addReceipt(userId, testReceipt);
 
         //db.getReceiptDetails();
         ArrayList<Receipt> test = db.getAllReceipts();
@@ -281,8 +281,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     private List<Receipt> generateDemoList(){
-        List<Receipt> recList = new ArrayList<>();
+        List<Receipt> recList;
 
+        recList = db.getAllReceipts();
+        /*
+        recList = new ArrayList<>();
         Receipt demo1 = parseJson(loadJsonLocal(DEMO_JSON_FILENAME));
         recList.add(demo1);
 
@@ -312,6 +315,7 @@ public class MainActivity extends AppCompatActivity
 
         Receipt demo10 = parseJson(loadJsonLocal("tastyGardenDemo.json"));
         recList.add(demo10);
+        */
 
         return recList;
     }
