@@ -21,4 +21,7 @@ public class AppConfig {
 
     // Server update email url
     public static String URL_UPDATEEMAIL = "http://13.93.202.168/android_login_api/updateEmail.php";
+
+    // Server update password url
+    public static String URL_UPDATEPASSWORD = "http://13.93.202.168/android_login_api/updatePassword.php";
 }

@@ -85,7 +85,7 @@ public class AccountActivity extends AppCompatActivity {
                 if(e.length() != 0 && at && dot)
                     updateEmail(e, id);
                 if(p.length() != 0)
-                    updatePassword(p);
+                    updatePassword(e,p);
             }
         });
 
@@ -109,11 +109,13 @@ public class AccountActivity extends AppCompatActivity {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
                         String id = jObj.getString("id");
-                        String name = jObj.getString("name");
+                        //String name = jObj.getString("name");
                         String email = jObj.getString("email");
 
                         System.out.println("Email succesfully updated.");
                         System.out.println("Email: " + email);
+
+                        db.updateEmail(id, email);
 
                         // Going to need to add somethng here for SQLite
                         //db.addUser(id, name, email, uid, created_at);
@@ -165,8 +167,78 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
-    private void updatePassword(String password) {
+    private void updatePassword(final String email, final String password) {
+        String tag_string_req = "req_updatepassword";
 
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_UPDATEPASSWORD, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Update Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        // User successfully stored in MySQL
+                        // Now store the user in sqlite
+                        String id = jObj.getString("id");
+                        //String name = jObj.getString("name");
+                        String email = jObj.getString("email");
+
+                        System.out.println("Password succesfully updated.");
+                        //System.out.println("Email: " + email);
+
+                        //db.updatePassword(email, password);
+
+                        // Going to need to add somethng here for SQLite
+                        //db.addUser(id, name, email, uid, created_at);
+
+                        // Launch login activity
+                        Intent intent = new Intent(
+                                AccountActivity.this,
+                                SettingsActivity.class);
+                        startActivity(intent);
+                        //finish();
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Update Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                //hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
+                params.put("password", password);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
     private void updateName(String name) {
