@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/res/merged/debug/mipmap-xhdpi-v4/ic_launcher_fyre_hd.png",
+        "source": "/Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/res/mipmap-xhdpi/ic_launcher_fyre_hd.png"
+    },
+    {
+        "merged": "/Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/res/merged/debug/mipmap-xhdpi-v4/ic_launcher_default.png",
+        "source": "/Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/res/mipmap-xhdpi/ic_launcher_default.png"
+    }
+]

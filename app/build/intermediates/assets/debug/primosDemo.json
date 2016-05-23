@@ -1,0 +1,24 @@
+{
+  "storeName": "Los Primos",
+  "storeStreet": "7770 Regents Road",
+  "storeCityState": "La Jolla, CA 92122",
+  "storePhone": "858-638-0003",
+  "storeWebsite": "www.primosmex.com",
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "Monster Baja Carnitas", "itemDesc": null, "price": "6.00", "itemNum": null, "quantity": null, "taxType": null}
+  ],
+  "hereGo": "1",
+  "cardType": "Amex",
+  "cardNum": "1023",
+  "paymentMethod": "Swipe",
+  "cashBack": "0.00",
+  "subtotal": "6.00",
+  "tax": ".48",
+  "totalPrice": "6.48",
+  "date": "4/11/16",
+  "time": "7:24",
+  "cashier": "Teresa M",
+  "checkNumber": "8582",
+  "orderNumber": "82"
+}

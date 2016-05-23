@@ -1,0 +1,24 @@
+{
+  "storeName": "SIXTY FOUR DEGREES",
+  "storeStreet": null,
+  "storeCityState": null,
+  "storePhone": null,
+  "storeWebsite": null,
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "Hamburger", "itemDesc": null, "price": "4.20", "itemNum": null, "quantity": null, "taxType": null}, {"name": "Bacon", "itemDesc": null, "price": "1.00", "itemNum": null, "quantity": null, "taxType": null}, {"name": "Swiss Cheese", "itemDesc": null, "price": "1.00", "itemNum": null, "quantity": null, "taxType": null}, {"name": "Brioche Bun", "itemDesc": "Ketchup Mayo Shredded Lettuce Tomato", "price": "0.00", "itemNum": null, "quantity": null, "taxType": null}  
+  ],
+  "hereGo": "1",
+  "cardType": null,
+  "cardNum": null,
+  "paymentMethod": "Dining Dollars",
+  "cashBack": "0.00",
+  "subtotal": "8.84",
+  "tax": null,
+  "totalPrice": "8.84",
+  "date": "05/01/2016",
+  "time": "17:56",
+  "cashier": "Martinez, Lorraine",
+  "checkNumber": null,
+  "orderNumber": "27"
+}

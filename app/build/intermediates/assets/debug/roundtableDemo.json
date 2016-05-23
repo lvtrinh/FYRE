@@ -1,0 +1,26 @@
+{
+  "storeName": "Round Table Pizza",
+  "storeStreet": "9500 Gilman Dr",
+  "storeCityState": "La Jolla, CA 92093",
+  "storePhone": "858-457-2060",
+  "storeWebsite": null,
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "LS1 Top Pizza + Small Ceaser Salad Combo", "itemDesc": null, "price": "7.99", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "Stone IPA Pint", "itemDesc": null, "price": "5.56", "itemNum": null, "quantity": null, "taxType": null},
+
+  ],
+  "hereGo": "0",
+  "cardType": "Visa",
+  "cardNum": "1234",
+  "paymentMethod": "Swipe",
+  "cashBack": "0.00",
+  "subtotal": "13.55",
+  "tax": "1.08",
+  "totalPrice": "14.63",
+  "date": "05/02/2016",
+  "time": "1:41",
+  "cashier": null,
+  "checkNumber": null,
+  "orderNumber": "170"
+}

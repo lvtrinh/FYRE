@@ -1,0 +1,26 @@
+{
+  "storeName":"Raki Raki",
+  "storeStreet": "4646 Convoy St #102",
+  "storeCityState": "San Diego, CA 92111",
+  "storePhone": "858-537-2400",
+  "storeWebsite": null,
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "Ikageso Karaage", "itemDesc": null, "price": "6.75", "itemNum": null, "quantity": "1", "taxType": null},
+    {"name": "DIP Miso Ton Pk", "itemDesc": null, "price": "13.75", "itemNum": null, "quantity": "1", "taxType": null},
+    {"name": "Sp Miso Ton UB", "itemDesc": "Akadama Hot", "price": "14.20", "itemNum": null, "quantity": "1", "taxType": null}
+  ],
+  "hereGo": "0",
+  "cardType": null,
+  "cardNum": null,
+  "paymentMethod": null,
+  "cashBack": "0.00",
+  "subtotal": "34.70",
+  "tax": "2.78",
+  "totalPrice": "37.48",
+  "date": "3/12/2016",
+  "time": "6:44:27 PM",
+  "cashier": "rovi",
+  "checkNumber": "161",
+  "orderNumber": "178820"
+}

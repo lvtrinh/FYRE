@@ -1,0 +1,27 @@
+{
+  "storeName": "85 C Bakery Cafe",
+  "storeStreet": "5575 Balboa Ave. #390",
+  "storeCityState": "San Diego, CA 92111",
+  "storePhone": "(858)278-8585",
+  "storeWebsite": "www.85cafe.us",
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "Boroh Danish", "itemDesc": null, "price": "2.00", "itemNum": null, "quantity": "1", "taxType": null},
+    {"name": "M IC Boba Milk Tea", "itemDesc": null, "price": "3.00", "itemNum": null, "quantity": "1", "taxType": null},
+    {"name": "L IC Boba Milk Tea", "itemDesc": null, "price": "3.25", "itemNum": null, "quantity": "1", "taxType": null},
+    {"name": "*85C Egg Tart", "itemDesc": null, "price": "6.60", "itemNum": null, "quantity": "4", "taxType": null}
+  ],
+  "hereGo": "Go",
+  "cardType": "VISA",
+  "cardNum": "5029",
+  "paymentMethod": "Swipe",
+  "cashBack": null,
+  "subtotal": "14.85",
+  "tax": "0.00",
+  "totalPrice": "14.85",
+  "date": "4/15/16",
+  "time": "14:42",
+  "cashier": "Nhi T",
+  "checkNumber": "625",
+  "orderNumber": "625"
+}

@@ -1,0 +1,30 @@
+{
+  "storeName": "Safeway",
+  "storeStreet": "710 Bancroft Rd",
+  "storeCityState": "Walnut Creek, CA 94598",
+  "storePhone": "925-937-8537",
+  "storeWebsite": "www.safeway.com",
+  "storeCategory": "Groceries",
+  "itemList": [
+    {"name": "Sfy Black Beans", "itemDesc": null, "price": "1.49", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "Raisin Bran", "itemDesc": null, "price": "2.18", "itemNum": null, "quantity": null, "taxType": null}
+    {"name": "Kelogg Cereal", "itemDesc": null, "price": "2.99", "itemNum": null, "quantity": null, "taxType": null}
+    {"name": "Pam Veg Oil Spray", "itemDesc": null, "price": "1.59", "itemNum": null, "quantity": null, "taxType": null}
+    {"name": "Sfy Lg AA Eggs Dzn", "itemDesc": null, "price": "3.42", "itemNum": null, "quantity": null, "taxType": null}
+    {"name": "Red Roma Tomatoes", "itemDesc": null, "price": "0.99", "itemNum": null, "quantity": null, "taxType": null}
+    {"name": "Broccoli Crowns", "itemDesc": null, "price": "0.97", "itemNum": null, "quantity": null, "taxType": null}
+  ],
+  "hereGo": "0",
+  "cardType": "Visa",
+  "cardNum": "5677",
+  "paymentMethod": "Swipe",
+  "cashBack": "0.00",
+  "subtotal": "13.63",
+  "tax": "1.31",
+  "totalPrice": "14.94",
+  "date": "8/12/15",
+  "time": "12:37",
+  "cashier": "Robert",
+  "checkNumber": null,
+  "orderNumber": null
+}

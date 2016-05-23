@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:gravity="left">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:text="Recent Receipts"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv"
+        android:paddingBottom="0sp"
+        android:onClick="onCardClicked"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:paddingBottom="14dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/store_name"
+                android:layout_alignParentTop="true"
+                android:textSize="16sp"
+                android:text="Los Primos"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/date_test"
+                android:text="05/04/16"
+                android:paddingTop="2dp"
+                android:layout_below="@id/store_name"
+                android:layout_alignParentBottom="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/store_price"
+                android:layout_alignParentRight="true"
+                android:textSize="20sp"
+                android:text="$10.00"
+                android:textColor="@color/price"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv2"
+        android:paddingBottom="0sp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:paddingBottom="14dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/store_name2"
+                android:layout_alignParentTop="true"
+                android:textSize="16sp"
+                android:text="Costco"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/date_test2"
+                android:text="04/10/16"
+                android:paddingTop="2dp"
+                android:layout_below="@id/store_name2"
+                android:layout_alignParentBottom="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/store_price2"
+                android:layout_alignParentRight="true"
+                android:textSize="20sp"
+                android:text="$253.63"
+                android:textColor="@color/price"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cv3"
+        android:paddingBottom="0sp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="14dp"
+            android:paddingBottom="14dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/store_name3"
+                android:layout_alignParentTop="true"
+                android:textSize="16sp"
+                android:text="UCSD Bookstore"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/date_test3"
+                android:text="03/05/16"
+                android:paddingTop="2dp"
+                android:layout_below="@id/store_name3"
+                android:layout_alignParentBottom="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/store_price3"
+                android:layout_alignParentRight="true"
+                android:textSize="20sp"
+                android:text="$10000.00"
+                android:textColor="@color/price"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

@@ -1,0 +1,24 @@
+{
+  "storeName": "Panda Express #0786",
+  "storeStreet": null,
+  "storeCityState": "La Jolla CA,
+  "storePhone": "8586380106",
+  "storeWebsite": "pandaexpress.com/connect",
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "1 Plate", "itemDesc": "CHOW MEIN-1/2 WHITE FRIED RICE-1/2 ORANGE CKN BEIJING BEEF", "price": "6.80", "itemNum": null, "quantity": null, "taxType": null}
+  ],
+  "hereGo": "1",
+  "cardType": "Visa",
+  "cardNum": "0347",
+  "paymentMethod": null,
+  "cashBack": "0.00",
+  "subtotal": "6.80",
+  "tax": "0.54",
+  "totalPrice": "7.34",
+  "date": "3/13/2016",
+  "time": "5:18:06 PM",
+  "cashier": "AMY B",
+  "checkNumber": null,
+  "orderNumber": "259137"
+}

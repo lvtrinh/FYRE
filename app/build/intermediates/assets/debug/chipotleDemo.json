@@ -1,0 +1,25 @@
+{
+  "storeName": "Chipotle",
+  "storeStreet": "8750 Genessee Ave, Suite 240",
+  "storeCityState": "San Diego CA, 92122",
+  "storePhone": "858-999-2403",
+  "storeWebsite": null,
+  "storeCategory": "Food and Drink",
+  "itemList": [
+    {"name": "Chips & Guac", "itemDesc": null, "price": "3.30", "itemNum": null, "quantity": null, "taxType": null},
+    {"name": "Chicken Bowl", "itemDesc": null, "price": "6.70", "itemNum": null, "quantity": null, "taxType": null}
+  ],
+  "hereGo": "1",
+  "cardType": "Amex",
+  "cardNum": "1023",
+  "paymentMethod": "Swipe",
+  "cashBack": "1.09",
+  "subtotal": "10.00",
+  "tax": "0.54",
+  "totalPrice": "10.54",
+  "date": "4/12/16",
+  "time": "8:27",
+  "cashier": "Cotee",
+  "checkNumber": "10569",
+  "orderNumber": "667"
+}
