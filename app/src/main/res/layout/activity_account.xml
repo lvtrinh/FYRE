@@ -13,10 +13,27 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-    <TextView
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Name"
+                android:id="@+id/newName"
+                android:layout_weight="0.07"
+                android:textSize="20dp"
+                android:gravity="center_vertical|bottom"
+                android:paddingTop="15dp" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:id="@+id/name"
+                android:hint="@string/hint_name" />
+
+            <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Email"
+        android:text="Update Email"
         android:id="@+id/newEmail"
         android:layout_weight="0.07"
         android:textSize="20dp"
@@ -33,12 +50,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Password"
+        android:text="Update Password"
         android:id="@+id/newPass"
         android:layout_weight="0.05"
         android:textSize="20dp"
         android:gravity="bottom"
-        android:paddingLeft="0.1dp" />
+        android:paddingLeft="0.1dp"
+        android:paddingTop="15dp" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -58,7 +76,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="365dp"
+        android:layout_height="340dp"
         android:layout_gravity="top" />
 
     <Button

@@ -184,7 +184,8 @@ public class SettingsActivity extends AppCompatActivity {
         String name = user.get("name");
         final String email = user.get("email");
 
-
+        final TextView textViewToChange1 = (TextView) findViewById(R.id.NAME);
+        textViewToChange1.setText("Name: " + name);
         //displaying email
         final TextView textViewToChange = (TextView) findViewById(R.id.EMAIL);
         textViewToChange.setText("Email: " + email);

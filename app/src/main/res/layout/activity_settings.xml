@@ -25,6 +25,14 @@
                 android:layout_width="286dp"
                 android:layout_height="wrap_content"
                 android:text="New Text"
+                android:id="@+id/NAME"
+                android:textSize="20dp"
+                android:layout_margin="10dp" />
+
+            <TextView
+                android:layout_width="286dp"
+                android:layout_height="wrap_content"
+                android:text="New Text"
                 android:id="@+id/EMAIL"
                 android:textSize="20dp"
                 android:layout_margin="10dp" />
