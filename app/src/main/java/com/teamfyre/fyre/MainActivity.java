@@ -114,7 +114,6 @@ public class MainActivity extends AppCompatActivity
 
         // Fetching user details from SQLite
         HashMap<String, String> user = db.getUserDetails();
-        //HashMap<String,String> receipt = db.getReceiptDetails();
 
         String name = user.get("name");
         String email = user.get("email");
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity
         jsonString = loadJsonLocal();
         // TODO put this into a variable that persists past onCreate
         // TODO and basically its own file, and thread
-        /*Receipt testReceipt = parseJson(jsonString);
+        Receipt testReceipt = parseJson(jsonString);
         int userId = Integer.parseInt(user.get("id"));
         System.out.println(userId);
         String storeName = testReceipt.getStoreName();
@@ -154,24 +153,18 @@ public class MainActivity extends AppCompatActivity
 
         ReceiptActivity add = new ReceiptActivity(db, session);
         int receiptId = 144;
-        add.addReceipt(userId, storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, hereGo, cardType, cardNum, paymentMethod, subtotal, tax, totalPrice, date, time, cashier, checkNumber, orderNumber);
-        //db.addReceiptLite(Integer.toString(userId), Integer.toString(receiptId), storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, Integer.toString(hereGo), cardType, Integer.toString(cardNum), paymentMethod, subtotal.toString(), tax.toString(), totalPrice.toString(), date, time, cashier, checkNumber, Integer.toString(orderNumber));
+        //add.addReceipt(userId, testReceipt);
 
-        Iterator it = receipt.entrySet().iterator();
-        while (it.hasNext()) {
-            HashMap.Entry pair = (HashMap.Entry)it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
-            //it.remove();
+        //db.getReceiptDetails();
+        ArrayList<Receipt> test = db.getAllReceipts();
+
+        for (int i = 0; i < test.size(); i++) {
+            for (int j = 0; j < 10; j++) System.out.println("RAN");
+            test.get(i).printReceipt();
         }
 
-        System.out.println("HERE:" + receipt.get("store_name"));
-        for (int j = 0; j < itemList.size(); j++) {
-            add.addItem(itemList.get(j));
-        }*/
-
-        int userId = Integer.parseInt(user.get("id"));
-        GetReceiptActivity get = new GetReceiptActivity();
-        get.getReceipts(userId);
+        //GetReceiptActivity get = new GetReceiptActivity();
+        //get.getReceipts(userId);
     }
 
     /**************************************************************************

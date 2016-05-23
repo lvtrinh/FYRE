@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SQLiteHandler extends SQLiteOpenHelper {
@@ -200,6 +201,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
         if (cursor.moveToFirst()) {
             do {
+
+
                 System.out.println("Id: " + cursor.getString(0));
                 System.out.println("Receipt Id: " + cursor.getString(1));
                 System.out.println("Store Name: " + cursor.getString(2));
@@ -313,6 +316,77 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "Fetching receipt from Sqlite: " + receipt.toString());
 
         return receipt;
+    }
+
+    public ArrayList<Receipt> getAllReceipts() {
+        ArrayList<Receipt> receipts = new ArrayList<Receipt>();
+        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        if (cursor.moveToFirst()) {
+            do {
+                Receipt currReceipt = new Receipt();
+                System.out.println("Id: " + cursor.getString(0));
+                currReceipt.setStoreName(cursor.getString(1));
+                currReceipt.setStoreStreet(cursor.getString(2));
+                currReceipt.setStoreCityState(cursor.getString(3));
+                currReceipt.setStorePhone(cursor.getString(4));
+                currReceipt.setStoreWebsite(cursor.getString(5));
+                currReceipt.setStoreCategory(cursor.getString(6));
+                currReceipt.setHereGo(cursor.getString(7));
+                currReceipt.setCardType(cursor.getString(8));
+                currReceipt.setCardNum(cursor.getString(9));
+
+                if (cursor.getString(10) == null) System.out.print("NULL");
+                //System.out.println("GOGOGOGOGO: " + cursor.getString(10));
+                //currReceipt.setPaymentMethod(cursor.getString(10));
+                currReceipt.setSubtotal(cursor.getString(11));
+                currReceipt.setTax(cursor.getString(12));
+                currReceipt.setTotalPrice(cursor.getString(13));
+                currReceipt.setDateTime(cursor.getString(14), cursor.getString(15));
+                currReceipt.setCashier(cursor.getString(16));
+                currReceipt.setCheckNumber(cursor.getString(17));
+                currReceipt.setOrderNumber(cursor.getString(18));
+                currReceipt.createItemList(getAllItemsID(cursor.getString(0)));
+                receipts.add(currReceipt);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        db.close();
+
+        return receipts;
+    }
+
+    public ArrayList<ReceiptItem> getAllItemsID(String id) {
+        ArrayList<ReceiptItem> receiptItem = new ArrayList<ReceiptItem>();
+        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT_ITEM + " WHERE " + KEY_RECEIPTID + " = '" + id + "'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        if (cursor.moveToFirst()) {
+            do {
+                ReceiptItem currItem = new ReceiptItem();
+                System.out.println("Receipt Id: " + cursor.getString(0));
+                System.out.println("Item Id: " + cursor.getString(1));
+                currItem.setName(cursor.getString(2));
+                if (cursor.getString(3) == null) System.out.println("NULL");
+                //currItem.setItemDesc(cursor.getString(3));
+                currItem.setPrice(cursor.getString(4));
+                currItem.setItemNum(cursor.getString(5));
+                currItem.setQuantity(cursor.getString(6));
+                currItem.setTaxType(cursor.getString(7));
+                receiptItem.add(currItem);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        db.close();
+
+        return receiptItem;
     }
 
     /**
