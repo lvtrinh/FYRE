@@ -10,6 +10,7 @@ package com.teamfyre.fyre;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.util.*;
 import java.math.BigDecimal;
@@ -150,7 +151,7 @@ public class Receipt implements Parcelable{
 
     public void setHereGo(Object go) {
         if (go.toString().equals("null")) {
-            hereGo = null;
+            hereGo = 0;
             return;
         }
         hereGo = Integer.parseInt(go.toString());
@@ -235,6 +236,26 @@ public class Receipt implements Parcelable{
             timeArr[i] = Integer.parseInt(timeArrTmp[i]);
         }
         dateTime = new GregorianCalendar(dateArr[2]+2000,dateArr[0],dateArr[1],timeArr[0],timeArr[1]);
+    }
+
+    public void setDateTimeDB(Object date, Object time) {
+        if (date.toString().equals("null") || time.toString().equals("null")) {
+            dateTime = null;
+            return;
+        }
+        String[] dateArrTmp = date.toString().split("-");
+        int[] dateArr = new int[dateArrTmp.length];
+
+        for (int i = 0; i < dateArrTmp.length; i++) {
+            dateArr[i] = Integer.parseInt(dateArrTmp[i]);
+        }
+
+        String[] timeArrTmp = time.toString().split(":");
+        int[] timeArr = new int[timeArrTmp.length];
+        for (int i = 0; i < timeArrTmp.length; i++) {
+            timeArr[i] = Integer.parseInt(timeArrTmp[i]);
+        }
+        dateTime = new GregorianCalendar(dateArr[0],dateArr[1],dateArr[2],timeArr[0],timeArr[1]);
     }
 
     public void setCashier(Object name) {
@@ -331,6 +352,13 @@ public class Receipt implements Parcelable{
 
     public Integer getOrderNumber() {return this.orderNumber; }
 
+    public String getDateUI() {
+        if (dateTime != null) {
+            return this.dateTime.get(Calendar.MONTH) + "/" + this.dateTime.get(Calendar.DAY_OF_MONTH)+ "/" + this.dateTime.get(Calendar.YEAR);
+        }
+        return null;
+    }
+
     public String getDate() {
         if (dateTime != null) {
             return this.dateTime.get(Calendar.YEAR) + "-" + this.dateTime.get(Calendar.MONTH) + "-" + this.dateTime.get(Calendar.DAY_OF_MONTH);
@@ -378,7 +406,7 @@ public class Receipt implements Parcelable{
 
     private void printDateTime() {
         if (this.dateTime == null) return;
-        System.out.println(this.dateTime.get(Calendar.MONTH) + "/" + this.dateTime.get(Calendar.DAY_OF_MONTH) + "/" + this.dateTime.get(Calendar.YEAR));
+        System.out.println(this.dateTime.get(Calendar.MONTH) + "-" + this.dateTime.get(Calendar.DAY_OF_MONTH) + "-" + this.dateTime.get(Calendar.YEAR));
         System.out.println(this.dateTime.get(Calendar.HOUR_OF_DAY) + ":" + this.dateTime.get(Calendar.MINUTE));
     }
 
@@ -439,7 +467,7 @@ public class Receipt implements Parcelable{
     public int getColumnCount() {
         int columnCount = 0;
 
-        if (itemList.get(0).getTaxType() != '\u0000') columnCount++;
+        if (itemList.get(0).getTaxType() != 'Z') columnCount++;
         if (itemList.get(0).getItemNum() != -1) columnCount++;
         if (itemList.get(0).getName() != null) columnCount++;
         if (itemList.get(0).getPrice() != null) columnCount++;

@@ -267,12 +267,12 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 else currReceipt.setTotalPrice(cursor.getString(13));
 
                 if (cursor.getString(14) == null || cursor.getString(15) == null) {}
-                else currReceipt.setDateTime(cursor.getString(14), cursor.getString(15));
-
-                if (cursor.getString(15) == null) {}
-                else currReceipt.setCashier(cursor.getString(16));
+                else currReceipt.setDateTimeDB(cursor.getString(14), cursor.getString(15));
 
                 if (cursor.getString(16) == null) {}
+                else currReceipt.setCashier(cursor.getString(16));
+
+                if (cursor.getString(17) == null) {}
                 else currReceipt.setCheckNumber(cursor.getString(17));
 
                 if (cursor.getString(18) == null) {}
@@ -337,6 +337,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         // Delete All Rows
         db.delete(TABLE_USER, null, null);
+        db.delete(TABLE_RECEIPT, null, null);
+        db.delete(TABLE_RECEIPT_ITEM, null, null);
         db.close();
 
         Log.d(TAG, "Deleted all user info from sqlite");

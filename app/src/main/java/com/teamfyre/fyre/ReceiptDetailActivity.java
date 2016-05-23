@@ -99,8 +99,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
         // TODO build a string for date time first, replace body view
         if (receipt.getDate() != null) {
-            date_header.setText(receipt.getDate());
-            purchaseDateTime.setText(receipt.getDate());
+            date_header.setText(receipt.getDateUI());
+            purchaseDateTime.setText(receipt.getDateUI());
         }
 
         if (receipt.getTime() != null) {

@@ -64,7 +64,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.RViewHol
     public void onBindViewHolder(RViewHolder holder, int position) {
         Receipt receipt = receiptList.get(position);
         holder.cv_name.setText(receipt.getStoreName());
-        holder.cv_date.setText(receipt.getDate());
+        holder.cv_date.setText(receipt.getDateUI());
         holder.cv_price.setText(receipt.getTotalPrice().toString());
     }
 

@@ -156,7 +156,8 @@ public class MainActivity extends AppCompatActivity
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        List<Receipt> demoList = generateDemoList();
+        int userId = Integer.parseInt(user.get("id"));
+        List<Receipt> demoList = generateDemoList(userId);
 
         mAdapter = new ReceiptAdapter(demoList);
         mRecyclerView.setAdapter(mAdapter);
@@ -169,22 +170,12 @@ public class MainActivity extends AppCompatActivity
         // TODO put this into a variable that persists past onCreate
         // TODO and basically its own file, and thread
         Receipt testReceipt = parseJson(jsonString);
-        int userId = Integer.parseInt(user.get("id"));
 
         ReceiptActivity add = new ReceiptActivity(db, session);
-        int receiptId = 144;
-        add.addReceipt(userId, testReceipt);
+        //add.addReceipt(userId, testReceipt);
 
-        //db.getReceiptDetails();
-        ArrayList<Receipt> test = db.getAllReceipts();
-
-        for (int i = 0; i < test.size(); i++) {
-            test.get(i).printReceipt();
-            System.out.println("");
-        }
-
-        //GetReceiptActivity get = new GetReceiptActivity();
-        //get.getReceipts(userId);
+        GetReceiptActivity get = new GetReceiptActivity(db, session);
+        get.getReceipts(userId);
     }
 
     /**************************************************************************
@@ -274,9 +265,12 @@ public class MainActivity extends AppCompatActivity
         return json;
     }
 
-    private List<Receipt> generateDemoList(){
+    private List<Receipt> generateDemoList(int userId){
         List<Receipt> recList;
+        GetReceiptActivity test = new GetReceiptActivity(db, session);
 
+
+        //recList = test.getReceipts(userId);
         recList = db.getAllReceipts();
         /*
         recList = new ArrayList<>();
@@ -407,6 +401,7 @@ public class MainActivity extends AppCompatActivity
                     })
                     .setIcon(android.R.drawable.ic_dialog_info)
                     .show();
+            db.deleteUsers();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
