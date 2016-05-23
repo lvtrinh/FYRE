@@ -15,12 +15,12 @@
 package com.teamfyre.fyre;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
     private String jsonString;
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
-    public static final String DEMO_JSON_FILENAME = "baguetteBrosDemo.json";
+    public static final String DEMO_JSON_FILENAME = "costcoDemo.json";
 
     /**************************************************************************
      * onCreate()
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         // manual addition for a receipt
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-           public void onClick(View view) {
+            public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, ReceiptManualActivity.class);
                 startActivity(intent);
             }
@@ -108,27 +108,26 @@ public class MainActivity extends AppCompatActivity
         session = new SessionManager(getApplicationContext());
 
         if (!session.isLoggedIn()) {
-                new AlertDialog.Builder(MainActivity.this) //changed to MainActivity.this from context
-                        .setTitle("Logout")
-                        .setMessage("Are you sure you want to logout??")
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
-                                logoutUser();
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .show();
+            new AlertDialog.Builder(MainActivity.this) //changed to MainActivity.this from context
+                    .setTitle("Logout")
+                    .setMessage("Are you sure you want to logout??")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                            logoutUser();
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // do nothing
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .show();
         }
 
         // Fetching user details from SQLite
         HashMap<String, String> user = db.getUserDetails();
-        //HashMap<String,String> receipt = db.getReceiptDetails();
 
         String name = user.get("name");
         String email = user.get("email");
@@ -145,43 +144,21 @@ public class MainActivity extends AppCompatActivity
         // TODO and basically its own file, and thread
         Receipt testReceipt = parseJson(jsonString);
         int userId = Integer.parseInt(user.get("id"));
-        System.out.println(userId);
-        String storeName = testReceipt.getStoreName();
-        String storeStreet = testReceipt.getStoreStreet();
-        String storeCityState = testReceipt.getStoreCityState();
-        String storePhone = testReceipt.getStorePhone();
-        String storeWebsite = testReceipt.getStoreWebsite();
-        String storeCategory = testReceipt.getStoreCategory();
-        Integer hereGo = testReceipt.getHereGo();
-        String cardType = testReceipt.getCardType();
-        int cardNum = testReceipt.getCardNum();
-        String paymentMethod = testReceipt.getPaymentMethod();
-        BigDecimal subtotal = testReceipt.getSubtotal();
-        BigDecimal tax = testReceipt.getTax();
-        BigDecimal totalPrice = testReceipt.getTotalPrice();
-        String date = testReceipt.getDate();
-        String time = testReceipt.getTime();
-        String cashier = testReceipt.getCashier();
-        String checkNumber = testReceipt.getCheckNumber();
-        int orderNumber = testReceipt.getOrderNumber();
-        ArrayList<ReceiptItem> itemList = testReceipt.getItemList();
 
         ReceiptActivity add = new ReceiptActivity(db, session);
         int receiptId = 144;
-        add.addReceipt(userId, storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, hereGo, cardType, cardNum, paymentMethod, subtotal, tax, totalPrice, date, time, cashier, checkNumber, orderNumber);
-        //db.addReceiptLite(Integer.toString(userId), Integer.toString(receiptId), storeName, storeStreet, storeCityState, storePhone, storeWebsite, storeCategory, Integer.toString(hereGo), cardType, Integer.toString(cardNum), paymentMethod, subtotal.toString(), tax.toString(), totalPrice.toString(), date, time, cashier, checkNumber, Integer.toString(orderNumber));
+        add.addReceipt(userId, testReceipt);
 
-        /*Iterator it = receipt.entrySet().iterator();
-        while (it.hasNext()) {
-            HashMap.Entry pair = (HashMap.Entry)it.next();
-            System.out.println(pair.getKey() + " = " + pair.getValue());
-            //it.remove();
+        //db.getReceiptDetails();
+        ArrayList<Receipt> test = db.getAllReceipts();
+
+        for (int i = 0; i < test.size(); i++) {
+            test.get(i).printReceipt();
+            System.out.println("");
         }
 
-        System.out.println("HERE:" + receipt.get("store_name"));*/
-        for (int j = 0; j < itemList.size(); j++) {
-            add.addItem(itemList.get(j));
-        }
+        //GetReceiptActivity get = new GetReceiptActivity();
+        //get.getReceipts(userId);
     }
 
     /**************************************************************************
@@ -239,7 +216,7 @@ public class MainActivity extends AppCompatActivity
 
             receipt.createItemList(indivItemArr);
 
-            receipt.printReceipt();
+            //receipt.printReceipt();
 
             return receipt;
 

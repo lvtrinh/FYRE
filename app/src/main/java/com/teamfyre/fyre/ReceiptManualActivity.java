@@ -130,10 +130,10 @@ public class ReceiptManualActivity extends Activity {
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
                     // creates receipt object from information
-                    receipt = new Receipt();
-                    receipt.setStoreName(store);
-                    receipt.setDateTime(date, "00:00");
-                    receipt.setTotalPrice(price);
+                    //receipt = new Receipt();
+                    //receipt.setStoreName(store);
+                    //receipt.setDateTime(date, "00:00");
+                    //receipt.setTotalPrice(price);
 
                     Toast.makeText(getApplicationContext(),
                             "Function not yet implemented",
