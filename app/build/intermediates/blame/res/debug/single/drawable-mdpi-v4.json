@@ -128,10 +128,6 @@
         "source": "/Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/drawable-mdpi-v4/abc_btn_switch_to_on_mtrl_00012.9.png"
     },
     {
-        "merged": "/Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/ic_action_name.png",
-        "source": "/Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/res/drawable-mdpi/ic_action_name.png"
-    },
-    {
         "merged": "/Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_list_selector_disabled_holo_light.9.png",
         "source": "/Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/drawable-mdpi-v4/abc_list_selector_disabled_holo_light.9.png"
     },

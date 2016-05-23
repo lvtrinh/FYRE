@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
     android:weightSum="1"
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
-
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +20,8 @@
         android:id="@+id/newEmail"
         android:layout_weight="0.07"
         android:textSize="20dp"
-        android:gravity="center_vertical|bottom" />
+        android:gravity="center_vertical|bottom"
+        android:paddingTop="15dp" />
 
     <EditText
         android:layout_width="fill_parent"
@@ -49,12 +56,19 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.07" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="365dp"
+        android:layout_gravity="top" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Remove Account"
         android:id="@+id/RemoveAccount"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07" />
-
+        android:layout_weight="0.07"
+        android:textColor="#FF0000"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
