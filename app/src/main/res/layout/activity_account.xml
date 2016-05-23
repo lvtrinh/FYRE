@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Email"
+        android:id="@+id/newEmail"
+        android:layout_weight="0.07"
+        android:textSize="20dp"
+        android:gravity="center_vertical|bottom" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:id="@+id/email"
+        android:hint="@string/hint_email" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Password"
+        android:id="@+id/newPass"
+        android:layout_weight="0.05"
+        android:textSize="20dp"
+        android:gravity="bottom"
+        android:paddingLeft="0.1dp" />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:fontFamily="sans-serif"
+        android:id="@+id/password"
+        android:hint="@string/hint_password" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Account"
+        android:id="@+id/updateAccount"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.07" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove Account"
+        android:id="@+id/RemoveAccount"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.07" />
 
 </LinearLayout>

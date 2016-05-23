@@ -25,7 +25,7 @@
     <TextView
         android:layout_width="238dp"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Password: *****"
         android:id="@+id/textView"
         android:textSize="20dp"
         android:layout_margin="10dp" />
@@ -52,7 +52,7 @@
         android:layout_marginBottom="10dp"
         android:background="#FFFFFF"
         android:padding="10dp"
-        />
+        android:id="@+id/privacy" />
 
     <Button
         android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
         android:background="#FFFFFF"
         android:padding="10dp"
         android:layout_marginBottom="10dp"
-        />
+        android:id="@+id/about" />
 
     <Button
         android:layout_width="wrap_content"
@@ -77,11 +77,11 @@
         android:fontFamily="sans-serif bold"
         android:background="#FFFFFF"
         android:padding="10dp"
-        />
+        android:id="@+id/contact" />
 
     <!-- Logout Button -->
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
