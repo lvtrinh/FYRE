@@ -222,7 +222,7 @@ public class Receipt implements Parcelable{
             dateTime = null;
             return;
         }
-        String[] dateArrTmp = date.toString().split("/");
+        String[] dateArrTmp = date.toString().split("-");
         int[] dateArr = new int[dateArrTmp.length];
 
         for (int i = 0; i < dateArrTmp.length; i++) {
@@ -332,11 +332,17 @@ public class Receipt implements Parcelable{
     public Integer getOrderNumber() {return this.orderNumber; }
 
     public String getDate() {
-        return this.dateTime.get(Calendar.YEAR) + "-" + this.dateTime.get(Calendar.MONTH) + "-" + this.dateTime.get(Calendar.DAY_OF_MONTH);
+        if (dateTime != null) {
+            return this.dateTime.get(Calendar.YEAR) + "-" + this.dateTime.get(Calendar.MONTH) + "-" + this.dateTime.get(Calendar.DAY_OF_MONTH);
+        }
+        return null;
     }
 
     public String getTime() {
-        return this.dateTime.get(Calendar.HOUR_OF_DAY) + ":" + this.dateTime.get(Calendar.MINUTE);
+        if (dateTime != null) {
+            return this.dateTime.get(Calendar.HOUR_OF_DAY) + ":" + this.dateTime.get(Calendar.MINUTE);
+        }
+        return null;
     }
 
     public boolean getStarred() { return this.starred; }

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SQLiteHandler extends SQLiteOpenHelper {
@@ -52,7 +53,18 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String KEY_TIME = "time";
     private static final String KEY_CASHIER = "cashier";
     private static final String KEY_CHECKNUM = "check_number";
-    private static final String KEY_ORDERNUM = "order_numer";
+    private static final String KEY_ORDERNUM = "order_number";
+
+    // Receipt Item table column names
+    private static final String TABLE_RECEIPT_ITEM = "item";
+    private static final String KEY_RECEIPTITEMID = "item_id";
+    private static final String KEY_ITEMNAME = "item_name";
+    private static final String KEY_ITEMDESC = "item_description";
+    private static final String KEY_PRICE = "price";
+    private static final String KEY_ITEMNUM = "item_num";
+    private static final String KEY_QUANTITY = "quantity";
+    private static final String KEY_TAXTYPE = "tax_type";
+
 
     public SQLiteHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -77,10 +89,16 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + KEY_DATE + " TEXT," + KEY_TIME + " TEXT," + KEY_CASHIER + " TEXT,"
                 + KEY_CHECKNUM + " TEXT," + KEY_ORDERNUM + " INTEGER)";
 
+        String CREATE_RECEIPT_ITEM_TABLE = "CREATE TABLE " + TABLE_RECEIPT_ITEM + "("
+                + KEY_RECEIPTID + " INTEGER," + KEY_RECEIPTITEMID + " INTEGER PRIMARY KEY,"
+                + KEY_ITEMNAME + " TEXT," + KEY_ITEMDESC + " TEXT," + KEY_PRICE + " REAL,"
+                + KEY_ITEMNUM + " INTEGER," + KEY_QUANTITY + " INTEGER," + KEY_TAXTYPE + " TEXT)";
+
 
 
         db.execSQL(CREATE_LOGIN_TABLE);
         db.execSQL(CREATE_RECEIPT_TABLE);
+        db.execSQL(CREATE_RECEIPT_ITEM_TABLE);
 
         Log.d(TAG, "Database tables created");
     }
@@ -142,34 +160,29 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     }
 
 
-    public void addReceiptLite(String receipt_id, String store_name, String store_street,
-                           String store_city_state, String store_phone, String store_website,
-                           String store_category, String here_go, String card_type,
-                           String card_num, String payment_method, String subtotal,
-                           String tax, String total_price, String date, String time,
-                           String cashier, String check_number, String order_number) {
+    public void addReceiptLite(String id, Receipt r) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_RECEIPTID, receipt_id);
-        values.put(KEY_STORENAME, store_name);
-        values.put(KEY_STORESTREET, store_street);
-        values.put(KEY_STORECITYSTATE, store_city_state);
-        values.put(KEY_STOREPHONE, store_phone);
-        values.put(KEY_STOREWEBSITE, store_website);
-        values.put(KEY_STORECATEGORY, store_category);
-        values.put(KEY_HEREGO, here_go);
-        values.put(KEY_CARDTYPE, card_type);
-        values.put(KEY_CARDNUM, card_num);
-        values.put(KEY_SUBTOTAL, subtotal);
-        values.put(KEY_TAX, tax);
-        values.put(KEY_TOTALPRICE, total_price);
-        values.put(KEY_DATE, date);
-        values.put(KEY_TIME, time);
-        values.put(KEY_CASHIER, cashier);
-        values.put(KEY_CHECKNUM, check_number);
-        values.put(KEY_ORDERNUM, order_number);
+        values.put(KEY_RECEIPTID, id);
+        values.put(KEY_STORENAME, r.getStoreName());
+        values.put(KEY_STORESTREET, r.getStoreStreet());
+        values.put(KEY_STORECITYSTATE, r.getStoreCityState());
+        values.put(KEY_STOREPHONE, r.getStorePhone());
+        values.put(KEY_STOREWEBSITE, r.getStoreWebsite());
+        values.put(KEY_STORECATEGORY, r.getStoreCategory());
+        values.put(KEY_HEREGO, String.valueOf(r.getHereGo()));
+        values.put(KEY_CARDTYPE, r.getCardType());
+        values.put(KEY_CARDNUM, String.valueOf(r.getCardNum()));
+        values.put(KEY_SUBTOTAL, String.valueOf(r.getSubtotal()));
+        values.put(KEY_TAX, String.valueOf(r.getTax()));
+        values.put(KEY_TOTALPRICE, String.valueOf(r.getTotalPrice()));
+        values.put(KEY_DATE, r.getDate());
+        values.put(KEY_TIME, r.getTime());
+        values.put(KEY_CASHIER, r.getCashier());
+        values.put(KEY_CHECKNUM, r.getCheckNumber());
+        values.put(KEY_ORDERNUM, String.valueOf(r.getOrderNumber()));
 
         long receipt = db.insert(TABLE_RECEIPT, null, values);
         db.close(); // Closing database connection
@@ -186,7 +199,33 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Move to first row
         cursor.moveToFirst();
-        if (cursor.getCount() > 0) {
+        if (cursor.moveToFirst()) {
+            do {
+
+
+                System.out.println("Id: " + cursor.getString(0));
+                System.out.println("Receipt Id: " + cursor.getString(1));
+                System.out.println("Store Name: " + cursor.getString(2));
+                System.out.println("Store Street: " + cursor.getString(3));
+                System.out.println("Store City State: " + cursor.getString(4));
+                System.out.println("Item Number: " + cursor.getString(5));
+                System.out.println("Quantity: " + cursor.getString(6));
+                System.out.println("Tax Type: " + cursor.getString(7));
+                System.out.println("Tax Type: " + cursor.getString(8));
+                System.out.println("Tax Type: " + cursor.getString(9));
+                System.out.println("Tax Type: " + cursor.getString(10));
+                System.out.println("Tax Type: " + cursor.getString(11));
+                System.out.println("Tax Type: " + cursor.getString(12));
+                System.out.println("Tax Type: " + cursor.getString(13));
+                System.out.println("Tax Type: " + cursor.getString(14));
+                System.out.println("Tax Type: " + cursor.getString(15));
+                System.out.println("Tax Type: " + cursor.getString(16));
+                System.out.println("Tax Type: " + cursor.getString(17));
+                System.out.println("Tax Type: " + cursor.getString(18));
+                //System.out.println("Tax Type: " + cursor.getString(19));
+            } while (cursor.moveToNext());
+        }
+        /*if (cursor.getCount() > 0) {
             receipt.put("id", cursor.getString(0));
             receipt.put("receipt_id", cursor.getString(1));
             receipt.put("store_name", cursor.getString(2));
@@ -206,14 +245,148 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             receipt.put("time", cursor.getString(16));
             receipt.put("cashier", cursor.getString(17));
             receipt.put("check_number", cursor.getString(18));
-            receipt.put("oreder_number", cursor.getString(19));
-        }
+            receipt.put("order_number", cursor.getString(19));
+        }*/
+
         cursor.close();
+
         db.close();
         // return user
         Log.d(TAG, "Fetching receipt from Sqlite: " + receipt.toString());
 
         return receipt;
+    }
+
+    public void addReceiptItem(String receipt_id, String item_id, ReceiptItem r) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_RECEIPTID, receipt_id);
+        values.put(KEY_RECEIPTITEMID, item_id);
+        values.put(KEY_ITEMNAME, r.getName());
+        values.put(KEY_ITEMDESC, r.getItemDesc());
+        values.put(KEY_PRICE, String.valueOf(r.getPrice()));
+        values.put(KEY_ITEMNUM, r.getItemNum());
+        values.put(KEY_QUANTITY, r.getQuantity());
+        values.put(KEY_TAXTYPE, String.valueOf(r.getTaxType()));
+
+        long receipt = db.insert(TABLE_RECEIPT_ITEM, null, values);
+        db.close(); // Closing database connection
+
+        Log.d(TAG, "New receiptItem inserted into sqlite: " + receipt);
+    }
+
+    //Get receipt details from SQLite database
+    //TODO RETURN ARRAYLIST OF RECEIPTS INSTEAD?
+    public HashMap<String, String> getReceiptItemDetails() {
+        HashMap<String, String> receipt = new HashMap<String, String>();
+        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT_ITEM;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        if (cursor.moveToFirst()) {
+            do {
+                System.out.println("Receipt Id: " + cursor.getString(0));
+                System.out.println("Item Id: " + cursor.getString(1));
+                System.out.println("Item Name: " + cursor.getString(2));
+                System.out.println("Item Description: " + cursor.getString(3));
+                System.out.println("Price: " + cursor.getString(4));
+                System.out.println("Item Number: " + cursor.getString(5));
+                System.out.println("Quantity: " + cursor.getString(6));
+                System.out.println("Tax Type: " + cursor.getString(7));
+            } while (cursor.moveToNext());
+        }
+        /*if (cursor.getCount() > 0) {
+            receipt.put("receipt_id", cursor.getString(0));
+            receipt.put("item_id", cursor.getString(1));
+            receipt.put("item_name", cursor.getString(2));
+            receipt.put("item_description", cursor.getString(3));
+            receipt.put("price",cursor.getString(4));
+            receipt.put("item_num",cursor.getString(5));
+            receipt.put("quantity",cursor.getString(6));
+            receipt.put("tax_type",cursor.getString(7));
+        }*/
+
+        cursor.close();
+
+        db.close();
+        // return user
+        Log.d(TAG, "Fetching receipt from Sqlite: " + receipt.toString());
+
+        return receipt;
+    }
+
+    public ArrayList<Receipt> getAllReceipts() {
+        ArrayList<Receipt> receipts = new ArrayList<Receipt>();
+        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        if (cursor.moveToFirst()) {
+            do {
+                Receipt currReceipt = new Receipt();
+                System.out.println("Id: " + cursor.getString(0));
+                currReceipt.setStoreName(cursor.getString(1));
+                currReceipt.setStoreStreet(cursor.getString(2));
+                currReceipt.setStoreCityState(cursor.getString(3));
+                currReceipt.setStorePhone(cursor.getString(4));
+                currReceipt.setStoreWebsite(cursor.getString(5));
+                currReceipt.setStoreCategory(cursor.getString(6));
+                currReceipt.setHereGo(cursor.getString(7));
+                currReceipt.setCardType(cursor.getString(8));
+                currReceipt.setCardNum(cursor.getString(9));
+
+                if (cursor.getString(10) == null) System.out.print("NULL");
+                //System.out.println("GOGOGOGOGO: " + cursor.getString(10));
+                //currReceipt.setPaymentMethod(cursor.getString(10));
+                currReceipt.setSubtotal(cursor.getString(11));
+                currReceipt.setTax(cursor.getString(12));
+                currReceipt.setTotalPrice(cursor.getString(13));
+                currReceipt.setDateTime(cursor.getString(14), cursor.getString(15));
+                currReceipt.setCashier(cursor.getString(16));
+                currReceipt.setCheckNumber(cursor.getString(17));
+                currReceipt.setOrderNumber(cursor.getString(18));
+                currReceipt.createItemList(getAllItemsID(cursor.getString(0)));
+                receipts.add(currReceipt);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        db.close();
+
+        return receipts;
+    }
+
+    public ArrayList<ReceiptItem> getAllItemsID(String id) {
+        ArrayList<ReceiptItem> receiptItem = new ArrayList<ReceiptItem>();
+        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT_ITEM + " WHERE " + KEY_RECEIPTID + " = '" + id + "'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        if (cursor.moveToFirst()) {
+            do {
+                ReceiptItem currItem = new ReceiptItem();
+                System.out.println("Receipt Id: " + cursor.getString(0));
+                System.out.println("Item Id: " + cursor.getString(1));
+                currItem.setName(cursor.getString(2));
+                if (cursor.getString(3) == null) System.out.println("NULL");
+                //currItem.setItemDesc(cursor.getString(3));
+                currItem.setPrice(cursor.getString(4));
+                currItem.setItemNum(cursor.getString(5));
+                currItem.setQuantity(cursor.getString(6));
+                currItem.setTaxType(cursor.getString(7));
+                receiptItem.add(currItem);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        db.close();
+
+        return receiptItem;
     }
 
     /**
