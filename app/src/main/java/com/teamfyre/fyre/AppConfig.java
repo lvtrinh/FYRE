@@ -19,9 +19,6 @@ public class AppConfig {
     // Server get items url
     public static String URL_GETITEMS = "http://13.93.202.168/android_login_api/getitems.php";
 
-    // Server update email url
-    public static String URL_UPDATEEMAIL = "http://13.93.202.168/android_login_api/updateEmail.php";
-
-    // Server update password url
-    public static String URL_UPDATEPASSWORD = "http://13.93.202.168/android_login_api/updatePassword.php";
+    // Server update account url
+    public static String URL_UPDATEACCOUNT = "http://13.93.202.168/android_login_api/updateAccount.php";
 }
