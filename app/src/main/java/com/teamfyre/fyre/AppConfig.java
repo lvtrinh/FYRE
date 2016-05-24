@@ -21,4 +21,7 @@ public class AppConfig {
 
     // Server update account url
     public static String URL_UPDATEACCOUNT = "http://13.93.202.168/android_login_api/updateAccount.php";
+
+    // Server remove account url
+    public static String URL_REMOVEACCOUNT = "http://13.93.202.168/android_login_api/removeUser.php";
 }

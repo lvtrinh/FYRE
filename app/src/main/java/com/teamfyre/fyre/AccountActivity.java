@@ -66,27 +66,13 @@ public class AccountActivity extends AppCompatActivity {
                 String e = email1.getText().toString();
                 String p = password.getText().toString();
 
-                //checking if email is in correct format
-                /*int emailLength = e.length();
-                boolean at = false;
-                int atIndex = 0;
-                boolean dot = false;
-                for (int i = 0; i < emailLength; i++) {
-                    if (i > 0 && e.charAt(i) == '@') {
-                        at = true;
-                        atIndex = i;
-                    }
-                    if (i > atIndex + 1 && i > 1 && e.charAt(i) == '.')
-                        dot = true;
-                }
-
-                if (n.length() != 0)
-                    updateName(n, id);
-                if (e.length() != 0 && at && dot)
-                    updateEmail(e, id);
-                if (p.length() != 0)
-                    updatePassword(e, p);*/
                 updateAccount(n, e, p, id);
+            }
+        });
+
+        RemoveAccount.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                removeAccount(email);
             }
         });
 
@@ -156,6 +142,70 @@ public class AccountActivity extends AppCompatActivity {
                 params.put("email", email);
                 params.put("password", password);
                 params.put("id", String.valueOf(id));
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+
+
+    //Updates a user account information
+    private void removeAccount(final String email) {
+        String tag_string_req = "req_updatename";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_REMOVEACCOUNT, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Update Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        //User succesfully deleted from MYSQL
+
+                        // Launch login activity
+                        Intent intent = new Intent(
+                                AccountActivity.this,
+                                LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Update Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                //hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
 
                 return params;
             }
