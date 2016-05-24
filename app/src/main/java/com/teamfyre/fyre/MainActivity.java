@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView.LayoutManager mLayoutManager;
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
-    public static final String DEMO_JSON_FILENAME = "costcoDemo.json";
+    public static final String DEMO_JSON_FILENAME = "chipotleDemo.json";
 
     /**************************************************************************
      * onCreate()
@@ -174,8 +174,8 @@ public class MainActivity extends AppCompatActivity
         ReceiptActivity add = new ReceiptActivity(db, session);
         //add.addReceipt(userId, testReceipt);
 
-        GetReceiptActivity get = new GetReceiptActivity(db, session);
-        get.getReceipts(userId);
+        //GetReceiptActivity get = new GetReceiptActivity(db, session);
+        //get.getReceipts(userId);
     }
 
     /**************************************************************************
@@ -271,6 +271,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //recList = test.getReceipts(userId);
+        //test.getReceipts(userId);
         recList = db.getAllReceipts();
         /*
         recList = new ArrayList<>();

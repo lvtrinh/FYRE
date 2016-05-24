@@ -250,7 +250,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         GridLayout.Spec columnSpec = GridLayout.spec(col, GridLayout.RIGHT);
         GridLayout.Spec rowSpec = GridLayout.spec(row);
 
-        toAdd.setText(text);
+        toAdd.setText("$" + text);
         toAdd.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Medium);
         layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
     }

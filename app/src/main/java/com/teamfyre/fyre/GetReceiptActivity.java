@@ -62,12 +62,11 @@ public class GetReceiptActivity {
                         for (int i = 0; i < receiptsArr.length(); i++) {
                             JSONObject arrObj = receiptsArr.getJSONObject(i);
                             Receipt tmpReceipt = new Receipt();
-                            int receiptId = Integer.parseInt(arrObj.get("receipt_id").toString());
-                            Log.d("MY FUCKING TAG AGAIN", "about to run");
-                            ArrayList<ReceiptItem> singleList = getItems(receiptId);
 
+                            int receiptId = Integer.parseInt(arrObj.get("receipt_id").toString());
+
+                            ArrayList<ReceiptItem> singleList = getItems(receiptId);
                             tmpReceipt.createItemList(singleList);
-                            receipt.add(tmpReceipt);
 
                             tmpReceipt.setStoreName(arrObj.get("store_name"));
                             tmpReceipt.setStoreStreet(arrObj.get("store_street"));
@@ -86,8 +85,8 @@ public class GetReceiptActivity {
                             tmpReceipt.setCashier(arrObj.get("cashier"));
                             tmpReceipt.setCheckNumber(arrObj.get("check_number"));
                             tmpReceipt.setOrderNumber(arrObj.get("order_number"));
-                            tmpReceipt.printReceipt();
                             //TODO GET A SINGLE RECEIPT
+                            receipt.add(tmpReceipt);
                             db.addReceiptLite(Integer.toString(receiptId), tmpReceipt);
                         }
 
@@ -165,14 +164,16 @@ public class GetReceiptActivity {
                         for (int i = 0; i < itemsArr.length(); i++) {
                             ReceiptItem tmpItem = new ReceiptItem();
                             JSONObject arrObj = itemsArr.getJSONObject(i);
+                            String itemId = arrObj.get("itemId").toString();
+
                             tmpItem.setName(arrObj.get("itemName"));
                             tmpItem.setItemDesc(arrObj.get("itemDescription"));
                             tmpItem.setPrice(arrObj.get("price"));
                             tmpItem.setItemNum(arrObj.get("itemNum"));
                             tmpItem.setQuantity(arrObj.get("quantity"));
                             tmpItem.setTaxType(arrObj.get("taxType"));
+                            db.addReceiptItem(String.valueOf(receiptId), itemId, tmpItem);
                             itemList.add(tmpItem);
-                            Log.d("MY TAG FUCK YOU BITCH", itemList.get(i).getName());
                         }
 
                     } else {

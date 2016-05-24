@@ -74,7 +74,7 @@ public class ReceiptActivity extends Activity {
                         JSONObject receipt = jObj.getJSONObject("receipt");
                         String id = receipt.getString("receiptId");
 
-                        //db.addReceiptLite(id, r);
+                        db.addReceiptLite(id, r);
                         for (int i = 0; i < r.getItemList().size(); i++) {
                             addItem(r.getItemList().get(i), Integer.parseInt(id));
                         }
@@ -176,7 +176,7 @@ public class ReceiptActivity extends Activity {
                         JSONObject receipt = jObj.getJSONObject("item");
                         String itemId = receipt.getString("itemId");
                         System.out.println(itemId);
-                        //db.addReceiptItem(String.valueOf(receiptId), itemId, item);
+                        db.addReceiptItem(String.valueOf(receiptId), itemId, item);
                     } else {
 
                         // Error occurred in registration. Get the error
