@@ -158,7 +158,7 @@ public class GetReceiptActivity {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
                     if (!error) {
-                        Log.d("SUCCESS", "Receipts were succesfully retrieved.");
+                        Log.d("SUCCESS", "Receipts were successfully retrieved.");
                         JSONArray itemsArr = jObj.getJSONArray("items");
 
                         for (int i = 0; i < itemsArr.length(); i++) {
