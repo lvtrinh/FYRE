@@ -71,6 +71,35 @@ public class AccountActivity extends AppCompatActivity {
                 boolean at = false;
                 int atIndex = 0;
                 boolean dot = false;
+                for (int i = 0; i < emailLength; i++) {
+                    if (i > 0 && e.charAt(i) == '@') {
+                        at = true;
+                        atIndex = i;
+                    }
+                    if (i > atIndex + 1 && i > 1 && e.charAt(i) == '.')
+                        dot = true;
+                }
+
+                if (n.length() != 0)
+                    updateName(n);
+                if (e.length() != 0 && at && dot)
+                    updateEmail(e, id);
+                if (p.length() != 0)
+                    updatePassword(e, p);
+            }
+        });
+
+        UpdateAccount.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                String n = name1.getText().toString();
+                String e = email1.getText().toString();
+                String p = password.getText().toString();
+
+                //checking if email is in correct format
+                int emailLength = e.length();
+                boolean at = false;
+                int atIndex = 0;
+                boolean dot = false;
                 for(int i = 0; i < emailLength; i++){
                     if(i > 0 && e.charAt(i) == '@') {
                         at = true;
