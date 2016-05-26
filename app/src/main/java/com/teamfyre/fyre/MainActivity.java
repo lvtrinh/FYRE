@@ -15,6 +15,8 @@
 package com.teamfyre.fyre;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,7 +30,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.view.menu.ActionMenuItemView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -158,7 +163,8 @@ public class MainActivity extends AppCompatActivity
         // TODO put this into a variable that persists past onCreate
         // TODO and basically its own file, and thread
         Receipt testReceipt = parseJson(jsonString);
-        int userId = Integer.parseInt(user.get("id"));
+
+ /*       int userId = Integer.parseInt(user.get("id"));
 
         ReceiptActivity add = new ReceiptActivity(db, session);
         int receiptId = 144;
@@ -172,9 +178,10 @@ public class MainActivity extends AppCompatActivity
             System.out.println("");
         }
 
+
         //GetReceiptActivity get = new GetReceiptActivity();
         //get.getReceipts(userId);
-
+*/
         // -------------------------- Begin NFC additions --------------------------
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -417,7 +424,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -432,6 +438,8 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if(id == R.id.action_search) {
         }
 
         return super.onOptionsItemSelected(item);
