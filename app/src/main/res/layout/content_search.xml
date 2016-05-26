@@ -8,8 +8,4 @@
     tools:context="com.teamfyre.fyre.MainActivity"
     android:orientation="vertical" >
 
-        <include
-            layout="@layout/recent_receipts_test"
-            />
-
 </LinearLayout>
