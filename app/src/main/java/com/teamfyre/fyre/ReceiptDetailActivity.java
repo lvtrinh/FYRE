@@ -99,8 +99,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
         // TODO build a string for date time first, replace body view
         if (receipt.getDate() != null) {
-            date_header.setText(receipt.getDate());
-            purchaseDateTime.setText(receipt.getDate());
+            date_header.setText(receipt.getDateUI());
+            purchaseDateTime.setText(receipt.getDateUI());
         }
 
         if (receipt.getTime() != null) {
@@ -250,7 +250,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         GridLayout.Spec columnSpec = GridLayout.spec(col, GridLayout.RIGHT);
         GridLayout.Spec rowSpec = GridLayout.spec(row);
 
-        toAdd.setText(text);
+        toAdd.setText("$" + text);
         toAdd.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Medium);
         layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
     }

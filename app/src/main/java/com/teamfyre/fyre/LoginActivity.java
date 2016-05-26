@@ -141,6 +141,9 @@ public class LoginActivity extends AppCompatActivity {
                         // Inserting row in users table
                         db.addUser(id, name, email, uid, created_at);
 
+                        GetReceiptActivity get = new GetReceiptActivity(db, session);
+                        get.getReceipts(Integer.parseInt(id));
+
                         // Launch main activity
                         Intent intent = new Intent(LoginActivity.this,
                                 MainActivity.class);

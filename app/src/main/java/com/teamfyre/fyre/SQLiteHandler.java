@@ -208,7 +208,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     }
 
     public void addReceiptItem(String receipt_id, String item_id, ReceiptItem r) {
-
+        Log.d("INSERTING SQLite", item_id);
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -228,7 +228,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         }
         db.close(); // Closing database connection
 
-        //Log.d(TAG, "New receiptItem inserted into sqlite: " + receipt);
+        Log.d(TAG, "New receiptItem inserted into sqlite: ");
     }
 
 
@@ -283,7 +283,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 else currReceipt.setTotalPrice(cursor.getString(13));
 
                 if (cursor.getString(14) == null || cursor.getString(15) == null) {}
-                else currReceipt.setDateTime(cursor.getString(14), cursor.getString(15));
+                else currReceipt.setDateTimeDB(cursor.getString(14), cursor.getString(15));
 
                 if (cursor.getString(16) == null) {}
                 else currReceipt.setCashier(cursor.getString(16));
@@ -294,8 +294,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 if (cursor.getString(18) == null) {}
                 else currReceipt.setOrderNumber(cursor.getString(18));
 
-                if (cursor.getString(0) == null) {}
-                else currReceipt.createItemList(getAllItemsID(cursor.getString(0)));
+                if (cursor.getString(0) == null) { Log.d("WRONG", ""); }
+                else {
+                    Log.d("SOMETHING IMPORTANT", cursor.getString(0));
+                    currReceipt.createItemList(getAllItemsID(cursor.getString(0)));
+                }
 
                 receipts.add(currReceipt);
             } while (cursor.moveToNext());
@@ -309,14 +312,16 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     public ArrayList<ReceiptItem> getAllItemsID(String id) {
         ArrayList<ReceiptItem> receiptItem = new ArrayList<ReceiptItem>();
-        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT_ITEM + " WHERE " + KEY_RECEIPTID + " = '" + id + "'";
+        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT_ITEM  + " WHERE receipt_id = " + id;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Move to first row
         if (cursor.moveToFirst()) {
+            Log.d("RUNNING GOOD", "GOOD");
             do {
                 ReceiptItem currItem = new ReceiptItem();
+                Log.d("GET CURSOR", cursor.getString(0));
 
                 if (cursor.getString(2) == null) {}
                 else currItem.setName(cursor.getString(2));
@@ -343,6 +348,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         db.close();
 
+        Log.d("SOMETHING BELOW LOOK", "");
+        for (int i = 0; i < receiptItem.size(); i++) Log.d("BELOW", receiptItem.get(i).getName());
         return receiptItem;
     }
 
@@ -353,6 +360,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         // Delete All Rows
         db.delete(TABLE_USER, null, null);
+        db.delete(TABLE_RECEIPT, null, null);
+        db.delete(TABLE_RECEIPT_ITEM, null, null);
         db.close();
 
         Log.d(TAG, "Deleted all user info from sqlite");

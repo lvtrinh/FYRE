@@ -11,7 +11,7 @@
     {"name": "L IC Boba Milk Tea", "itemDesc": null, "price": "3.25", "itemNum": null, "quantity": "1", "taxType": null},
     {"name": "*85C Egg Tart", "itemDesc": null, "price": "6.60", "itemNum": null, "quantity": "4", "taxType": null}
   ],
-  "hereGo": "Go",
+  "hereGo": "0",
   "cardType": "VISA",
   "cardNum": "5029",
   "paymentMethod": "Swipe",
@@ -19,7 +19,7 @@
   "subtotal": "14.85",
   "tax": "0.00",
   "totalPrice": "14.85",
-  "date": "4/15/16",
+  "date": "4-15-16",
   "time": "14:42",
   "cashier": "Nhi T",
   "checkNumber": "625",
