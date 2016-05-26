@@ -80,13 +80,12 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private NfcAdapter mNfcAdapter;
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
     public static final String DEMO_JSON_FILENAME = "costcoDemo.json";
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "NfcDemo";
-
-    private NfcAdapter mNfcAdapter;
 
     /**************************************************************************
      * onCreate()
