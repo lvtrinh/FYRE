@@ -2087,4 +2087,5 @@ int[] styleable ViewStubCompat { 0x010100d0, 0x010100f2, 0x010100f3 }
 int styleable ViewStubCompat_android_id 0
 int styleable ViewStubCompat_android_inflatedId 2
 int styleable ViewStubCompat_android_layout 1
-int xml pref_general 0x7f050000
+int xml nfc_tech_filter 0x7f050000
+int xml pref_general 0x7f050001

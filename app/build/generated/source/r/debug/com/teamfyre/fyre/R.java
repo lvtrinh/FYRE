@@ -3699,7 +3699,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int Widget_Design_TextInputLayout=0x7f09016a;
     }
     public static final class xml {
-        public static final int pref_general=0x7f050000;
+        public static final int nfc_tech_filter=0x7f050000;
+        public static final int pref_general=0x7f050001;
     }
     public static final class styleable {
         /** Attributes that can be used with a ActionBar.
