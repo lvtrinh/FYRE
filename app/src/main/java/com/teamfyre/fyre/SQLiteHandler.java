@@ -310,12 +310,104 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         return receipts;
     }
 
+    public Receipt getSpecificReceipt(String receiptId) {
+        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT + " WHERE receipt_id = " + receiptId;
 
+        Receipt currReceipt = new Receipt();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(1) == null) {}
+                else currReceipt.setStoreName(cursor.getString(1));
+
+                if (cursor.getString(2) == null) {}
+                else currReceipt.setStoreStreet(cursor.getString(2));
+
+                if (cursor.getString(3) == null) {}
+                else currReceipt.setStoreCityState(cursor.getString(3));
+
+                if (cursor.getString(4) == null) {}
+                else currReceipt.setStorePhone(cursor.getString(4));
+
+                if (cursor.getString(5) == null) {}
+                else currReceipt.setStoreWebsite(cursor.getString(5));
+
+                if (cursor.getString(6) == null) {}
+                else currReceipt.setStoreCategory(cursor.getString(6));
+
+                if (cursor.getString(7) == null) {}
+                else currReceipt.setHereGo(cursor.getString(7));
+
+                if (cursor.getString(8) == null) {}
+                else currReceipt.setCardType(cursor.getString(8));
+
+                if (cursor.getString(9) == null) {}
+                else currReceipt.setCardNum(cursor.getString(9));
+
+                if (cursor.getString(10) == null) {}
+                else currReceipt.setPaymentMethod(cursor.getString(10));
+
+                if (cursor.getString(11) == null) {}
+                else currReceipt.setSubtotal(cursor.getString(11));
+
+                if (cursor.getString(12) == null) {}
+                else currReceipt.setTax(cursor.getString(12));
+
+                if (cursor.getString(13) == null) {}
+                else currReceipt.setTotalPrice(cursor.getString(13));
+
+                if (cursor.getString(14) == null || cursor.getString(15) == null) {}
+                else currReceipt.setDateTimeDB(cursor.getString(14), cursor.getString(15));
+
+                if (cursor.getString(16) == null) {}
+                else currReceipt.setCashier(cursor.getString(16));
+
+                if (cursor.getString(17) == null) {}
+                else currReceipt.setCheckNumber(cursor.getString(17));
+
+                if (cursor.getString(18) == null) {}
+                else currReceipt.setOrderNumber(cursor.getString(18));
+
+                if (cursor.getString(0) == null) { Log.d("WRONG", ""); }
+                else {
+                    currReceipt.createItemList(getAllItemsID(cursor.getString(0)));
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        db.close();
+
+        return currReceipt;
+    }
+
+    public ArrayList<Receipt> getSearchItems(String query) {
+        ArrayList<Receipt> receipts = new ArrayList<Receipt>();
+        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT_ITEM + " WHERE item_name like '%" + query + "%'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        Log.d("getSearchItems running", "GOOOOOOD");
+        // Move to first row
+        if (cursor.moveToFirst()) {
+            do {
+                if (cursor.getString(0) != null) receipts.add(getSpecificReceipt(cursor.getString(0)));
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        db.close();
+
+        return receipts;
+    }
 
     public ArrayList<Receipt> getSearchReceipts(String query) {
         ArrayList<Receipt> receipts = new ArrayList<Receipt>();
-        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT + " WHERE store_name like '%" + query + "%'" +
-                "OR WHERE store_street like '%" + query + "%'";
+        String selectQuery = "SELECT * FROM " + TABLE_RECEIPT
+                + " WHERE store_name like '%" + query + "%'";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -387,6 +479,11 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         cursor.close();
 
         db.close();
+
+        ArrayList<Receipt> itemResult = getSearchItems(query);
+        if (itemResult.size() != 0) for (int i = 0; i < itemResult.size(); i++) {
+            receipts.add(itemResult.get(i));
+        }
 
         return receipts;
     }

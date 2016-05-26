@@ -229,7 +229,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         GridLayout.Spec rowSpec = GridLayout.spec(row);
 
         toAdd.setText(text);
-        toAdd.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Medium);
+        toAdd.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+        toAdd.setTextColor(getResources().getColor(R.color.text));
         layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
     }
 
@@ -251,7 +252,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         GridLayout.Spec rowSpec = GridLayout.spec(row);
 
         toAdd.setText("$" + text);
-        toAdd.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Medium);
+        toAdd.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+        toAdd.setTextColor(getResources().getColor(R.color.text));
         layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
     }
 
@@ -275,7 +277,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         GridLayout.Spec rowSpec = GridLayout.spec(row);
 
         toAdd.setText(text);
-        toAdd.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Small);
+        toAdd.setTextAppearance(this, android.R.style.TextAppearance_Small);
         layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
     }
 

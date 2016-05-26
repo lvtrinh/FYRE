@@ -68,7 +68,7 @@ import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+public class  MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // TODO create something that can hold/display many receipts, instead of just one
