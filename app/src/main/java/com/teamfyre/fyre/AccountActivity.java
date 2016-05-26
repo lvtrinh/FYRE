@@ -1,5 +1,6 @@
 package com.teamfyre.fyre;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -96,8 +97,23 @@ public class AccountActivity extends AppCompatActivity {
 
         RemoveAccount.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                String e = email1.getText().toString();
-                removeAccount(e);
+                final String e = email1.getText().toString();
+                new android.support.v7.app.AlertDialog.Builder(AccountActivity.this) //changed to MainActivity.this from context
+                        .setTitle("Remove Account")
+                        .setMessage("Are you sure you want to remove your account?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                removeAccount(e);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         });
 

@@ -397,10 +397,22 @@ public class SettingsActivity extends AppCompatActivity {
                         startActivity(intent);
                         **/
 
-                        removeAccount(email);
-
-
-                        //finish();
+                        new android.support.v7.app.AlertDialog.Builder(SettingsActivity.this) //changed to MainActivity.this from context
+                                .setTitle("Remove Account")
+                                .setMessage("Are you sure you want to remove your account?")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                        removeAccount(email);
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
                     }
                     else {
                         // Error in login. Get the error message
