@@ -16,6 +16,7 @@ package com.teamfyre.fyre;
 
 import android.app.Activity;
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
@@ -437,6 +438,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchableActivity.class)));
+        searchView.setQueryHint(getResources().getString(R.string.search_hint));
         return true;
     }
 
@@ -452,6 +458,7 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         else if(id == R.id.action_search) {
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
