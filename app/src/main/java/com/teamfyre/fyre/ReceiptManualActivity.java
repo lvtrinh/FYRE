@@ -111,37 +111,11 @@ public class ReceiptManualActivity extends Activity {
                 StringBuilder date = new StringBuilder(inputDate.getText().toString().trim());
                 String price = inputPrice.getText().toString().trim();
 
-                // fixes input for price
-                boolean decimalFound = false;
-                for (int x = 0; x < price.length(); x++) {
-                    if (price.charAt(x) == '.') {
-                        decimalFound = true;
-                    }
-                }
-
-                if (!decimalFound) {
-                    price += ".00";
-                }
-
                 // fixes input for date
-                boolean correctDate = true;
-                int count = 0;
-
                 for (int x = 0; x < date.toString().length(); x++) {
                     if (date.toString().charAt(x) == '/') {
                         date.setCharAt(x, '-');
-
-                        count++;
                     }
-
-                    else if (date.toString().charAt(x) == '-') {
-                        count++;
-                    }
-                }
-
-                System.out.println(count);
-                if (count != 2 || date.toString().charAt(0) == '-' || date.toString().charAt(0) == '/') {
-                    correctDate = false;
                 }
 
                 // user did not properly insert info, display warning
@@ -152,7 +126,7 @@ public class ReceiptManualActivity extends Activity {
                 }
 
                 // user had incorrect date format
-                else if (!correctDate) {
+                else if (!date.toString().matches("\\d{2}-\\d{2}-\\d{4}")) {
                     Toast.makeText(getApplicationContext(),
                             "Incorrect date format",
                             Toast.LENGTH_LONG).show();
@@ -163,6 +137,18 @@ public class ReceiptManualActivity extends Activity {
                     // hides keyboard after user entry complete
                     InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+                    // fixes input for price
+                    boolean decimalFound = false;
+                    for (int x = 0; x < price.length(); x++) {
+                        if (price.charAt(x) == '.') {
+                            decimalFound = true;
+                        }
+                    }
+
+                    if (!decimalFound) {
+                        price += ".00";
+                    }
 
                     // creates receipt object from information
                     receipt = new Receipt();

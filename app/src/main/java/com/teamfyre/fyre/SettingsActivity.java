@@ -64,6 +64,7 @@ public class SettingsActivity extends AppCompatActivity {
     private SessionManager session;
     private Button btn;
     private Button logout;
+    private Button removeAccount;
     private String pass = "";
     private ProgressDialog pDialog;
     private static final String TAG = RegisterActivity.class.getSimpleName();
@@ -164,6 +165,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         btn = (Button) findViewById(R.id.btn);
         logout = (Button) findViewById(R.id.logout);
+        removeAccount = (Button) findViewById(R.id.removeAccount);
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
@@ -243,6 +245,38 @@ public class SettingsActivity extends AppCompatActivity {
 
         });
 
+        removeAccount.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+                builder.setTitle("Enter Password");
+
+                // Set up the input
+                final EditText input = new EditText(SettingsActivity.this);
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        pass = input.getText().toString();
+                        checkPassword2(email, pass);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+            }
+
+        });
+
         logout.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -268,6 +302,7 @@ public class SettingsActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         //client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
+
     private void checkPassword(final String email, final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_login";
@@ -294,6 +329,90 @@ public class SettingsActivity extends AppCompatActivity {
                                 AccountActivity.class);
                         startActivity(intent);
                         //finish();
+                    }
+                    else {
+                        // Error in login. Get the error message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    // JSON error
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Login Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting parameters to login url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
+                params.put("password", password);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+    private void checkPassword2(final String email, final String password) {
+        // Tag used to cancel the request
+        String tag_string_req = "req_login";
+
+        pDialog.setMessage("Verifying password...");
+        showDialog();
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_LOGIN, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Login Response: " + response.toString());
+                hideDialog();
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+
+                    // Check for error node in json
+                    if (!error) {
+                        // Launch main activity
+                        /**Intent intent = new Intent(SettingsActivity.this,
+                                LoginActivity.class);
+                        startActivity(intent);
+                        **/
+
+                        new android.support.v7.app.AlertDialog.Builder(SettingsActivity.this) //changed to MainActivity.this from context
+                                .setTitle("Remove Account")
+                                .setMessage("Are you sure you want to remove your account?")
+                                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // continue with delete
+                                        removeAccount(email);
+                                    }
+                                })
+                                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
                     }
                     else {
                         // Error in login. Get the error message
@@ -544,5 +663,77 @@ public class SettingsActivity extends AppCompatActivity {
             pDialog.dismiss();
     }
 
+    //Updates a user account information
+    private void removeAccount(final String email) {
+        String tag_string_req = "req_updatename";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_REMOVEACCOUNT, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Update Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        //User succesfully deleted from MYSQL
+
+                        session.setLogin(false);
+
+                        // delete all the data that was on the phone
+                        db.deleteUsers();
+
+                        // Launching the login activity
+                        Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                        /**
+                         // Launch login activity
+                         Intent intent = new Intent(
+                         AccountActivity.this,
+                         LoginActivity.class);
+                         startActivity(intent);
+                         finish();
+                         **/
+                    } else {
+
+                        // Error occurred in registration. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Update Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                //hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
 
 }

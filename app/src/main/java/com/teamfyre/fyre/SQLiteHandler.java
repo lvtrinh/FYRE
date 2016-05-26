@@ -134,17 +134,20 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "New user inserted into sqlite: " + id);
     }
 
-
-    public void updateEmail(String userId, String email) {
+    /**
+     * Update the account info in SQLite
+     * */
+    public void updateAccountLite(String userId, String name, String email) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(KEY_NAME, name);
         values.put(KEY_EMAIL, email);
 
         long id = db.update(TABLE_USER, values, KEY_ID + "=" + userId, null);
         db.close();
 
-        Log.d(TAG, "User email was updated: " + id);
+        Log.d(TAG, "User info was updated: " + id);
     }
 
     /**

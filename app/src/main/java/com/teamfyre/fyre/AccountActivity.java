@@ -1,5 +1,6 @@
 package com.teamfyre.fyre;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +36,7 @@ public class AccountActivity extends AppCompatActivity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
@@ -67,36 +68,64 @@ public class AccountActivity extends AppCompatActivity {
                 String p = password.getText().toString();
 
                 //checking if email is in correct format
-                int emailLength = e.length();
+                /**
+                 int emailLength = e.length();
                 boolean at = false;
                 int atIndex = 0;
                 boolean dot = false;
-                for(int i = 0; i < emailLength; i++){
-                    if(i > 0 && e.charAt(i) == '@') {
+                for (int i = 0; i < emailLength; i++) {
+                    if (i > 0 && e.charAt(i) == '@') {
                         at = true;
                         atIndex = i;
                     }
-                    if(i > atIndex + 1 && i > 1 && e.charAt(i) == '.')
+                    if (i > atIndex + 1 && i > 1 && e.charAt(i) == '.')
                         dot = true;
                 }
+                 **/
 
-                if(n.length() != 0)
+                /**
+                if (n.length() != 0)
                     updateName(n);
-                if(e.length() != 0 && at && dot)
+                if (e.length() != 0 && at && dot)
                     updateEmail(e, id);
-                if(p.length() != 0)
-                    updatePassword(e,p);
+                if (p.length() != 0)
+                    updatePassword(e, p);
+                 **/
+                updateAccount(n, e, p, id);
+            }
+        });
+
+        RemoveAccount.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                final String e = email1.getText().toString();
+                new android.support.v7.app.AlertDialog.Builder(AccountActivity.this) //changed to MainActivity.this from context
+                        .setTitle("Remove Account")
+                        .setMessage("Are you sure you want to remove your account?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                removeAccount(e);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         });
 
     }
 
-    //need a method to update account info based on new info inputted
-    private void updateEmail(final String email, final int id){
-        String tag_string_req = "req_updateemail";
+
+    //Updates a user account information
+    private void updateAccount(final String name, final String email, final String password, final int id) {
+        String tag_string_req = "req_updatename";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                AppConfig.URL_UPDATEEMAIL, new Response.Listener<String>() {
+                AppConfig.URL_UPDATEACCOUNT, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -109,23 +138,19 @@ public class AccountActivity extends AppCompatActivity {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
                         String id = jObj.getString("id");
-                        //String name = jObj.getString("name");
+                        String name = jObj.getString("name");
                         String email = jObj.getString("email");
 
-                        System.out.println("Email succesfully updated.");
-                        System.out.println("Email: " + email);
+                        System.out.println("User info succesfully updated.");
 
-                        db.updateEmail(id, email);
-
-                        // Going to need to add somethng here for SQLite
-                        //db.addUser(id, name, email, uid, created_at);
+                        //Update the user account in SQLite
+                        db.updateAccountLite(id, name, email);
 
                         // Launch login activity
                         Intent intent = new Intent(
                                 AccountActivity.this,
                                 SettingsActivity.class);
                         startActivity(intent);
-                        //finish();
                     } else {
 
                         // Error occurred in registration. Get the error
@@ -154,7 +179,9 @@ public class AccountActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("name", name);
                 params.put("email", email);
+                params.put("password", password);
                 params.put("id", String.valueOf(id));
 
                 return params;
@@ -167,11 +194,13 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
-    private void updatePassword(final String email, final String password) {
-        String tag_string_req = "req_updatepassword";
+
+    //Updates a user account information
+    private void removeAccount(final String email) {
+        String tag_string_req = "req_updatename";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
-                AppConfig.URL_UPDATEPASSWORD, new Response.Listener<String>() {
+                AppConfig.URL_REMOVEACCOUNT, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -181,26 +210,25 @@ public class AccountActivity extends AppCompatActivity {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
                     if (!error) {
-                        // User successfully stored in MySQL
-                        // Now store the user in sqlite
-                        String id = jObj.getString("id");
-                        //String name = jObj.getString("name");
-                        String email = jObj.getString("email");
+                        //User succesfully deleted from MYSQL
 
-                        System.out.println("Password succesfully updated.");
-                        //System.out.println("Email: " + email);
+                            session.setLogin(false);
 
-                        //db.updatePassword(email, password);
+                            // delete all the data that was on the phone
+                            db.deleteUsers();
 
-                        // Going to need to add somethng here for SQLite
-                        //db.addUser(id, name, email, uid, created_at);
-
+                            // Launching the login activity
+                            Intent intent = new Intent(AccountActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        /**
                         // Launch login activity
                         Intent intent = new Intent(
                                 AccountActivity.this,
-                                SettingsActivity.class);
+                                LoginActivity.class);
                         startActivity(intent);
-                        //finish();
+                        finish();
+                         **/
                     } else {
 
                         // Error occurred in registration. Get the error
@@ -230,7 +258,6 @@ public class AccountActivity extends AppCompatActivity {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email", email);
-                params.put("password", password);
 
                 return params;
             }
@@ -239,10 +266,6 @@ public class AccountActivity extends AppCompatActivity {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-    }
-
-    private void updateName(String name) {
-
     }
 
 }
