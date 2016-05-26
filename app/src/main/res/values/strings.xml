@@ -6,6 +6,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="search_title">Search</string>
+    <string name="search_label">Search</string>
     <string name="search_hint">Search by item or mechant</string>
 
     <!-- these two should always be replaced by the login user's info -->
