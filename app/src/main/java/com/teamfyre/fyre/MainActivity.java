@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity
         //GetReceiptActivity get = new GetReceiptActivity();
         //get.getReceipts(userId);
 */
-        // -------------------------- Begin NFC additions --------------------------
+        // Nfc additions
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
         // If there is is an enabled NFC adapter, perform NFC actions
@@ -190,6 +190,13 @@ public class MainActivity extends AppCompatActivity
             handleIntent(getIntent());
         }
     }
+
+    /**************************************************************************
+     * NdefReaderTask
+     *
+     * This class is used to read and process NFC data. See method onPostExecute
+     * for the resulting string receipt processed.
+     **************************************************************************/
 
     private class NdefReaderTask extends AsyncTask<Tag, Void, String> {
 
@@ -237,7 +244,12 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                System.out.println(result);
+
+                // Turns the read data into an nfcReceipt and opens in ReceiptDetailActivity
+                Receipt nfcReceipt = parseJson(result);
+
+                //todo: open this receipt in ReceiptDetailActivity
+                //todo: upload this receipt to database
 
                 Toast.makeText(getApplicationContext(),
                         "NFC data read",
