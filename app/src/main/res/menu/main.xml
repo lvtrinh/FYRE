@@ -7,6 +7,11 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menu_refresh"
+        android:title="Refresh"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/action_search"
         android:title="Search"
         android:icon="@drawable/ic_menu_search"

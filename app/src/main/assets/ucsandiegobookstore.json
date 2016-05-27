@@ -6,19 +6,19 @@
   "storeWebsite": "www.ucsandiegobookstore.com",
   "storeCategory": "Retail",
   "itemList": [
-    {"name": "Scissors 3M Precision", "itemDesc": null, "price": "5.99", "itemNum": null, "quantity": null, "taxType": null}
+    {"name": "Scissors 3M Precision", "itemDesc": null, "price": "5999.99", "itemNum": null, "quantity": null, "taxType": null}
   ],
   "hereGo": "0",
   "cardType": "Visa",
   "cardNum": "0347",
   "paymentMethod": "Swipe",
   "cashBack": "0.00",
-  "subtotal": "5.99",
+  "subtotal": "5999.99",
   "tax": ".48",
   "totalPrice": "6.47",
-  "date": "09/20/15",
+  "date": "09-20-15",
   "time": "15:40",
-  "cashier": null,
+  "cashier": "JSON",
   "checkNumber": null,
   "orderNumber": null
 }

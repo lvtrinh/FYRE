@@ -18,8 +18,11 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.UiThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +54,7 @@ import java.util.HashMap;
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.RunnableFuture;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -60,13 +64,18 @@ public class MainActivity extends AppCompatActivity
     private SQLiteHandler db;
     private SessionManager session;
     private String jsonString;
+    private int userId;
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ReceiptAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<Receipt> demoList;
+
+    private Handler updateDataHandler = new Handler();
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
-    public static final String DEMO_JSON_FILENAME = "chipotleDemo.json";
+    public static final String DEMO_JSON_FILENAME = "primosDemo.json";
 
     /**************************************************************************
      * onCreate()
@@ -151,16 +160,28 @@ public class MainActivity extends AppCompatActivity
         /////////////////////////////////////////////////////
         //  recycler view stuff
         /////////////////////////////////////////////////////
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.receipts_swipe_refresh_layout);
         mRecyclerView = (RecyclerView) findViewById(R.id.receipts_recycler_view);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryDark);
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        int userId = Integer.parseInt(user.get("id"));
-        List<Receipt> demoList = generateDemoList(userId);
+        userId = Integer.parseInt(user.get("id"));
+        generateDemoList(userId);
 
         mAdapter = new ReceiptAdapter(demoList);
         mRecyclerView.setAdapter(mAdapter);
+
+        mSwipeRefreshLayout.setOnRefreshListener(
+            new SwipeRefreshLayout.OnRefreshListener() {
+
+                @Override
+                public void onRefresh() {
+                    updateData();
+                }
+            }
+        );
 
         ///////////////////////////////////////////////////
         // end recycler view stuff
@@ -265,48 +286,87 @@ public class MainActivity extends AppCompatActivity
         return json;
     }
 
-    private List<Receipt> generateDemoList(int userId){
-        List<Receipt> recList;
+    private void generateDemoList(int userId){
         GetReceiptActivity test = new GetReceiptActivity(db, session);
 
-
-        //recList = test.getReceipts(userId);
+        //demoList = test.getReceipts(userId);
         //test.getReceipts(userId);
-        recList = db.getAllReceipts();
-        /*
-        recList = new ArrayList<>();
+        //demoList = db.getAllReceipts();
+        int numDemos = 0;
+        demoList = new ArrayList<>();
         Receipt demo1 = parseJson(loadJsonLocal(DEMO_JSON_FILENAME));
-        recList.add(demo1);
-
         Receipt demo2 = parseJson(loadJsonLocal("chipotleDemo.json"));
-        recList.add(demo2);
+        Receipt demo3 = parseJson(loadJsonLocal("costcoDemo.json"));
+        Receipt demo4 = parseJson(loadJsonLocal("ucsandiegobookstore.json"));
 
-        Receipt demo3 = parseJson(loadJsonLocal("popeyesDemo.json"));
-        recList.add(demo3);
+        while (Math.random() > 0.1) {
+            numDemos++;
+            double rand2 = Math.random();
+            Log.d("demoList", "rand = " + rand2);
+            if (rand2 > .75) {
+                Log.d("demoList", "Adding demo1");
+                demoList.add(demo1);
+            } else if (rand2 > .5){
+                Log.d("demoList", "Adding demo2");
+                demoList.add(demo2);
+            } else if (rand2 > .25) {
+                Log.d("demoList", "Adding demo3");
+                demoList.add(demo3);
+            } else {
+                Log.d("demoList", "Adding demo4");
+                demoList.add(demo4);
+            }
+        }
+        Log.d("demoList", "finished adding demos! num: " + numDemos);
+        /*Receipt demo3 = parseJson(loadJsonLocal("popeyesDemo.json"));
+        demoList.add(demo3);
 
         Receipt demo4 = parseJson(loadJsonLocal("dlush.json"));
-        recList.add(demo4);
+        demoList.add(demo4);
 
         Receipt demo5 = parseJson(loadJsonLocal("primosDemo.json"));
-        recList.add(demo5);
+        demoList.add(demo5);
 
         Receipt demo6 = parseJson(loadJsonLocal("innoutburger.json"));
-        recList.add(demo6);
+        demoList.add(demo6);
 
         Receipt demo7 = parseJson(loadJsonLocal("costcoDemo.json"));
-        recList.add(demo7);
+        demoList.add(demo7);
 
         Receipt demo8 = parseJson(loadJsonLocal("pandaexpress.json"));
-        recList.add(demo8);
+        demoList.add(demo8);
 
         Receipt demo9 = parseJson(loadJsonLocal("safewayDemo.json"));
-        recList.add(demo9);
+        demoList.add(demo9);
 
         Receipt demo10 = parseJson(loadJsonLocal("tastyGardenDemo.json"));
-        recList.add(demo10);
-        */
+        demoList.add(demo10);
+*/
+    }
 
-        return recList;
+    /**************************************************************************
+     * updateData()
+     *
+     * Updates the list of receipts, and tells the RecyclerView to update itself
+     *
+     **************************************************************************/
+    private void updateData() {
+
+        updateDataHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                generateDemoList(userId);
+                mAdapter.swapData(demoList);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        }, 1000);
     }
 
     @Override
@@ -336,6 +396,8 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.menu_refresh) {
+            updateData();
         }
 
         return super.onOptionsItemSelected(item);
