@@ -283,8 +283,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:id="@+id/editText"
-                    android:hint="memo (isn&apos;t saved yet)"
+                    android:id="@+id/rec_detail_memo"
+                    android:hint="Optional: Insert memo here"
                     android:layout_marginLeft="14dp"
                     android:layout_marginRight="14dp"
                     android:layout_marginBottom="14dp" />

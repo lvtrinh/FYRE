@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 public class ReceiptDetailActivity extends AppCompatActivity {
     private Receipt receipt;
     private GridLayout layout;
+    private EditText inputMemo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
         Bundle data = getIntent().getExtras();
         receipt = data.getParcelable(MainActivity.EXTRA_RECEIPT);
+
+        inputMemo = (EditText) findViewById(R.id.rec_detail_memo);
 
         /* Test */
         //System.out.println("ReceiptDetailActivity: ");
@@ -82,6 +86,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         // may need to delete these two, if not card
         TextView paymentCardMethod = (TextView) findViewById(R.id.rec_detail_payment_card_method);
         TextView paymentCardNum = (TextView) findViewById(R.id.rec_detail_payment_card_num);
+        TextView memo = (TextView) findViewById(R.id.rec_detail_memo);
 
 
         // replace data
@@ -155,7 +160,9 @@ public class ReceiptDetailActivity extends AppCompatActivity {
             paymentCardNum.setText("Card ending in " + receipt.getCardNum());
         }
 
-        // TODO if memo has data in it, populate the memo
+        if (receipt.getMemo() != null) {
+            memo.setText(receipt.getMemo());
+        }
     }
 
     /**************************************************************************
@@ -292,6 +299,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        // TODO save memo data (to local app? to database?)
+        // memo input working, need to update receipt in DB here though
+        System.out.println(inputMemo.getText().toString().trim());
     }
 }
