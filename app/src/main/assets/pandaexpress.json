@@ -1,7 +1,7 @@
 {
   "storeName": "Panda Express #0786",
   "storeStreet": null,
-  "storeCityState": "La Jolla CA,
+  "storeCityState": "La Jolla CA",
   "storePhone": "8586380106",
   "storeWebsite": "pandaexpress.com/connect",
   "storeCategory": "Food and Drink",
@@ -17,7 +17,7 @@
   "tax": "0.54",
   "totalPrice": "7.34",
   "date": "3/13/2016",
-  "time": "5:18:06 PM",
+  "time": "15:18",
   "cashier": "AMY B",
   "checkNumber": null,
   "orderNumber": "259137"
