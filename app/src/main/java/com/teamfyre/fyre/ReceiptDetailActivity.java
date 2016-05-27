@@ -22,6 +22,7 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -299,7 +300,18 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        // memo input working, need to update receipt in DB here though
-        System.out.println(inputMemo.getText().toString().trim());
+        if (receipt.getMemo() == null) {
+            receipt.setMemo("");
+        }
+
+        // if the memo was changed, update it in the DB
+        if (!receipt.getMemo().equals(inputMemo.getText().toString().trim())) {
+
+            // memo input working, need to update receipt in DB here though
+
+            Toast.makeText(getApplicationContext(),
+                    "Memo saved",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }
