@@ -33,7 +33,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.view.menu.ActionMenuItemView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Gravity;
@@ -48,6 +49,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,8 +66,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.math.BigDecimal;
 import java.util.Iterator;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity
+public class  MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // TODO create something that can hold/display many receipts, instead of just one
@@ -73,12 +77,15 @@ public class MainActivity extends AppCompatActivity
     private SessionManager session;
     private String jsonString;
 
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private NfcAdapter mNfcAdapter;
+
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
     public static final String DEMO_JSON_FILENAME = "costcoDemo.json";
     public static final String MIME_TEXT_PLAIN = "text/plain";
     public static final String TAG = "NfcDemo";
-
-    private NfcAdapter mNfcAdapter;
 
     /**************************************************************************
      * onCreate()
@@ -160,29 +167,35 @@ public class MainActivity extends AppCompatActivity
         headerMain.setText(name);
         headerSub.setText(email);
 
-        jsonString = loadJsonLocal();
+        /////////////////////////////////////////////////////
+        //  recycler view stuff
+        /////////////////////////////////////////////////////
+        mRecyclerView = (RecyclerView) findViewById(R.id.receipts_recycler_view);
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        int userId = Integer.parseInt(user.get("id"));
+        List<Receipt> demoList = generateDemoList(userId);
+
+        mAdapter = new ReceiptAdapter(demoList);
+        mRecyclerView.setAdapter(mAdapter);
+
+        ///////////////////////////////////////////////////
+        // end recycler view stuff
+        ///////////////////////////////////////////////////
+
+        jsonString = loadJsonLocal(DEMO_JSON_FILENAME);
         // TODO put this into a variable that persists past onCreate
         // TODO and basically its own file, and thread
         Receipt testReceipt = parseJson(jsonString);
 
- /*       int userId = Integer.parseInt(user.get("id"));
-
         ReceiptActivity add = new ReceiptActivity(db, session);
-        int receiptId = 144;
-        add.addReceipt(userId, testReceipt);
+        //add.addReceipt(userId, testReceipt);
 
-        //db.getReceiptDetails();
-        ArrayList<Receipt> test = db.getAllReceipts();
-
-        for (int i = 0; i < test.size(); i++) {
-            test.get(i).printReceipt();
-            System.out.println("");
-        }
-
-
-        //GetReceiptActivity get = new GetReceiptActivity();
+        //GetReceiptActivity get = new GetReceiptActivity(db, session);
         //get.getReceipts(userId);
-*/
+
         // Nfc additions
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
@@ -409,10 +422,10 @@ public class MainActivity extends AppCompatActivity
      * Reads json formatted data into a string from a local assets file
      * @return String - json data
      **************************************************************************/
-    public String loadJsonLocal() {
+    public String loadJsonLocal(String rawJSON) {
         String json = null;
         try {
-            InputStream is = getAssets().open(DEMO_JSON_FILENAME);
+            InputStream is = getAssets().open(rawJSON);
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -423,6 +436,50 @@ public class MainActivity extends AppCompatActivity
             return null;
         }
         return json;
+    }
+
+    private List<Receipt> generateDemoList(int userId){
+        List<Receipt> recList;
+        GetReceiptActivity test = new GetReceiptActivity(db, session);
+
+
+        //recList = test.getReceipts(userId);
+        //test.getReceipts(userId);
+        recList = db.getAllReceipts();
+        /*
+        recList = new ArrayList<>();
+        Receipt demo1 = parseJson(loadJsonLocal(DEMO_JSON_FILENAME));
+        recList.add(demo1);
+
+        Receipt demo2 = parseJson(loadJsonLocal("chipotleDemo.json"));
+        recList.add(demo2);
+
+        Receipt demo3 = parseJson(loadJsonLocal("popeyesDemo.json"));
+        recList.add(demo3);
+
+        Receipt demo4 = parseJson(loadJsonLocal("dlush.json"));
+        recList.add(demo4);
+
+        Receipt demo5 = parseJson(loadJsonLocal("primosDemo.json"));
+        recList.add(demo5);
+
+        Receipt demo6 = parseJson(loadJsonLocal("innoutburger.json"));
+        recList.add(demo6);
+
+        Receipt demo7 = parseJson(loadJsonLocal("costcoDemo.json"));
+        recList.add(demo7);
+
+        Receipt demo8 = parseJson(loadJsonLocal("pandaexpress.json"));
+        recList.add(demo8);
+
+        Receipt demo9 = parseJson(loadJsonLocal("safewayDemo.json"));
+        recList.add(demo9);
+
+        Receipt demo10 = parseJson(loadJsonLocal("tastyGardenDemo.json"));
+        recList.add(demo10);
+        */
+
+        return recList;
     }
 
     @Override

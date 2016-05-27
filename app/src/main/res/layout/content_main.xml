@@ -9,7 +9,7 @@
     android:orientation="vertical" >
 
         <include
-            layout="@layout/recent_receipts_test"
+            layout="@layout/receipts_recycler_view"
             />
 
 </LinearLayout>

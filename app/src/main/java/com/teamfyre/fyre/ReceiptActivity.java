@@ -73,7 +73,6 @@ public class ReceiptActivity extends Activity {
                         JSONObject receipt = jObj.getJSONObject("receipt");
                         String id = receipt.getString("receiptId");
 
-
                         db.addReceiptLite(id, r);
                         if (r.getItemList() != null && r.getItemList().size() != 0) {
                             for (int i = 0; i < r.getItemList().size(); i++) {
@@ -157,14 +156,6 @@ public class ReceiptActivity extends Activity {
         final Integer itemNum = item.getItemNum();
         final Integer quantity = item.getQuantity();
         final Character taxType = item.getTaxType();
-
-        System.out.println("Receipt id: " + String.valueOf(id));
-        System.out.println("Item name: " + name);
-        System.out.println("Item Description: " + itemDesc);
-        System.out.println("Price: " + String.valueOf(price));
-        System.out.println("Item Number: " + String.valueOf(itemNum));
-        System.out.println("Quantity: " + String.valueOf(quantity));
-        System.out.println("Tax Type: " + String.valueOf(taxType));
         //pDialog.setMessage("Adding Receipt ...");
         //showDialog();
 
@@ -185,8 +176,7 @@ public class ReceiptActivity extends Activity {
 
                         JSONObject receipt = jObj.getJSONObject("item");
                         String itemId = receipt.getString("itemId");
-
-                        // TODO ADD FUCKING SQLLITE SHIT HERE FUCK U
+                        System.out.println(itemId);
                         db.addReceiptItem(String.valueOf(receiptId), itemId, item);
                     } else {
 
