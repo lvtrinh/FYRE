@@ -29,15 +29,13 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -47,10 +45,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,8 +58,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.math.BigDecimal;
-import java.util.Iterator;
 import java.util.List;
 
 public class  MainActivity extends AppCompatActivity
@@ -81,6 +73,8 @@ public class  MainActivity extends AppCompatActivity
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private NfcAdapter mNfcAdapter;
+
+    private Handler delayMain = new Handler();
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
     public static final String DEMO_JSON_FILENAME = "costcoDemo.json";
@@ -156,6 +150,21 @@ public class  MainActivity extends AppCompatActivity
 
         // Fetching user details from SQLite
         HashMap<String, String> user = db.getUserDetails();
+        List<Receipt> demoList;
+
+        int userId = Integer.parseInt(user.get("id"));
+        Intent intent = getIntent();
+        String checkFlag = intent.getStringExtra("flag");
+        GetReceiptActivity test = new GetReceiptActivity(db, session);
+
+        if (checkFlag == null) demoList = generateDemoList(userId);
+        else if (checkFlag.equals("justLoggedIn")) {
+            Log.d("JUST LOGGED IN", "WGHSLKJGHLKJHS");
+            demoList = test.getReceipts(userId);
+        }
+        else demoList = generateDemoList(userId);
+
+        Log.d("DEMO LIST SIZE", " " + demoList.size());
 
         String name = user.get("name");
         String email = user.get("email");
@@ -174,9 +183,7 @@ public class  MainActivity extends AppCompatActivity
 
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        int userId = Integer.parseInt(user.get("id"));
-        List<Receipt> demoList = generateDemoList(userId);
+        //loadReceipts(demoList);
 
         mAdapter = new ReceiptAdapter(demoList);
         mRecyclerView.setAdapter(mAdapter);
@@ -511,14 +518,29 @@ public class  MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
         }
-        else if(id == R.id.action_search) {
+        else */
+        if(id == R.id.action_search) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void loadReceipts(final List<Receipt> demoList) {
+        delayMain.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter = new ReceiptAdapter(demoList);
+                mRecyclerView.setAdapter(mAdapter);
+
+                ///////////////////////////////////////////////////
+                // end recycler view stuff
+                ///////////////////////////////////////////////////
+            }
+        }, 100);
     }
 
     // TODO display one receipt
