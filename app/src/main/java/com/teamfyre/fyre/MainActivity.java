@@ -215,6 +215,7 @@ public class  MainActivity extends AppCompatActivity
     private class NdefReaderTask extends AsyncTask<Tag, Void, String> {
 
         public static final String TAG = "NfcDemo";
+        public boolean AcceptTransfer = false;
 
         @Override
         protected String doInBackground(Tag... params) {
@@ -255,19 +256,56 @@ public class  MainActivity extends AppCompatActivity
             return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
         }
 
+        /**************************************************************************
+         * onPostExecute()
+         *
+         * Turns the receipt string into a receipt object
+         * Asks if user wants to save the receipt
+         * Uploads the receipt to the database
+         * Displays the receipt in ReceiptDetailActivity
+         *
+         * @param result The received nfc data string
+         *************************************************************************/
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(final String result) {
+
+            // Button for when NFC transfer is detected
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        //Yes button clicked
+                        case DialogInterface.BUTTON_POSITIVE:
+
+                            // creates receipt object from NFC data
+                            Receipt nfcReceipt = parseJson(result);
+
+                            HashMap<String, String> user = db.getUserDetails();
+                            String id = user.get("id");
+
+                            // adds receipt to database
+                            ReceiptActivity receiptActivity = new ReceiptActivity(db, session);
+                            receiptActivity.addReceipt(Integer.parseInt(id), nfcReceipt);
+                            
+                            Toast.makeText(getApplicationContext(),
+                                    "Receipt from NFC saved",
+                                    Toast.LENGTH_LONG).show();
+                            break;
+
+                        //No button clicked
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            AcceptTransfer = false;
+                            break;
+                    }
+                }
+            };
+
             if (result != null) {
-
-                // Turns the read data into an nfcReceipt and opens in ReceiptDetailActivity
-                Receipt nfcReceipt = parseJson(result);
-
-                //todo: open this receipt in ReceiptDetailActivity
-                //todo: upload this receipt to database
-
-                Toast.makeText(getApplicationContext(),
-                        "NFC data read",
-                        Toast.LENGTH_LONG).show();
+                // Displays button asking if user wishes to add receipt
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("Accept NFC receipt transfer?")
+                        .setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
             }
         }
     }
