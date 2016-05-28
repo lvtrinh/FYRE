@@ -147,6 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                         // Launch main activity
                         Intent intent = new Intent(LoginActivity.this,
                                 MainActivity.class);
+                        intent.putExtra("flag", "justLoggedIn");
                         startActivity(intent);
                         finish();
                     } else {

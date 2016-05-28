@@ -7,14 +7,6 @@
             android:id="@+id/nav_receipt"
             android:icon="@drawable/ic_menu_receipt"
             android:title="@string/label_home" />
-        <item
-            android:id="@+id/nav_categories"
-            android:icon="@drawable/ic_menu_categories"
-            android:title="@string/label_categories" />
-        <item
-            android:id="@+id/nav_search"
-            android:icon="@drawable/ic_menu_search"
-            android:title="@string/label_search" />
     </group>
 
     <item
