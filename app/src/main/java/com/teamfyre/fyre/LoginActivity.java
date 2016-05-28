@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
+    private boolean validEmail;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
         forgot = (Button) findViewById(R.id.forgot);
+        validEmail = false;
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -122,6 +125,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         //if email exists
                         String email = input.getText().toString();
+
+                        validateEmail(email);
                         if (true) {
 
                             ////// start of second dialog
@@ -268,6 +273,196 @@ public class LoginActivity extends AppCompatActivity {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
+
+
+    //Checks whether the entered email is in the database
+    //If it is in the database, we receive the code for the security question in response
+    private void validateEmail(final String email) {
+        String tag_string_req = "req_validateemail";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_VALIDATEEMAIL, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Email Validation Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        System.out.println("Email was validated. Fetched security question.");
+                        validEmail = true;
+
+                    } else {
+
+                        // Error occurred in password reset. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Email Validation Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                //hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+
+    //Validates the answer to the security question
+    //If the security answer is correct, tempPassword reset is called
+    private void validateSecurityQuestion(final String email, final String security_answer) {
+        String tag_string_req = "req_validatesecurity";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_VALIDATESECURITYQUESTION, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Security Question Validation Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    boolean validated = jObj.getBoolean("validated");
+                    if (!error && validated) {
+                        //The user's security question was validated. Now we can send the temp password
+                        tempPasswordReset(email);
+
+                        System.out.println("Email with temporary password was sent");
+
+                        // Something probably needs to go here
+                        Intent intent = new Intent(
+                                PasswordResetActivity.this,
+                                LoginActivity.class);
+                        startActivity(intent);
+                    } else {
+
+                        // Error occurred in password reset. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Security Question Validation Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                //hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
+                params.put("security_answer", security_answer);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+
+    //Loads a temporary password into the database. Sends an email to the user with the temp pw
+    private void tempPasswordReset(final String email) {
+        String tag_string_req = "req_temppasswordreset";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_PASSWORDRESET, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Update Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        System.out.println("Password updated. Email sent.");
+
+                        // Launch login activity
+                        /*Intent intent = new Intent(
+                                PasswordResetActivity.this,
+                                LoginActivity.class);
+                        startActivity(intent);*/
+                    } else {
+
+                        // Error occurred in password reset. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Temp Password Reset Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                //hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", email);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
 
     private void showDialog() {
         if (!pDialog.isShowing())
