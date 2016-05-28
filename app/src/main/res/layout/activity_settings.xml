@@ -141,7 +141,6 @@
                 android:id="@+id/removeAccount"
                 android:background="@color/btn_login_bg"
                 android:textColor="#FF0000"
-<<<<<<< HEAD
                 android:layout_gravity="center_horizontal"
                 android:layout_width="150dp"
                 android:layout_marginTop="20dip" />
@@ -150,9 +149,6 @@
                 android:layout_width="20px"
                 android:layout_height="10px" />
 
-=======
-                android:layout_gravity="center_horizontal"/>
->>>>>>> 30a26592a3cfc4c26abc96093d13b4c0131ba415
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
