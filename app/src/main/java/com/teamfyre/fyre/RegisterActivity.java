@@ -124,15 +124,15 @@ public class RegisterActivity extends AppCompatActivity{
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
             {
                 selectedQ = parent.getSelectedItem().toString();
-                if(!selectedQ.equals("Select one")){
+                if(!selectedQ.equals(R.string.select_one)){
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setTitle(selectedQ);
 
-                    if(selectedQ.equals("What is your Mothers maiden name?"))
+                    if(selectedQ.equals(R.string.maiden_q))
                         qOption = 1;
-                    else if(selectedQ.equals("What is your favorite food?"))
+                    else if(selectedQ.equals(R.string.food_q))
                         qOption = 2;
-                    else if(selectedQ.equals("Who was your favorite teacher growing up"))
+                    else if(selectedQ.equals(R.string.teacher_q))
                         qOption = 3;
 
                     // Set up the input

@@ -127,6 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                             ////// start of second dialog
                             AlertDialog.Builder builder2 = new AlertDialog.Builder(LoginActivity.this);
                             builder2.setTitle("Security Question");
+                            //pull security question
+                            builder2.setMessage("this is the question");
 
                             // Set up the input
                             final EditText input = new EditText(LoginActivity.this);
