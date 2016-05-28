@@ -19,14 +19,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/label_recent_receipts"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/label_login"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
                 <data android:mimeType="text/plain" />
@@ -37,6 +31,15 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchableActivity" />
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".RegisterActivity"
