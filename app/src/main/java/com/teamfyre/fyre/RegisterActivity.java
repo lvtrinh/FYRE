@@ -6,14 +6,20 @@
 package com.teamfyre.fyre;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -27,7 +33,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity{
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private Button btnRegister;
     private Button btnLinkToLogin;
@@ -37,6 +43,12 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
     private SessionManager session;
     private SQLiteHandler db;
+    private Spinner spinner;
+    private ArrayAdapter<CharSequence> adapter;
+    private String selectedQ;
+    private String answer;
+    private int qOption;
+    private boolean ans;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +60,11 @@ public class RegisterActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.password);
         btnRegister = (Button) findViewById(R.id.btnRegister);
         btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+        spinner = (Spinner) findViewById(R.id.security);
+        adapter = ArrayAdapter.createFromResource(this, R.array.security_questions, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        ans = false;
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -74,11 +91,14 @@ public class RegisterActivity extends AppCompatActivity {
                 String name = inputFullName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
+                //
+                int question = qOption;
+                String qAnswer = answer;
 
                 System.out.println(name + " " + email + " " + password);
 
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    registerUser(name, email, password);
+                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && ans) {
+                    registerUser(name, email, password, question, qAnswer);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
@@ -98,6 +118,66 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
+            {
+                selectedQ = parent.getSelectedItem().toString();
+                if(!selectedQ.equals("Select one")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    builder.setTitle(selectedQ);
+
+                    if(selectedQ.equals("What is your Mothers maiden name?"))
+                        qOption = 1;
+                    else if(selectedQ.equals("What is your favorite food?"))
+                        qOption = 2;
+                    else if(selectedQ.equals("Who was your favorite teacher growing up"))
+                        qOption = 3;
+
+                    // Set up the input
+                    final EditText input = new EditText(RegisterActivity.this);
+                    // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    builder.setView(input);
+
+                    // Set up the buttons
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            answer = input.getText().toString();
+                            if(answer.length() > 0)
+                                ans = true;
+                            else {
+                                Toast.makeText(getApplicationContext(),
+                                        "Please enter valid answer to your question", Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    builder.show();
+
+                }
+                //create alert to ask for answer
+                //switch statement to get int value to insert into db
+                //insert into db
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+
+            }
+        });
+
     }
 
     /**
@@ -105,7 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
      * email, password) to register url
      * */
     private void registerUser(final String name, final String email,
-                              final String password) {
+                              final String password, final int security_question, final String security_answer) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
 
@@ -178,6 +258,8 @@ public class RegisterActivity extends AppCompatActivity {
                 params.put("name", name);
                 params.put("email", email);
                 params.put("password", password);
+                params.put("security_question", String.valueOf(security_question));
+                params.put("security_answer", security_answer);
 
                 return params;
             }

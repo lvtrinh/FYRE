@@ -94,4 +94,16 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_receipt_detail">Receipt Details</string>
+
+    <string-array name="security_questions">
+        <item>Select one</item>
+        <item>What is your Mothers maiden name?</item>
+        <item>What is your favorite food?</item>
+        <item>Who was your favorite teacher growing up?</item>
+    </string-array>
+
+    <string name="select_one">Select One</string>
+    <string name="forgot_password"><u>Forgot Password</u></string>
+
+    <string name="security_question_title">Security Question</string>
 </resources>

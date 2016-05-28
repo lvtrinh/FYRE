@@ -6,11 +6,14 @@
 package com.teamfyre.fyre;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
     private Button btnLogin;
     private Button btnLinkToRegister;
+    private Button forgot;
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
@@ -47,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.password);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLinkToRegister = (Button) findViewById(R.id.btnLinkToRegisterScreen);
+        forgot = (Button) findViewById(R.id.forgot);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -96,6 +101,78 @@ public class LoginActivity extends AppCompatActivity {
                         RegisterActivity.class);
                 startActivity(i);
                 finish();
+            }
+        });
+
+        forgot.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setTitle("Enter Email");
+
+                // Set up the input
+                final EditText input = new EditText(LoginActivity.this);
+                // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                // Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //if email exists
+                        String email = input.getText().toString();
+                        if (true) {
+
+                            ////// start of second dialog
+                            AlertDialog.Builder builder2 = new AlertDialog.Builder(LoginActivity.this);
+                            builder2.setTitle("Security Question");
+
+                            // Set up the input
+                            final EditText input = new EditText(LoginActivity.this);
+                            // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                            input.setInputType(InputType.TYPE_CLASS_TEXT);
+                            builder2.setView(input);
+
+                            // Set up the buttons
+                            builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String securityAnswer = input.getText().toString();
+                                    //check question answer
+                                }
+                            });
+                            builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                            builder2.show();
+                            //////
+                        } else {
+                            dialog.cancel();
+                            Toast.makeText(getApplicationContext(),
+                                    "Security question answer is incorrect", Toast.LENGTH_LONG)
+                                    .show();
+                        }
+
+
+                        //prompt for security question
+
+                        //if security question right send email and notify that email has been sent
+
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
 

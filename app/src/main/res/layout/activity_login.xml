@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="56dp"
+        android:paddingTop="45dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
@@ -70,9 +70,21 @@
             android:background="@color/colorPrimaryDark"
             android:text="@string/btn_signup"
             android:textColor="@color/white"
-            android:layout_marginBottom="24dp"
             android:padding="12dp"
+            android:layout_marginBottom="12dp"
             android:layout_gravity="center" />
 
-        </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/blue"
+            android:text="@string/forgot_password"
+            android:id="@+id/forgot"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            style="?android:attr/borderlessButtonStyle"/>
+
+    </LinearLayout>
 </LinearLayout>
