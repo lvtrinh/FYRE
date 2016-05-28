@@ -124,21 +124,21 @@ public class RegisterActivity extends AppCompatActivity{
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
             {
                 selectedQ = parent.getSelectedItem().toString();
-                if(!selectedQ.equals(R.string.select_one)){
+                if(!selectedQ.equals("Select one")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setTitle(selectedQ);
 
-                    if(selectedQ.equals(R.string.maiden_q))
+                    if(selectedQ.equals("What is your Mothers maiden name?"))
                         qOption = 1;
-                    else if(selectedQ.equals(R.string.food_q))
+                    else if(selectedQ.equals("What is your favorite food?"))
                         qOption = 2;
-                    else if(selectedQ.equals(R.string.teacher_q))
+                    else if(selectedQ.equals("Who was your favorite teacher growing up?"))
                         qOption = 3;
 
                     // Set up the input
                     final EditText input = new EditText(RegisterActivity.this);
                     // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                    input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
                     builder.setView(input);
 
                     // Set up the buttons
