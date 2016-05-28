@@ -496,10 +496,10 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Move to first row
         if (cursor.moveToFirst()) {
-            Log.d("RUNNING GOOD", "GOOD");
+            //Log.d("RUNNING GOOD", "GOOD");
             do {
                 ReceiptItem currItem = new ReceiptItem();
-                Log.d("GET CURSOR", cursor.getString(0));
+                //Log.d("GET CURSOR", cursor.getString(0));
 
                 if (cursor.getString(2) == null) {}
                 else currItem.setName(cursor.getString(2));
@@ -526,8 +526,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         db.close();
 
-        Log.d("SOMETHING BELOW LOOK", "");
-        for (int i = 0; i < receiptItem.size(); i++) Log.d("BELOW", receiptItem.get(i).getName());
+        //Log.d("SOMETHING BELOW LOOK", "");
+        //for (int i = 0; i < receiptItem.size(); i++) Log.d("BELOW", receiptItem.get(i).getName());
         return receiptItem;
     }
 

@@ -1,8 +1,18 @@
+/******************************************************************************
+ * ReceiptManualActivity.java
+ *
+ * This is the activity the user is taken to when they wish to manually add a
+ * receipt.
+ *
+ ******************************************************************************/
+
 package com.teamfyre.fyre;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -15,10 +25,7 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
-/**
- * Created by daniel on 5/22/16.
- */
-public class ReceiptManualActivity extends Activity {
+public class ReceiptManualActivity extends AppCompatActivity {
 
     private Receipt receipt;
     private SQLiteHandler db;
@@ -33,11 +40,27 @@ public class ReceiptManualActivity extends Activity {
     private Button btnSaveReceipt;
     private ImageButton btnTakePicture;
 
+    /**************************************************************************
+     * onCreate()
+     *
+     * This function sets up the activity. It populates the screen with the input
+     * fields for the receipt's manual additions.
+     *
+     * This function is called when the activity starts. For more on what this
+     * means, see:
+     * http://developer.android.com/training/basics/activity-lifecycle/starting.html
+     * (protip: ctrl/cmd-click in android studio to open the link!)
+     *
+     * @param savedInstanceState The saved instance state
+     **************************************************************************/
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manually_add_receipt);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         inputStore = (EditText) findViewById(R.id.store);
         inputDate = (EditText) findViewById(R.id.date);
@@ -54,7 +77,7 @@ public class ReceiptManualActivity extends Activity {
         session = new SessionManager(getApplicationContext());
         db = new SQLiteHandler(getApplicationContext());
 
-        // live update for receipt details fields
+        // live update for store text on card
         inputStore.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -67,7 +90,7 @@ public class ReceiptManualActivity extends Activity {
             }
         });
 
-        // live update for receipt details fields
+        // live update for date text on card
         inputDate.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -80,7 +103,7 @@ public class ReceiptManualActivity extends Activity {
             }
         });
 
-        // live update for receipt details fields
+        // live update for price text on card
         inputPrice.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -93,7 +116,7 @@ public class ReceiptManualActivity extends Activity {
             }
         });
 
-        // camera button
+        // camera button, not implemented yet
         btnTakePicture.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
@@ -107,6 +130,7 @@ public class ReceiptManualActivity extends Activity {
         btnSaveReceipt.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
+                // grabs the user's inputted text
                 String store = inputStore.getText().toString().trim();
                 StringBuilder date = new StringBuilder(inputDate.getText().toString().trim());
                 String price = inputPrice.getText().toString().trim();
@@ -118,14 +142,14 @@ public class ReceiptManualActivity extends Activity {
                     }
                 }
 
-                // user did not properly insert info, display warning
+                // user did not fill out all fields, display warning
                 if (store.isEmpty() || date.toString().isEmpty() || price.isEmpty()) {
                     Toast.makeText(getApplicationContext(),
                             "Please fill out all fields",
                             Toast.LENGTH_LONG).show();
                 }
 
-                // user had incorrect date format
+                // user had incorrect date format, display warning
                 else if (!date.toString().matches("\\d{2}-\\d{2}-\\d{4}")) {
                     Toast.makeText(getApplicationContext(),
                             "Incorrect date format",
@@ -159,6 +183,7 @@ public class ReceiptManualActivity extends Activity {
                     HashMap<String, String> user = db.getUserDetails();
                     String id = user.get("id");
 
+                    // adds receipt to database
                     ReceiptActivity receiptActivity = new ReceiptActivity(db, session);
                     receiptActivity.addReceipt(Integer.parseInt(id), receipt);
 
@@ -168,6 +193,5 @@ public class ReceiptManualActivity extends Activity {
                 }
             }
         });
-
     }
 }

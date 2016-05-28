@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    tools:context="com.teamfyre.fyre.AccountActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -31,62 +49,63 @@
                 android:hint="@string/hint_name" />
 
             <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Update Email"
-        android:id="@+id/newEmail"
-        android:layout_weight="0.07"
-        android:textSize="20dp"
-        android:gravity="center_vertical|bottom"
-        android:paddingTop="15dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Email"
+                android:id="@+id/newEmail"
+                android:layout_weight="0.07"
+                android:textSize="20dp"
+                android:gravity="center_vertical|bottom"
+                android:paddingTop="15dp" />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:id="@+id/email"
-        android:hint="@string/hint_email" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:id="@+id/email"
+                android:hint="@string/hint_email" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Update Password"
-        android:id="@+id/newPass"
-        android:layout_weight="0.05"
-        android:textSize="20dp"
-        android:gravity="bottom"
-        android:paddingLeft="0.1dp"
-        android:paddingTop="15dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Password"
+                android:id="@+id/newPass"
+                android:layout_weight="0.05"
+                android:textSize="20dp"
+                android:gravity="bottom"
+                android:paddingLeft="0.1dp"
+                android:paddingTop="15dp" />
 
-    <EditText
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:fontFamily="sans-serif"
-        android:id="@+id/password"
-        android:hint="@string/hint_password" />
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:fontFamily="sans-serif"
+                android:id="@+id/password"
+                android:hint="@string/hint_password" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update Account"
-        android:id="@+id/updateAccount"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update Account"
+                android:id="@+id/updateAccount"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.07" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="340dp"
-        android:layout_gravity="top" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="340dp"
+                android:layout_gravity="top" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Remove Account"
-        android:id="@+id/RemoveAccount"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.07"
-        android:textColor="#FF0000"/>
-        </LinearLayout>
-    </ScrollView>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remove Account"
+                android:id="@+id/RemoveAccount"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="0.07"
+                android:textColor="#FF0000"/>
+
+            </LinearLayout>
+        </ScrollView>
 </LinearLayout>
