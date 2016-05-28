@@ -6,92 +6,51 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="search_title">Search</string>
-    <string name="search_label">Search</string>
-    <string name="search_hint">Search by item or mechant</string>
+    <string name="label_recent_receipts">Recent Receipts</string>
+    <string name="label_home">Home</string>
+    <string name="label_login">Login</string>
+    <string name="label_register">Register</string>
+    <string name="label_logout">Logout</string>
+    <string name="label_activity_receipt_detail">Receipt Details</string>
+    <string name="label_manual_add_receipt">Add A Receipt</string>
+    <string name="label_categories">Categories</string>
+    <string name="label_search">Search</string>
+    <string name="label_search_results">Search Results</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_settings">Settings</string>
+    <string name="label_account_settings">Account Settings</string>
 
     <!-- these two should always be replaced by the login user's info -->
-    <string name="nav_header_main">main mane text</string>
-    <string name="nav_header_sub">sub sandwich text</string>
-
-    <string name="nav_label_receipt">Home</string>
-    <string name="nav_label_categories">Categories</string>
-    <string name="nav_label_search">Search</string>
-    <string name="nav_label_settings">Settings</string>
-    <string name="nav_label_login">Login</string>
-    <string name="nav_label_logout">Logout</string>
+    <string name="nav_header_main">FYRE</string>
+    <string name="nav_header_sub">Free Your Receipts Electronically</string>
 
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_name">Full Name</string>
+    <string name="hint_search">Search Item/Merchant</string>
+
     <string name="btn_login">LOGIN</string>
     <string name="btn_signup">SIGN UP</string>
     <string name="btn_register">REGISTER</string>
     <string name="btn_link_to_login">LOGIN HERE</string>
-    <string name="welcome">Welcome</string>
     <string name="btn_logout">LOGOUT</string>
+
+    <string name="welcome">Welcome</string>
     <string name="name">Full Name</string>
-
-    <string name="action_settings">Settings</string>
-    <string name="fyre">FYRE</string>
-    <string name="title_activity_settings">activity_settings</string>
-
-    <!-- Strings related to Settings -->
-
-    <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
-
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
-    </string>
-
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
-
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
-
-    <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
-
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_receipt_detail">Receipt Details</string>
+
+    <string-array name="security_questions">
+        <item>Select one</item>
+        <item>What is your Mothers maiden name?</item>
+        <item>What is your favorite food?</item>
+        <item>Who was your favorite teacher growing up?</item>
+    </string-array>
+
+    <string name="select_one">Select One</string>
+    <string name="forgot_password"><u>Forgot Password</u></string>
+
+    <string name="security_question_title">Security Question</string>
+
 </resources>

@@ -4,11 +4,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/colorPrimary"
-    tools:context=".RegisterActivity"
+    tools:context="com.teamfyre.fyre.RegisterActivity"
     android:orientation="vertical"
     android:paddingTop="56dp"
     android:paddingLeft="24dp"
-    android:paddingRight="24dp" >
+    android:paddingRight="24dp"
+    android:weightSum="1">
 
     <RelativeLayout
         android:orientation="vertical"
@@ -50,7 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="6dp" >
+        android:layout_marginBottom="6dp"
+        android:theme="@style/TextLabel" >
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,7 +65,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp" >
+        android:layout_marginBottom="6dp"
+        android:theme="@style/TextLabel" >
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,7 +80,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
-        android:id="@+id/passwordLayout">
+        android:id="@+id/passwordLayout"
+        android:theme="@style/TextLabel">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,6 +90,22 @@
             android:id="@+id/password"
             android:hint="@string/hint_password" />
     </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/security_question_title"
+        android:fontFamily="sans-serif"
+        android:id="@+id/textView2"
+        android:paddingTop="15dp" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/security_question_title"
+        android:id="@+id/security"
+        android:entries="@array/security_questions"
+        android:spinnerMode="dropdown" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btnRegister"

@@ -18,11 +18,11 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/recent_receipts"
+            android:label="@string/label_recent_receipts"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name"
+            android:label="@string/label_login"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,27 +40,39 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/app_name"
+            android:label="@string/label_register"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
         <activity
             android:name=".AccountActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:label="@string/label_account_settings"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".SettingsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.SettingsActivity" />
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="Settings"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:label="@string/label_settings"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.MainActivity" />
         </activity>
         <activity
             android:name=".ReceiptManualActivity"
-            android:label="ReceiptManual"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:label="@string/label_manual_add_receipt"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".SettingsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.SettingsActivity" />
         </activity>
         <activity
             android:name=".ReceiptDetailActivity"
-            android:label="@string/title_activity_receipt_detail"
+            android:label="@string/label_activity_receipt_detail"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -70,6 +82,7 @@
         <!-- android:launchMode="singleTop" -->
         <activity
             android:name=".SearchableActivity"
+            android:label="@string/label_search_results"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
@@ -77,7 +90,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value="com.teamfyre.fyre.MainActivity" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>

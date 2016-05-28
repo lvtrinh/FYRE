@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,7 @@ import java.util.Iterator;
 /**
  * Created by claytonyamaguchi on 5/12/16.
  */
-public class ReceiptActivity extends Activity {
+public class ReceiptActivity extends AppCompatActivity {
     private static final String TAG = ReceiptActivity.class.getSimpleName();
     private SessionManager session;
     private SQLiteHandler db;
