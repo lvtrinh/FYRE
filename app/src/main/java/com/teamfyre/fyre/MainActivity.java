@@ -215,7 +215,6 @@ public class  MainActivity extends AppCompatActivity
     private class NdefReaderTask extends AsyncTask<Tag, Void, String> {
 
         public static final String TAG = "NfcDemo";
-        public boolean AcceptTransfer = false;
 
         @Override
         protected String doInBackground(Tag... params) {
@@ -286,15 +285,19 @@ public class  MainActivity extends AppCompatActivity
                             // adds receipt to database
                             ReceiptActivity receiptActivity = new ReceiptActivity(db, session);
                             receiptActivity.addReceipt(Integer.parseInt(id), nfcReceipt);
-                            
+
                             Toast.makeText(getApplicationContext(),
                                     "Receipt from NFC saved",
                                     Toast.LENGTH_LONG).show();
+
+                            // displays receipt details on screen
+                            Intent detailIntent = new Intent(MainActivity.this, ReceiptDetailActivity.class);
+                            detailIntent.putExtra(EXTRA_RECEIPT, nfcReceipt);
+                            startActivity(detailIntent);
                             break;
 
                         //No button clicked
                         case DialogInterface.BUTTON_NEGATIVE:
-                            AcceptTransfer = false;
                             break;
                     }
                 }
@@ -386,8 +389,6 @@ public class  MainActivity extends AppCompatActivity
     public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
         adapter.disableForegroundDispatch(activity);
     }
-
-    // -------------------------- End NFC additions --------------------------
 
     /**************************************************************************
      * parseJson()
