@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
-public class ReceiptManualActivity extends Activity {
+public class ReceiptManualActivity extends AppCompatActivity {
 
     private Receipt receipt;
     private SQLiteHandler db;
