@@ -499,7 +499,7 @@ public class  MainActivity extends AppCompatActivity
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchableActivity.class)));
-        searchView.setQueryHint(getResources().getString(R.string.search_hint));
+        searchView.setQueryHint(getResources().getString(R.string.hint_search));
         return true;
     }
 
