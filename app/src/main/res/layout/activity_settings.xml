@@ -148,6 +148,7 @@
             <Space
                 android:layout_width="20px"
                 android:layout_height="10px" />
+                android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>
     </ScrollView>

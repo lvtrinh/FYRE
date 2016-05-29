@@ -48,6 +48,11 @@
         <item>Who was your favorite teacher growing up?</item>
     </string-array>
 
+    <string name="maiden_q">What is your Mothers maiden name?</string>
+    <string name="food_q">What is your favorite food?</string>
+    <string name="teacher_q">Who was your favorite teacher growing up?</string>
+
+
     <string name="select_one">Select One</string>
     <string name="forgot_password"><u>Forgot Password</u></string>
 

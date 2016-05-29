@@ -127,40 +127,10 @@ public class LoginActivity extends AppCompatActivity {
                         String email = input.getText().toString();
 
                         validateEmail(email);
-                        if (true) {
+                        if (validEmail) {
 
-                            ////// start of second dialog
-                            AlertDialog.Builder builder2 = new AlertDialog.Builder(LoginActivity.this);
-                            builder2.setTitle("Security Question");
-
-                            // Set up the input
-                            final EditText input = new EditText(LoginActivity.this);
-                            // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-                            input.setInputType(InputType.TYPE_CLASS_TEXT);
-                            builder2.setView(input);
-
-                            // Set up the buttons
-                            builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    String securityAnswer = input.getText().toString();
-                                    //check question answer
-                                }
-                            });
-                            builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.cancel();
-                                }
-                            });
-
-                            builder2.show();
-                            //////
                         } else {
                             dialog.cancel();
-                            Toast.makeText(getApplicationContext(),
-                                    "Security question answer is incorrect", Toast.LENGTH_LONG)
-                                    .show();
                         }
 
 
@@ -291,6 +261,50 @@ public class LoginActivity extends AppCompatActivity {
                     if (!error) {
                         System.out.println("Email was validated. Fetched security question.");
                         validEmail = true;
+                        String secQuestion = null;
+
+                        int question = Integer.parseInt(jObj.getString("security_question"));
+
+                        AlertDialog.Builder builder2 = new AlertDialog.Builder(LoginActivity.this);
+                        builder2.setTitle("Security Question");
+                        //pull security question
+                        if(question ==1) {
+                            secQuestion = "What is your Mothers maiden name?";
+                        }
+                        else if(question == 2) {
+                            secQuestion = "What is your favorite food?";
+                        }
+                        else {
+                           secQuestion = "Who was your favorite teacher growing up?";
+                        }
+                        builder2.setMessage(secQuestion);
+
+                        // Set up the input
+                        final EditText input = new EditText(LoginActivity.this);
+                        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                        input.setInputType(InputType.TYPE_CLASS_TEXT);
+                        builder2.setView(input);
+
+                        // Set up the buttons
+                        builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String securityAnswer = input.getText().toString();
+                                //check question answer
+                                validateSecurityQuestion(email, securityAnswer);
+                                //send email
+                            }
+                        });
+                        builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                        builder2.show();
+
+
 
                     } else {
 
@@ -334,7 +348,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //Validates the answer to the security question
     //If the security answer is correct, tempPassword reset is called
-    /*private void validateSecurityQuestion(final String email, final String security_answer) {
+    private void validateSecurityQuestion(final String email, final String security_answer) {
         String tag_string_req = "req_validatesecurity";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -351,14 +365,11 @@ public class LoginActivity extends AppCompatActivity {
                     if (!error && validated) {
                         //The user's security question was validated. Now we can send the temp password
                         tempPasswordReset(email);
+                        Toast.makeText(getApplicationContext(),
+                                "Temporary password was sent to: " + email, Toast.LENGTH_LONG)
+                                .show();
 
                         System.out.println("Email with temporary password was sent");
-
-                        // Something probably needs to go here
-                        /ntent intent = new Intent(
-                                PasswordResetActivity.this,
-                                LoginActivity.class);
-                        startActivity(intent);
                     } else {
 
                         // Error occurred in password reset. Get the error
@@ -397,7 +408,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-    }*/
+    }
 
 
     //Loads a temporary password into the database. Sends an email to the user with the temp pw
