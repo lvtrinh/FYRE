@@ -334,7 +334,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //Validates the answer to the security question
     //If the security answer is correct, tempPassword reset is called
-    private void validateSecurityQuestion(final String email, final String security_answer) {
+    /*private void validateSecurityQuestion(final String email, final String security_answer) {
         String tag_string_req = "req_validatesecurity";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -355,7 +355,7 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("Email with temporary password was sent");
 
                         // Something probably needs to go here
-                        Intent intent = new Intent(
+                        /ntent intent = new Intent(
                                 PasswordResetActivity.this,
                                 LoginActivity.class);
                         startActivity(intent);
@@ -397,7 +397,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-    }
+    }*/
 
 
     //Loads a temporary password into the database. Sends an email to the user with the temp pw

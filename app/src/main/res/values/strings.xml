@@ -53,4 +53,12 @@
 
     <string name="security_question_title">Security Question</string>
 
+    <string name="sort_date_asc">Date: Oldest to Newest</string>
+    <string name="sort_date_desc">Date: Newest to Oldest</string>
+    <string name="sort_price_asc">Price: Low to High</string>
+    <string name="sort_price_desc">Price: High to Low</string>
+    <string name="filter_category">Filter by Category</string>
+    <string name="filter_price">Filter by Price</string>
+    <string name="filter_date">Filter by Date</string>
+
 </resources>
