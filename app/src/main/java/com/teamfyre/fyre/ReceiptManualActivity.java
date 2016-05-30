@@ -10,6 +10,7 @@ package com.teamfyre.fyre;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,12 +18,16 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView;
+import android.widget.ArrayAdapter;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.provider.MediaStore;
@@ -30,9 +35,16 @@ import android.graphics.Bitmap;
 import android.view.View;
 
 
-import java.util.HashMap;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
-public class ReceiptManualActivity extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.math.BigDecimal;
+
+public class ReceiptManualActivity extends AppCompatActivity implements OnItemSelectedListener {
 
     private Receipt receipt;
     private SQLiteHandler db;
@@ -41,6 +53,8 @@ public class ReceiptManualActivity extends AppCompatActivity {
     private EditText inputStore;
     private EditText inputDate;
     private EditText inputPrice;
+    private Spinner spinCategory;
+    private EditText inputMemo;
     private TextView txtStore;
     private TextView txtDate;
     private TextView txtPrice;
@@ -48,6 +62,13 @@ public class ReceiptManualActivity extends AppCompatActivity {
     private ImageButton btnTakePicture;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    private String item;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     // Private method to launch image capture software
     private void dispatchTakePictureIntent() {
@@ -60,10 +81,10 @@ public class ReceiptManualActivity extends AppCompatActivity {
 
     /**************************************************************************
      * onCreate()
-     *
+     * <p/>
      * This function sets up the activity. It populates the screen with the input
      * fields for the receipt's manual additions.
-     *
+     * <p/>
      * This function is called when the activity starts. For more on what this
      * means, see:
      * http://developer.android.com/training/basics/activity-lifecycle/starting.html
@@ -83,6 +104,8 @@ public class ReceiptManualActivity extends AppCompatActivity {
         inputStore = (EditText) findViewById(R.id.store);
         inputDate = (EditText) findViewById(R.id.date);
         inputPrice = (EditText) findViewById(R.id.price);
+        spinCategory = (Spinner) findViewById(R.id.storeCategory);
+        inputMemo = (EditText) findViewById(R.id.memo);
 
         txtStore = (TextView) findViewById(R.id.card_store);
         txtDate = (TextView) findViewById(R.id.card_date);
@@ -99,9 +122,13 @@ public class ReceiptManualActivity extends AppCompatActivity {
         inputStore.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 txtStore.setText(inputStore.getText().toString().trim());
@@ -112,9 +139,13 @@ public class ReceiptManualActivity extends AppCompatActivity {
         inputDate.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 txtDate.setText(inputDate.getText().toString().trim());
@@ -125,19 +156,16 @@ public class ReceiptManualActivity extends AppCompatActivity {
         inputPrice.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 txtPrice.setText('$' + inputPrice.getText().toString().trim());
-            }
-        });
-
-        // camera button, not implemented yet
-        btnTakePicture.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                dispatchTakePictureIntent();
             }
         });
 
@@ -163,10 +191,15 @@ public class ReceiptManualActivity extends AppCompatActivity {
         spinCategory.setAdapter(dataAdapter);
 
 
+        // camera button, not implemented yet
+        btnTakePicture.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                dispatchTakePictureIntent();
+            }
+        });
 
         // save button
         btnSaveReceipt.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.GINGERBREAD)
             public void onClick(View view) {
 
                 // grabs the user's inputted text
@@ -174,6 +207,7 @@ public class ReceiptManualActivity extends AppCompatActivity {
                 StringBuilder date = new StringBuilder(inputDate.getText().toString().trim());
                 String price = inputPrice.getText().toString().trim();
                 String category = item;
+                String memo = inputMemo.getText().toString().trim();
 
 
                 // fixes input for date
@@ -184,7 +218,7 @@ public class ReceiptManualActivity extends AppCompatActivity {
                 }
 
                 // user did not fill out all fields, display warning
-                if (store.isEmpty() || date.toString().isEmpty() || price.isEmpty()||item == "Select a Category") {
+                if (store.isEmpty() || date.toString().isEmpty() || price.isEmpty() || item == "Select a Category") {
                     Toast.makeText(getApplicationContext(),
                             "Please fill out all fields",
                             Toast.LENGTH_LONG).show();
@@ -193,7 +227,7 @@ public class ReceiptManualActivity extends AppCompatActivity {
                 // user properly added information, begin receipt addition process
                 else {
                     // hides keyboard after user entry complete
-                    InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
                     // fixes input for price
@@ -210,15 +244,15 @@ public class ReceiptManualActivity extends AppCompatActivity {
 
                     // creates receipt object from information
                     receipt = new Receipt();
-                    if (date.toString().matches("\\d{2}-\\d{2}-\\d{2}")){
+                    if (date.toString().matches("\\d{2}-\\d{2}-\\d{2}")) {
                         receipt.setDateTime(date.toString(), "0:0");
-                    }
-                    else{
+                    } else {
                         receipt.setDateTime2000(date.toString(), "0:0");
                     }
                     receipt.setStoreName(store);
                     receipt.setTotalPrice(price);
                     receipt.setStoreCategory(category);
+                    receipt.setMemo(memo);
                     receipt.setStoreStreet("");
                     receipt.setStoreStreet("");
                     receipt.setStoreCityState("");
@@ -235,7 +269,6 @@ public class ReceiptManualActivity extends AppCompatActivity {
                     receipt.setCheckNumber("");
                     receipt.setOrderNumber(-1);
                     receipt.setStarred(false);
-                    receipt.setMemo("");
 
 
                     HashMap<String, String> user = db.getUserDetails();
@@ -251,6 +284,9 @@ public class ReceiptManualActivity extends AppCompatActivity {
                 }
             }
         });
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -258,7 +294,10 @@ public class ReceiptManualActivity extends AppCompatActivity {
         item = parent.getItemAtPosition(position).toString();
 
     }
+
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
+
+
 }

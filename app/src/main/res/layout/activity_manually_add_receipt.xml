@@ -115,9 +115,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:id="@+id/storeCategory"
             android:spinnerMode="dropdown" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp" >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType= "text"
+                android:id="@+id/memo"
+                android:hint="Memo" />
+        </android.support.design.widget.TextInputLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
