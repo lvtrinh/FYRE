@@ -73,96 +73,11 @@ public class SettingsActivity extends AppCompatActivity {
     //private TextView EMAIL= (TextView)findViewById(R.id.EMAIL);
 
 
-    /**
-     * A preference value change listener that updates the preference's summary
-     * to reflect its new value.
-     */
-   /** private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
-
-            if (preference instanceof ListPreference) {
-                // For list preferences, look up the correct display value in
-                // the preference's 'entries' list.
-                ListPreference listPreference = (ListPreference) preference;
-                int index = listPreference.findIndexOfValue(stringValue);
-
-                // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? listPreference.getEntries()[index]
-                                : null);
-
-            } else if (preference instanceof RingtonePreference) {
-                // For ringtone preferences, look up the correct display value
-                // using RingtoneManager.
-                if (TextUtils.isEmpty(stringValue)) {
-                    // Empty values correspond to 'silent' (no ringtone).
-                    preference.setSummary(R.string.pref_ringtone_silent);
-
-                } else {
-                    Ringtone ringtone = RingtoneManager.getRingtone(
-                            preference.getContext(), Uri.parse(stringValue));
-
-                    if (ringtone == null) {
-                        // Clear the summary if there was a lookup error.
-                        preference.setSummary(null);
-                    } else {
-                        // Set the summary to reflect the new ringtone display
-                        // name.
-                        String name = ringtone.getTitle(preference.getContext());
-                        preference.setSummary(name);
-                    }
-                }
-
-            } else {
-                // For all other preferences, set the summary to the value's
-                // simple string representation.
-                preference.setSummary(stringValue);
-            }
-            return true;
-        }
-    };**/
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    //private GoogleApiClient client;
-
-    /**
-     * Helper method to determine if the device has an extra-large screen. For
-     * example, 10" tablets are extra-large.
-     */
-    /**private static boolean isXLargeTablet(Context context) {
-        return (context.getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_XLARGE;
-    }**/
-
-    /**
-     * Binds a preference's summary to its value. More specifically, when the
-     * preference's value is changed, its summary (line of text below the
-     * preference title) is updated to reflect the value. The summary is also
-     * immediately updated upon calling this method. The exact display format is
-     * dependent on the type of preference.
-     *
-     * @see #sBindPreferenceSummaryToValueListener
-     */
-    /**private static void bindPreferenceSummaryToValue(Preference preference) {
-        // Set the listener to watch for value changes.
-        preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
-
-        // Trigger the listener immediately with the preference's
-        // current value.
-        sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
-                PreferenceManager
-                        .getDefaultSharedPreferences(preference.getContext())
-                        .getString(preference.getKey(), ""));
-    }**/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //associates file with screen
         setContentView(R.layout.activity_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -174,12 +89,8 @@ public class SettingsActivity extends AppCompatActivity {
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-     //   setupActionBar();
 
-        // Display the fragment as the main content.
-        //getFragmentManager().beginTransaction().replace(android.R.id.content, new SettingsFragment()).commit();
-
-
+        //launches sqLite database
         db = new SQLiteHandler(getApplicationContext());
 
         // session manager
@@ -188,19 +99,20 @@ public class SettingsActivity extends AppCompatActivity {
         // Fetching user details from SQLite
         HashMap<String, String> user = db.getUserDetails();
 
+        //gets email and name associated to the user to display
         String name = user.get("name");
         final String email = user.get("email");
 
+        //display's user information ont he screen
         final TextView textViewToChange1 = (TextView) findViewById(R.id.NAME);
         textViewToChange1.setText("Name: " + name);
         //displaying email
         final TextView textViewToChange = (TextView) findViewById(R.id.EMAIL);
         textViewToChange.setText("Email: " + email);
 
-
-
+        //if not logged in prompt to ensure they want to log out
         if (!session.isLoggedIn()) {
-            new AlertDialog.Builder(SettingsActivity.this) //changed to SettingsActivity.this from context
+            new AlertDialog.Builder(SettingsActivity.this)
                     .setTitle("Logout")
                     .setMessage("Are you sure you want to logout?")
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -218,9 +130,12 @@ public class SettingsActivity extends AppCompatActivity {
                     .show();
         }
 
+        //if they want to update their account settings they click this button
         btn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
+
+                //prompts user for their password to update their settings
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
                 builder.setTitle("Enter Password");
 
@@ -235,6 +150,8 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         pass = input.getText().toString();
+
+                        //method verifies if the password is correct
                         checkPassword(email, pass);
                     }
                 });
@@ -250,6 +167,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         });
 
+        //if the user wants to remove their account they click this ubtton
         removeAccount.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -267,6 +185,8 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         pass = input.getText().toString();
+
+                        //method checks to make sure password inputted is correct
                         checkPassword2(email, pass);
                     }
                 });
@@ -282,15 +202,17 @@ public class SettingsActivity extends AppCompatActivity {
 
         });
 
+        //if user wants to logout, they click this button
         logout.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
+                //alert pops up prompting to know if user really wants to logout
                 new android.support.v7.app.AlertDialog.Builder(SettingsActivity.this) //changed to MainActivity.this from context
                         .setTitle("Logout")
                         .setMessage("Are you sure you want to logout?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
+                                //if they click yes, user is logged out
                                 logoutUser();
                             }
                         })
@@ -303,11 +225,13 @@ public class SettingsActivity extends AppCompatActivity {
                         .show();
             }
         });
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         //client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    //This method checks to see if the password associated with the email matches
     private void checkPassword(final String email, final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_login";
@@ -375,6 +299,8 @@ public class SettingsActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    //This method verifies if the email is asociated with the password and then prompts the user
+    //to ensure they actually want to delete their account
     private void checkPassword2(final String email, final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_login";
@@ -396,15 +322,10 @@ public class SettingsActivity extends AppCompatActivity {
 
                     // Check for error node in json
                     if (!error) {
-                        // Launch main activity
-                        /**Intent intent = new Intent(SettingsActivity.this,
-                                LoginActivity.class);
-                        startActivity(intent);
-                        **/
-
+                        //alert prompting the user to verify they want to remove their account
                         new android.support.v7.app.AlertDialog.Builder(SettingsActivity.this) //changed to MainActivity.this from context
-                                .setTitle("Remove Account")
-                                .setMessage("Are you sure you want to remove your account?")
+                                .setTitle(getString(R.string.remove_account))
+                                .setMessage(getString(R.string.are_you_sure_remove))
                                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
                                         // continue with delete
@@ -458,187 +379,6 @@ public class SettingsActivity extends AppCompatActivity {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
-
-    /**public static class SettingsFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.pref_general);
-        }
-    }**/
-
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    /**private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            // Show the Up button in the action bar.
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }**/
-
-    /**
-     * {@inheritDoc}
-     */
-    /**@Override
-    public boolean onIsMultiPane() {
-        return isXLargeTablet(this);
-    }**/
-
-    /**
-     * {@inheritDoc}
-     */
-    /**@Override
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public void onBuildHeaders(List<Header> target) {
-        // loadHeadersFromResource(R.xml.pref_headers, target);
-    }**/
-
-    /**
-     * This method stops fragment injection in malicious applications.
-     * Make sure to deny any unknown fragments here.
-     */
-    /**protected boolean isValidFragment(String fragmentName) {
-        return PreferenceFragment.class.getName().equals(fragmentName)
-                || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
-    }
-**/
-   /** @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Settings Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.teamfyre.fyre/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }**/
-
-   /** @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Settings Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.teamfyre.fyre/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }**/
-
-    /**
-     * This fragment shows general preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    /**@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_general);
-            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference("example_list"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }**/
-
-    /**
-     * This fragment shows notification preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-   /** @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class NotificationPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            //addPreferencesFromResource(R.xml.pref_notification);
-            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }**/
-
-    /**
-     * This fragment shows data and sync preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-   /** @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public class DataSyncPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            //addPreferencesFromResource(R.xml.pref_data_sync);
-            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-
-    }**/
 
     /**************************************************************************
      * logoutUser()
@@ -694,14 +434,6 @@ public class SettingsActivity extends AppCompatActivity {
                         Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
-                        /**
-                         // Launch login activity
-                         Intent intent = new Intent(
-                         AccountActivity.this,
-                         LoginActivity.class);
-                         startActivity(intent);
-                         finish();
-                         **/
                     } else {
 
                         // Error occurred in registration. Get the error
