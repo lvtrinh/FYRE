@@ -23,6 +23,7 @@ import java.math.BigDecimal;
  */
 public class Receipt implements Parcelable{
 
+    private Integer receiptID;
     private String storeName;
     private String storeStreet;
     private String storeCityState;
@@ -53,9 +54,6 @@ public class Receipt implements Parcelable{
      **************************************************************************/
     public Receipt() { }
 
-    // constructor to construct Receipt from Parcel
-    // FIFO
-
     /**************************************************************************
      * Receipt()
      *
@@ -68,6 +66,7 @@ public class Receipt implements Parcelable{
      * @param in The Parcel with the receipt's data
      **************************************************************************/
     protected Receipt(Parcel in) {
+        receiptID = in.readByte() == 0x00 ? null : in.readInt();
         storeName = in.readString();
         storeStreet = in.readString();
         storeCityState = in.readString();
@@ -420,6 +419,7 @@ public class Receipt implements Parcelable{
 
 
     public void printReceipt() {
+        System.out.println("Receipt ID:" + this.receiptID);
         System.out.println("Store Name: " + this.storeName);
         System.out.println("Store Street: " + this.storeStreet);
         System.out.println("Store City, State, ZIP: " + this.storeCityState);
@@ -463,6 +463,12 @@ public class Receipt implements Parcelable{
     // writes contents of Receipt into Parcel
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        if (receiptID == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(receiptID);
+        }
         dest.writeString(storeName);
         dest.writeString(storeStreet);
         dest.writeString(storeCityState);
