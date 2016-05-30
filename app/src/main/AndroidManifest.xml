@@ -12,7 +12,7 @@
     <application
         android:name=".AppController"
         android:allowBackup="true"
-        android:icon="@drawable/ic_logo_fyre"
+        android:icon="@mipmap/ic_launcher_fyre"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
@@ -44,7 +44,8 @@
         <activity
             android:name=".RegisterActivity"
             android:label="@string/label_register"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".ReceiptManualActivity"
             android:label="@string/label_manual_add_receipt"
