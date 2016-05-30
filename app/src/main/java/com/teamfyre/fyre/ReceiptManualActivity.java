@@ -142,15 +142,39 @@ public class ReceiptManualActivity extends AppCompatActivity {
         });
 
 
+        //click spinner
+        spinCategory.setOnItemSelectedListener(this);
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
+        categories.add("Select a Category");
+        categories.add("Food and Drink");
+        categories.add("Grocery");
+        categories.add("Retail");
+        categories.add("Misc");
+
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        spinCategory.setAdapter(dataAdapter);
+
+
 
         // save button
         btnSaveReceipt.setOnClickListener(new View.OnClickListener() {
+            @TargetApi(Build.VERSION_CODES.GINGERBREAD)
             public void onClick(View view) {
 
                 // grabs the user's inputted text
                 String store = inputStore.getText().toString().trim();
                 StringBuilder date = new StringBuilder(inputDate.getText().toString().trim());
                 String price = inputPrice.getText().toString().trim();
+                String category = item;
+
 
                 // fixes input for date
                 for (int x = 0; x < date.toString().length(); x++) {
@@ -160,16 +184,9 @@ public class ReceiptManualActivity extends AppCompatActivity {
                 }
 
                 // user did not fill out all fields, display warning
-                if (store.isEmpty() || date.toString().isEmpty() || price.isEmpty()) {
+                if (store.isEmpty() || date.toString().isEmpty() || price.isEmpty()||item == "Select a Category") {
                     Toast.makeText(getApplicationContext(),
                             "Please fill out all fields",
-                            Toast.LENGTH_LONG).show();
-                }
-
-                // user had incorrect date format, display warning
-                else if (!date.toString().matches("\\d{2}-\\d{2}-\\d{4}")) {
-                    Toast.makeText(getApplicationContext(),
-                            "Incorrect date format",
                             Toast.LENGTH_LONG).show();
                 }
 
@@ -193,9 +210,33 @@ public class ReceiptManualActivity extends AppCompatActivity {
 
                     // creates receipt object from information
                     receipt = new Receipt();
+                    if (date.toString().matches("\\d{2}-\\d{2}-\\d{2}")){
+                        receipt.setDateTime(date.toString(), "0:0");
+                    }
+                    else{
+                        receipt.setDateTime2000(date.toString(), "0:0");
+                    }
                     receipt.setStoreName(store);
-                    receipt.setDateTime(date.toString(), "00:00");
                     receipt.setTotalPrice(price);
+                    receipt.setStoreCategory(category);
+                    receipt.setStoreStreet("");
+                    receipt.setStoreStreet("");
+                    receipt.setStoreCityState("");
+                    receipt.setStorePhone("");
+                    receipt.setStoreWebsite("");
+                    receipt.setHereGo(0);
+                    receipt.setCardType("");
+                    receipt.setCardNum(0);
+                    receipt.setPaymentMethod("");
+                    receipt.setSubtotal(BigDecimal.ZERO);
+                    receipt.setTax(BigDecimal.ZERO);
+                    receipt.setCashBack(BigDecimal.ZERO);
+                    receipt.setCashier("");
+                    receipt.setCheckNumber("");
+                    receipt.setOrderNumber(-1);
+                    receipt.setStarred(false);
+                    receipt.setMemo("");
+
 
                     HashMap<String, String> user = db.getUserDetails();
                     String id = user.get("id");
@@ -210,5 +251,14 @@ public class ReceiptManualActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        // On selecting a spinner item
+        item = parent.getItemAtPosition(position).toString();
+
+    }
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
     }
 }

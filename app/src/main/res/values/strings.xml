@@ -58,6 +58,8 @@
 
     <string name="security_question_title">Security Question</string>
 
+    <string name="action_settings">Settings</string>
+
     <string name="enter_email">Enter Email</string>
     <string name="security_question">Security Question</string>
 
