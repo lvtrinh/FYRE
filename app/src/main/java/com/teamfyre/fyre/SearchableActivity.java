@@ -32,6 +32,8 @@ public class SearchableActivity extends AppCompatActivity {
     private SQLiteHandler db;
     private SessionManager session;
 
+    private String query;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,13 +71,37 @@ public class SearchableActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        List<Receipt> recyclerList;
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_filter) {
-            return true;
+        if (id == R.id.date_asc) {
+            recyclerList = db.getSearchReceiptsFilter(query, "ORDER BY date ASC");
         }
-        else if(id == R.id.action_search) {
-            return true;
+        else if(id == R.id.date_desc) {
+            recyclerList = db.getSearchReceipts(query);
+        }
+        else if(id == R.id.price_asc) {
+            recyclerList = db.getSearchReceiptsFilter(query, "ORDER BY total_price ASC");
+        }
+        else if(id == R.id.price_desc) {
+            recyclerList = db.getSearchReceiptsFilter(query, "ORDER BY total_price DESC");
+        }
+        else if(id == R.id.filter_category) {
+            // pop something up here to determine a spinner
+            String cat = "Food and Drink";
+            recyclerList = db.getSearchReceiptsFilter(query, "AND store_category = " + cat + " ORDER BY total_price DESC");
+        }
+        else if(id == R.id.filter_price) {
+            // pop something up here to determine
+            int priceFrom = 0;
+            int priceTo = 100;
+            recyclerList = db.getSearchReceiptsFilter(query, "AND total_price > " + priceFrom +  " AND " + priceTo + " ORDER BY date DESC");
+        }
+        else if(id == R.id.filter_date) {
+            // pop something up here to determine
+            String dateFrom = "2011-00-11";
+            String dateTo = "2014-00-12";
+            recyclerList = db.getSearchReceiptsFilter(query, "AND total_price > " + dateFrom +  " AND " + dateTo + " ORDER BY date DESC");
         }
 
         return super.onOptionsItemSelected(item);
@@ -83,7 +109,7 @@ public class SearchableActivity extends AppCompatActivity {
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
+            query = intent.getStringExtra(SearchManager.QUERY);
 
             HashMap<String, String> user = db.getUserDetails();
 
