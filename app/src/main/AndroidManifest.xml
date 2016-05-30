@@ -12,7 +12,7 @@
     <application
         android:name=".AppController"
         android:allowBackup="true"
-        android:icon="@drawable/ic_logo_fyre"
+        android:icon="@mipmap/ic_launcher_fyre"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
@@ -44,7 +44,8 @@
         <activity
             android:name=".RegisterActivity"
             android:label="@string/label_register"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".ReceiptManualActivity"
             android:label="@string/label_manual_add_receipt"
@@ -98,9 +99,18 @@
         </activity>
         <activity
             android:name=".PrivacyPolicy"
-            android:label="@string/label_account_settings"
+            android:label="@string/label_privacy_policy"
             android:parentActivityName=".SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".ContactUs"
+            android:label="@string/label_contact_us"
+            android:parentActivityName=".SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamfyre.fyre.SettingsActivity" />
@@ -112,8 +122,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <activity android:name=".ContactUs"></activity>
     </application>
 
 </manifest>
