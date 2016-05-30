@@ -24,4 +24,13 @@ public class AppConfig {
 
     // Server remove account url
     public static String URL_REMOVEACCOUNT = "http://13.93.202.168/android_login_api/removeUser.php";
+
+    // Server password reset url
+    public static String URL_PASSWORDRESET = "http://13.93.202.168/android_login_api/forget.php";
+
+    // Server validate email url
+    public static String URL_VALIDATEEMAIL = "http://13.93.202.168/android_login_api/getSecurityQuestion.php";
+
+    // Server validate security question url
+    public static String URL_VALIDATESECURITYQUESTION = "http://13.93.202.168/android_login_api/validateSecurityQuestion.php";
 }

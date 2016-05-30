@@ -11,6 +11,8 @@ package com.teamfyre.fyre;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -30,7 +32,7 @@ import android.view.View;
 
 import java.util.HashMap;
 
-public class ReceiptManualActivity extends Activity {
+public class ReceiptManualActivity extends AppCompatActivity {
 
     private Receipt receipt;
     private SQLiteHandler db;
@@ -74,6 +76,9 @@ public class ReceiptManualActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manually_add_receipt);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         inputStore = (EditText) findViewById(R.id.store);
         inputDate = (EditText) findViewById(R.id.date);

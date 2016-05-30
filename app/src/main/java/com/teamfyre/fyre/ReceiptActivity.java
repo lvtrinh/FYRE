@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,7 @@ import java.util.Iterator;
 /**
  * Created by claytonyamaguchi on 5/12/16.
  */
-public class ReceiptActivity extends Activity {
+public class ReceiptActivity extends AppCompatActivity {
     private static final String TAG = ReceiptActivity.class.getSimpleName();
     private SessionManager session;
     private SQLiteHandler db;
@@ -176,8 +177,10 @@ public class ReceiptActivity extends Activity {
 
                         JSONObject receipt = jObj.getJSONObject("item");
                         String itemId = receipt.getString("itemId");
-                        System.out.println(itemId);
-                        db.addReceiptItem(String.valueOf(receiptId), itemId, item);
+                        //System.out.println(itemId);
+                        GetReceiptActivity test = new GetReceiptActivity(db, session);
+                        test.getItems(receiptId);
+                        //db.addReceiptItem(String.valueOf(receiptId), itemId, item);
                     } else {
 
                         // Error occurred in registration. Get the error

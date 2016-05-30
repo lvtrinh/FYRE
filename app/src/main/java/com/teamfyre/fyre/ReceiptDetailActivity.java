@@ -16,7 +16,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
@@ -24,6 +27,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class ReceiptDetailActivity extends AppCompatActivity {
@@ -78,81 +82,133 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         TextView purchaseTax = (TextView) findViewById(R.id.rec_detail_purchase_tax);
         TextView purchaseTotal = (TextView) findViewById(R.id.rec_detail_purchase_total);
 
+        TextView staticTax = (TextView) findViewById(R.id.rec_detail_purchase_tax_lit);
+        TextView staticSubtotal = (TextView) findViewById(R.id.rec_detail_purchase_subtotal_lit);
+
         TextView paymentType = (TextView) findViewById(R.id.rec_detail_payment_type);
         // may need to delete these two, if not card
         TextView paymentCardMethod = (TextView) findViewById(R.id.rec_detail_payment_card_method);
         TextView paymentCardNum = (TextView) findViewById(R.id.rec_detail_payment_card_num);
 
-
         // replace data
         // for now, let's say everything's required and we can implement removing null fields later
 
-        if (receipt.getStoreName() != null) {
+        if (receipt.getStoreName() != "") {
             merchantName_header.setText(receipt.getStoreName());
             merchantName.setText(receipt.getStoreName());
         }
+        else {
+            ((ViewGroup) merchantName.getParent()).removeView(merchantName);
+        }
 
-        if (receipt.getTotalPrice() != null) {
+        if (receipt.getTotalPrice().toString() != "") {
             price_header.setText("$" + receipt.getTotalPrice().toString());
             purchaseTotal.setText("$" + receipt.getTotalPrice().toString());
         }
+        else {
+            ((ViewGroup) purchaseTotal.getParent()).removeView(purchaseTotal);
+        }
 
         // TODO build a string for date time first, replace body view
-        if (receipt.getDate() != null) {
+        if (receipt.getDate() != "-1--1--1") {
             date_header.setText(receipt.getDateUI());
             purchaseDateTime.setText(receipt.getDateUI());
         }
+        else {
+            ((ViewGroup) purchaseDateTime.getParent()).removeView(purchaseDateTime);
+        }
 
-        if (receipt.getTime() != null) {
+        if (receipt.getTime() != null && !receipt.getTime().equals("0:0")) {
            purchaseDateTime.append(" " + receipt.getTime());
         }
 
-        if (receipt.getStoreStreet() != null) {
+        if (!receipt.getStoreStreet().equals("")) {
             merchantAddress.setText(receipt.getStoreStreet());
         }
+        else {
+            ((ViewGroup) merchantAddress.getParent()).removeView(merchantAddress);
+        }
 
-        if (receipt.getStoreCityState() != null) {
+        if (!receipt.getStoreCityState().equals("")) {
             merchantCityState.setText(receipt.getStoreCityState());
         }
+        else {
+            ((ViewGroup) merchantCityState.getParent()).removeView(merchantCityState);
+        }
 
-        if (receipt.getStorePhone() != null) {
+        if (!receipt.getStorePhone().equals("")) {
             merchantPhone.setText(receipt.getStorePhone());
         }
-        if (receipt.getStoreWebsite() != null) {
+        else {
+            ((ViewGroup) merchantPhone.getParent()).removeView(merchantPhone);
+            merchantPhone.setVisibility(View.GONE);
+        }
+
+        if (!receipt.getStoreWebsite().equals("")) {
             merchantWeb.setText(receipt.getStoreWebsite());
         }
-        if (receipt.getStoreCategory() != null) {
+        else {
+            merchantWeb.setVisibility(View.GONE);
+        }
+
+        if (!receipt.getStoreCategory().equals("")) {
             merchantCategory.setText("Category: " + receipt.getStoreCategory());
         }
-
-        if (receipt.getCashier() != null) {
-            purchaseCashier.setText("Cashier: " + receipt.getCashier());
+        else {
+            merchantCategory.setVisibility(View.GONE);
         }
 
-        if (receipt.getOrderNumber() != 0) {
+        if (!receipt.getCashier().equals("")) {
+            purchaseCashier.setText("Cashier: " + receipt.getCashier());
+        }
+        else {
+            ((ViewGroup) purchaseCashier.getParent()).removeView(purchaseCashier);
+        }
+
+        if (receipt.getOrderNumber() != -1) {
             purchaseOrderNum.setText("Order Number: " + receipt.getOrderNumber());
+        }
+        else {
+            ((ViewGroup) purchaseOrderNum.getParent()).removeView(purchaseOrderNum);
         }
 
         fillItemList();
 
-        if (receipt.getSubtotal() != null) {
+        if (receipt.getSubtotal().toString() != "0") {
             purchaseSubtotal.setText("$" + receipt.getSubtotal().toString());
         }
+        else {
+            ((ViewGroup) purchaseSubtotal.getParent()).removeView(purchaseSubtotal);
+            ((ViewGroup) staticSubtotal.getParent()).removeView(staticSubtotal);
+        }
 
-        if (receipt.getTax() != null) {
+        if (receipt.getTax().toString() != "0") {
             purchaseTax.setText("$" + receipt.getTax().toString());
         }
+        else {
+            ((ViewGroup) purchaseTax.getParent()).removeView(purchaseTax);
+            ((ViewGroup) staticTax.getParent()).removeView(staticTax);
+        }
 
-        if (receipt.getCardType() != null){
+        if (!receipt.getCardType().equals("")){
             paymentType.setText("Paid with: " + receipt.getCardType());
         }
-
-        if (receipt.getPaymentMethod() != null) {
-            paymentCardMethod.setText("Card method: " + receipt.getPaymentMethod());
+        else {
+            ((ViewGroup) paymentType.getParent()).removeView(paymentType);
         }
 
-        if (receipt.getCardNum() != null) {
+        if (receipt.getPaymentMethod() != null && !receipt.getPaymentMethod().equals("")) {
+            paymentCardMethod.setText("Card method: " + receipt.getPaymentMethod());
+        }
+        else {
+            ((ViewGroup) paymentCardMethod.getParent()).removeView(paymentCardMethod);
+        }
+
+        if (receipt.getCardNum() != 0) {
             paymentCardNum.setText("Card ending in " + receipt.getCardNum());
+        }
+        else {
+            ((ViewGroup) paymentCardNum.getParent()).removeView(paymentCardNum);
         }
 
         // TODO if memo has data in it, populate the memo
