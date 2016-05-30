@@ -54,7 +54,6 @@ public class SearchableActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("INFLATE", "should inflate here");
         getMenuInflater().inflate(R.menu.test, menu);
 
         //SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -72,7 +71,7 @@ public class SearchableActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_filter) {
             return true;
         }
         else if(id == R.id.action_search) {
