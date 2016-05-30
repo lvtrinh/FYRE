@@ -99,9 +99,18 @@
         </activity>
         <activity
             android:name=".PrivacyPolicy"
-            android:label="@string/label_account_settings"
+            android:label="@string/label_privacy_policy"
             android:parentActivityName=".SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".ContactUs"
+            android:label="@string/label_contact_us"
+            android:parentActivityName=".SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamfyre.fyre.SettingsActivity" />
@@ -113,8 +122,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <activity android:name=".ContactUs"></activity>
     </application>
 
 </manifest>
