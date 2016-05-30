@@ -41,7 +41,7 @@
     <string name="title_activity_receipt_detail">Receipt Details</string>
 
     <string-array name="security_questions">
-        <item>Select one</item>
+        <item>Select One</item>
         <item>What is your Mothers maiden name?</item>
         <item>What is your favorite food?</item>
         <item>Who was your favorite teacher growing up?</item>
@@ -54,7 +54,15 @@
     <string name="select_one">Select One</string>
     <string name="forgot_password"><u>Forgot Password</u></string>
 
+    <string name="answer_correctly">Please enter valid answer to your question</string>
+
     <string name="security_question_title">Security Question</string>
+
+    <string name="enter_email">Enter Email</string>
+    <string name="security_question">Security Question</string>
+
+    <string name="remove_account">Remove Account</string>
+    <string name="are_you_sure_remove">Are you sure you want to remove your account?</string>
 
     <string name="sort_date_asc">Date: Oldest to Newest</string>
     <string name="sort_date_desc">Date: Newest to Oldest</string>
@@ -63,5 +71,6 @@
     <string name="filter_category">Filter by Category</string>
     <string name="filter_price">Filter by Price</string>
     <string name="filter_date">Filter by Date</string>
+
 
 </resources>

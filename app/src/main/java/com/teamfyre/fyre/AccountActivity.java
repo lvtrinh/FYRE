@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.util.Log;
 import android.widget.Button;
@@ -40,9 +39,6 @@ public class AccountActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         db = new SQLiteHandler(getApplicationContext());
 
@@ -62,6 +58,9 @@ public class AccountActivity extends AppCompatActivity {
         UpdateAccount = (Button) findViewById(R.id.updateAccount);
         RemoveAccount = (Button) findViewById(R.id.RemoveAccount);
 
+        UpdateAccount.setBackgroundResource(0);
+        RemoveAccount.setBackgroundResource(0);
+
         name1.setText(name);
         email1.setText(email);
 
@@ -71,6 +70,30 @@ public class AccountActivity extends AppCompatActivity {
                 String e = email1.getText().toString();
                 String p = password.getText().toString();
 
+                //checking if email is in correct format
+                /**
+                 int emailLength = e.length();
+                boolean at = false;
+                int atIndex = 0;
+                boolean dot = false;
+                for (int i = 0; i < emailLength; i++) {
+                    if (i > 0 && e.charAt(i) == '@') {
+                        at = true;
+                        atIndex = i;
+                    }
+                    if (i > atIndex + 1 && i > 1 && e.charAt(i) == '.')
+                        dot = true;
+                }
+                 **/
+
+                /**
+                if (n.length() != 0)
+                    updateName(n);
+                if (e.length() != 0 && at && dot)
+                    updateEmail(e, id);
+                if (p.length() != 0)
+                    updatePassword(e, p);
+                 **/
                 updateAccount(n, e, p, id);
             }
         });

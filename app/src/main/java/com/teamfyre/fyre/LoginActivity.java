@@ -96,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // Link to Register Screen
-
         btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -107,11 +106,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //if user forgot their password clicks on forgot password button
         forgot.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
+
+                //prompts user to enter email of account looking to retrieve password from
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                builder.setTitle("Enter Email");
+                builder.setTitle(getString(R.string.enter_email));
 
                 // Set up the input
                 final EditText input = new EditText(LoginActivity.this);
@@ -126,18 +128,8 @@ public class LoginActivity extends AppCompatActivity {
                         //if email exists
                         String email = input.getText().toString();
 
+                        //calls method to validate that a user exists associated ot that email
                         validateEmail(email);
-                        if (validEmail) {
-
-                        } else {
-                            dialog.cancel();
-                        }
-
-
-                        //prompt for security question
-
-                        //if security question right send email and notify that email has been sent
-
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -258,24 +250,30 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
+
+                    //if there no error in retrieval and user exists
                     if (!error) {
                         System.out.println("Email was validated. Fetched security question.");
                         validEmail = true;
                         String secQuestion = null;
 
+                        //gets security question associated with user's account
                         int question = Integer.parseInt(jObj.getString("security_question"));
 
+                        //create an alert to prompt answer for the security question
                         AlertDialog.Builder builder2 = new AlertDialog.Builder(LoginActivity.this);
-                        builder2.setTitle("Security Question");
+
+                        builder2.setTitle(getString(R.string.security_question));
+
                         //pull security question
                         if(question ==1) {
-                            secQuestion = "What is your Mothers maiden name?";
+                            secQuestion = getString(R.string.maiden_q);
                         }
                         else if(question == 2) {
-                            secQuestion = "What is your favorite food?";
+                            secQuestion = getString(R.string.food_q);
                         }
                         else {
-                           secQuestion = "Who was your favorite teacher growing up?";
+                           secQuestion = getString(R.string.teacher_q);
                         }
                         builder2.setMessage(secQuestion);
 
@@ -289,10 +287,10 @@ public class LoginActivity extends AppCompatActivity {
                         builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                //gets answer to security question
                                 String securityAnswer = input.getText().toString();
                                 //check question answer
                                 validateSecurityQuestion(email, securityAnswer);
-                                //send email
                             }
                         });
                         builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

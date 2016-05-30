@@ -84,6 +84,22 @@
                 android:id="@+id/password"
                 android:hint="@string/hint_password" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Security Question"
+                android:fontFamily="sans-serif"
+                android:id="@+id/textView2"
+                android:paddingTop="15dp" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/security_question_title"
+                android:id="@+id/security"
+                android:entries="@array/security_questions"
+                android:spinnerMode="dropdown" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -53,8 +53,9 @@ public class RegisterActivity extends AppCompatActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
 
+        //links controller to view
+        setContentView(R.layout.activity_register);
         inputFullName = (EditText) findViewById(R.id.name);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -64,6 +65,8 @@ public class RegisterActivity extends AppCompatActivity{
         adapter = ArrayAdapter.createFromResource(this, R.array.security_questions, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        //variable indicates whether an answer for the security question has been inputted
         ans = false;
 
         // Progress dialog
@@ -91,15 +94,18 @@ public class RegisterActivity extends AppCompatActivity{
                 String name = inputFullName.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-                //
+
+                //which question they selected
                 int question = qOption;
+
+                //what their answer was to the security question
                 String qAnswer = answer;
 
-                System.out.println(name + " " + email + " " + password);
-
+                //as long as all required fields have been filled out, register the new user
                 if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty() && ans) {
                     registerUser(name, email, password, question, qAnswer);
                 } else {
+                    //or else throw an error
                     Toast.makeText(getApplicationContext(),
                             "Please enter your details!", Toast.LENGTH_LONG)
                             .show();
@@ -118,21 +124,25 @@ public class RegisterActivity extends AppCompatActivity{
             }
         });
 
+        //handles security question field
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
             {
+                //gets which question they selected to answer
                 selectedQ = parent.getSelectedItem().toString();
-                if(!selectedQ.equals("Select one")){
+
+                //if they have picked one other than default "select one" prompt for an answer
+                if(!selectedQ.equals(getString(R.string.select_one))){
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setTitle(selectedQ);
 
-                    if(selectedQ.equals("What is your Mothers maiden name?"))
+                    if(selectedQ.equals(getString(R.string.maiden_q)))
                         qOption = 1;
-                    else if(selectedQ.equals("What is your favorite food?"))
+                    else if(selectedQ.equals(getString(R.string.food_q)))
                         qOption = 2;
-                    else if(selectedQ.equals("Who was your favorite teacher growing up?"))
+                    else if(selectedQ.equals(getString(R.string.teacher_q)))
                         qOption = 3;
 
                     // Set up the input
@@ -146,11 +156,15 @@ public class RegisterActivity extends AppCompatActivity{
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             answer = input.getText().toString();
+
+                            //if the user puts in an answer
                             if(answer.length() > 0)
                                 ans = true;
+
+                            //if no answer is entered, ie box is left blank, prompts user to answer
                             else {
                                 Toast.makeText(getApplicationContext(),
-                                        "Please enter valid answer to your question", Toast.LENGTH_LONG)
+                                        getString(R.string.answer_correctly), Toast.LENGTH_LONG)
                                         .show();
                             }
                         }
@@ -165,16 +179,12 @@ public class RegisterActivity extends AppCompatActivity{
                     builder.show();
 
                 }
-                //create alert to ask for answer
-                //switch statement to get int value to insert into db
-                //insert into db
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent)
             {
-
+                //do nothing
             }
         });
 
