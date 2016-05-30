@@ -8,6 +8,7 @@
  ******************************************************************************/
 package com.teamfyre.fyre;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -54,6 +55,9 @@ public class Receipt implements Parcelable{
      **************************************************************************/
     public Receipt() { }
 
+    // constructor to construct Receipt from Parcel
+    // FIFO
+
     /**************************************************************************
      * Receipt()
      *
@@ -96,6 +100,14 @@ public class Receipt implements Parcelable{
     }
 
     // Setters
+    public void setReceiptID(Object id) {
+        if (id.toString().equals(null)) {
+            receiptID = 0;
+            return;
+        }
+        receiptID = Integer.parseInt(id.toString());
+    }
+
     public void setStoreName(Object name) {
         if (name.toString().equals("null")) {
             storeName = "";
@@ -361,6 +373,8 @@ public class Receipt implements Parcelable{
     public String getStoreWebsite() {
         return this.storeWebsite;
     }
+
+    public Integer getReceiptID() { return this.receiptID; }
 
     public String getStoreCategory() { return this.storeCategory; }
 

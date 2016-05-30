@@ -33,4 +33,7 @@ public class AppConfig {
 
     // Server validate security question url
     public static String URL_VALIDATESECURITYQUESTION = "http://13.93.202.168/android_login_api/validateSecurityQuestion.php";
+
+    // Server update memo url
+    public static String URL_UPDATEMEMO = "http://13.93.202.168/android_login_api/updateMemo.php";
 }

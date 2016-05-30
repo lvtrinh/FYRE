@@ -127,6 +127,7 @@ public class ReceiptActivity extends AppCompatActivity {
                 params.put("cashier", r.getCashier());
                 params.put("checkNumber", r.getCheckNumber());
                 params.put("orderNumber", String.valueOf(r.getOrderNumber()));
+                params.put("memo", r.getMemo());
 
                 Iterator it = params.entrySet().iterator();
                 while (it.hasNext()) {

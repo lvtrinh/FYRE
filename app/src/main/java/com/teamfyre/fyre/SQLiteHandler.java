@@ -243,6 +243,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             do {
                 Receipt currReceipt = new Receipt();
 
+                if (cursor.getString(0) == null) {}
+                else currReceipt.setReceiptID(cursor.getString(0));
+
                 if (cursor.getString(1) == null) {}
                 else currReceipt.setStoreName(cursor.getString(1));
 
