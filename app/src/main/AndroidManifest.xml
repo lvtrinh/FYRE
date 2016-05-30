@@ -56,7 +56,7 @@
         </activity>
         <activity
             android:name=".ReceiptDetailActivity"
-            android:label="@string/label_activity_receipt_detail"
+            android:label="@string/label_receipt_detail"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity" >
             <meta-data

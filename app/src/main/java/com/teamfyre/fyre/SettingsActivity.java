@@ -185,7 +185,7 @@ public class SettingsActivity extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        btn.setBackgroundResource(0);
+        modifyAccount.setBackgroundResource(0);
         logout.setBackgroundResource(0);
         removeAccount.setBackgroundResource(0);
         about.setBackgroundResource(0);
