@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">FYRE</string>
-    <string name="recent_receipts">Recent Receipts</string>
     <string name="app_tagline">Free Your Receipts Electronically</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -11,7 +10,7 @@
     <string name="label_login">Login</string>
     <string name="label_register">Register</string>
     <string name="label_logout">Logout</string>
-    <string name="label_activity_receipt_detail">Receipt Details</string>
+    <string name="label_receipt_detail">Receipt Details</string>
     <string name="label_manual_add_receipt">Add A Receipt</string>
     <string name="label_categories">Categories</string>
     <string name="label_search">Search</string>
@@ -51,7 +50,6 @@
     <string name="maiden_q">What is your Mothers maiden name?</string>
     <string name="food_q">What is your favorite food?</string>
     <string name="teacher_q">Who was your favorite teacher growing up?</string>
-
 
     <string name="select_one">Select One</string>
     <string name="forgot_password"><u>Forgot Password</u></string>

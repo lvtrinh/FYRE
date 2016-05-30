@@ -615,7 +615,6 @@ public class  MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
             //finish();
-
         }
         // only if we're placing logout in the hamburger menu
         else if (id == R.id.nav_logout) {

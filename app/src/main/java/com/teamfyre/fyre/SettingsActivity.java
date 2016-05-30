@@ -63,9 +63,10 @@ public class SettingsActivity extends AppCompatActivity {
 
     private SQLiteHandler db;
     private SessionManager session;
-    private Button btn;
+    private Button editAccount;
     private Button logout;
     private Button removeAccount;
+    private Button privacyPolicy;
     private String pass = "";
     private ProgressDialog pDialog;
     private static final String TAG = RegisterActivity.class.getSimpleName();
@@ -168,9 +169,11 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btn = (Button) findViewById(R.id.btn);
+        editAccount = (Button) findViewById(R.id.editAccount);
         logout = (Button) findViewById(R.id.logout);
         removeAccount = (Button) findViewById(R.id.removeAccount);
+        privacyPolicy = (Button) findViewById(R.id.privacyPolicy);
+
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
@@ -218,7 +221,7 @@ public class SettingsActivity extends AppCompatActivity {
                     .show();
         }
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        editAccount.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
@@ -246,6 +249,15 @@ public class SettingsActivity extends AppCompatActivity {
                 });
 
                 builder.show();
+            }
+
+        });
+
+        privacyPolicy.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, PrivacyPolicy.class);
+                startActivity(intent);
             }
 
         });

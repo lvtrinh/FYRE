@@ -65,7 +65,7 @@
                 android:layout_margin="10dp" />
 
             <Button
-                android:id="@+id/btn"
+                android:id="@+id/editAccount"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -86,7 +86,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="#FFFFFF"
                 android:padding="10dp"
-                android:id="@+id/privacy" />
+                android:id="@+id/privacyPolicy" />
 
             <Button
                 android:layout_width="150dp"

@@ -5,56 +5,45 @@
     <item
         android:id="@+id/action_filter"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_filter_outline"
+        android:icon="@drawable/ic_filter"
         android:title="@string/label_filter"
         app:showAsAction="ifRoom" >
-
         <menu>
-
             <item
                 android:id="@+id/date_asc"
                 android:orderInCategory="100"
                 android:title="@string/sort_date_asc"
                 app:showAsAction="never" />
-
             <item
                 android:id="@+id/date_desc"
                 android:orderInCategory="100"
                 android:title="@string/sort_date_desc"
                 app:showAsAction="never" />
-
             <item
                 android:id="@+id/price_asc"
                 android:orderInCategory="100"
                 android:title="@string/sort_price_asc"
                 app:showAsAction="never" />
-
             <item
                 android:id="@+id/price_desc"
                 android:orderInCategory="100"
                 android:title="@string/sort_price_desc"
                 app:showAsAction="never" />
-
             <item
                 android:id="@+id/filter_category"
                 android:orderInCategory="100"
                 android:title="@string/filter_category"
                 app:showAsAction="never" />
-
             <item
                 android:id="@+id/filter_price"
                 android:orderInCategory="100"
                 android:title="@string/filter_price"
                 app:showAsAction="never" />
-
             <item
                 android:id="@+id/filter_date"
                 android:orderInCategory="100"
                 android:title="@string/filter_date"
                 app:showAsAction="never" />
-
         </menu>
-
     </item>
-
 </menu>
