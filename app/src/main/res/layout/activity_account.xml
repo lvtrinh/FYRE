@@ -16,7 +16,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Update Name"
+                android:text="Name"
                 android:id="@+id/newName"
                 android:layout_weight="0.07"
                 android:textSize="20dp"
@@ -33,7 +33,7 @@
             <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Email"
+        android:text="Email"
         android:id="@+id/newEmail"
         android:layout_weight="0.07"
         android:textSize="20dp"
@@ -50,7 +50,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Update Password"
+        android:text="Password"
         android:id="@+id/newPass"
         android:layout_weight="0.05"
         android:textSize="20dp"
@@ -71,20 +71,16 @@
         android:layout_height="wrap_content"
         android:text="Update Account"
         android:id="@+id/updateAccount"
-        android:layout_gravity="center_horizontal"
+        android:textAllCaps="false"
+        android:textSize="20dp"
         android:layout_weight="0.07" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="340dp"
-        android:layout_gravity="top" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Remove Account"
         android:id="@+id/RemoveAccount"
-        android:layout_gravity="center_horizontal"
         android:layout_weight="0.07"
         android:textColor="#FF0000"/>
         </LinearLayout>

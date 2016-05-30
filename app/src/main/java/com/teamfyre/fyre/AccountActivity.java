@@ -58,6 +58,9 @@ public class AccountActivity extends AppCompatActivity {
         UpdateAccount = (Button) findViewById(R.id.updateAccount);
         RemoveAccount = (Button) findViewById(R.id.RemoveAccount);
 
+        UpdateAccount.setBackgroundResource(0);
+        RemoveAccount.setBackgroundResource(0);
+
         name1.setText(name);
         email1.setText(email);
 

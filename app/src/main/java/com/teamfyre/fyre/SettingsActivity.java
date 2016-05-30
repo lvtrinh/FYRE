@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -47,6 +48,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.graphics.Color.TRANSPARENT;
+
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,
@@ -65,6 +68,8 @@ public class SettingsActivity extends AppCompatActivity {
     private Button btn;
     private Button logout;
     private Button removeAccount;
+    private Button about;
+    private Button contactUs;
     private String pass = "";
     private ProgressDialog pDialog;
     private static final String TAG = RegisterActivity.class.getSimpleName();
@@ -166,9 +171,19 @@ public class SettingsActivity extends AppCompatActivity {
         btn = (Button) findViewById(R.id.btn);
         logout = (Button) findViewById(R.id.logout);
         removeAccount = (Button) findViewById(R.id.removeAccount);
+        about = (Button) findViewById(R.id.about);
+        contactUs = (Button) findViewById(R.id.contact);
+
         // Progress dialog
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
+
+        btn.setBackgroundResource(0);
+        logout.setBackgroundResource(0);
+        removeAccount.setBackgroundResource(0);
+        about.setBackgroundResource(0);
+        contactUs.setBackgroundResource(0);
+
      //   setupActionBar();
 
         // Display the fragment as the main content.

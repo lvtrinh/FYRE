@@ -19,7 +19,8 @@
                 android:text="Account"
                 android:textSize="20dp"
                 android:fontFamily="sans-serif bold"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:textColor="#000000" />
 
             <TextView
                 android:layout_width="286dp"
@@ -27,7 +28,9 @@
                 android:text="New Text"
                 android:id="@+id/NAME"
                 android:textSize="20dp"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:textColor="#000000" />
+
 
             <TextView
                 android:layout_width="286dp"
@@ -35,57 +38,54 @@
                 android:text="New Text"
                 android:id="@+id/EMAIL"
                 android:textSize="20dp"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:textColor="#000000"/>
 
-            <TextView
-                android:layout_width="238dp"
-                android:layout_height="wrap_content"
-                android:text="Password: *****"
-                android:id="@+id/textView"
-                android:textSize="20dp"
-                android:layout_margin="10dp" />
 
             <Button
                 android:id="@+id/btn"
-                android:layout_width="111dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dip"
                 android:background="@color/btn_login_bg"
-                android:text="EDIT ACCOUNT"
-                android:textColor="@color/bg_login" />
+                android:text="Modify Account"
+                android:layout_margin="10dp"
+                android:textColor="@color/bg_login"
+                android:textSize="20dp"
+                android:textAllCaps="false"
+                android:fontFamily="sans-serif"/>
+
+            <View android:layout_width="fill_parent"
+                android:layout_height="0.75dp"
+                android:background="#696969"
+                android:layout_margin="10dp"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
                 android:text="Privacy Policy"
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:fontFamily="sans-serif"
-                android:layout_marginTop="70dp"
-                android:layout_marginBottom="10dp"
-                android:background="#FFFFFF"
+                android:background="#00ffffff"
                 android:padding="10dp"
                 android:id="@+id/privacy" />
+
+
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
                 android:text="About Us"
                 android:textAllCaps="false"
                 android:textSize="20dp"
                 android:fontFamily="sans-serif bold"
                 android:background="#FFFFFF"
                 android:padding="10dp"
-                android:layout_marginBottom="10dp"
                 android:id="@+id/about" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|bottom"
                 android:text="Contact Us"
                 android:textAllCaps="false"
                 android:textSize="20dp"
@@ -94,27 +94,28 @@
                 android:padding="10dp"
                 android:id="@+id/contact" />
 
+            <View android:layout_width="fill_parent"
+                android:layout_height="0.75dp"
+                android:background="#696969"
+                android:layout_margin="10dp"/>
+
             <!-- Logout Button -->
             <Button
                 android:id="@+id/logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dip"
                 android:background="@color/btn_login_bg"
-                android:text="LOGOUT"
+                android:text="Logout"
+                android:textAllCaps="false"
+                android:fontFamily="sans-serif"
+                android:textSize="20dp"
+                android:padding="10dp"
                 android:textColor="@color/bg_login" />
 
-            <ImageView
-                android:paddingTop="20dp"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_logo_fyre"
-                android:layout_gravity="center_horizontal" />
-
-            <Space
-                android:layout_width="20px"
-                android:layout_height="30dp" />
+            <View android:layout_width="fill_parent"
+                android:layout_height="0.75dp"
+                android:background="#696969"
+                android:layout_margin="10dp"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -123,7 +124,10 @@
                 android:id="@+id/removeAccount"
                 android:background="@color/btn_login_bg"
                 android:textColor="#FF0000"
-                android:layout_gravity="center_horizontal"/>
+                android:textSize="20dp"
+                android:textAllCaps="false"
+                android:fontFamily="sans-serif"
+                android:padding="10dp"/>
 
         </LinearLayout>
     </ScrollView>

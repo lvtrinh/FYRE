@@ -20,6 +20,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.provider.MediaStore;
+import android.graphics.Bitmap;
+import android.view.View;
+
 
 import java.util.HashMap;
 
@@ -37,6 +44,17 @@ public class ReceiptManualActivity extends Activity {
     private TextView txtPrice;
     private Button btnSaveReceipt;
     private ImageButton btnTakePicture;
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    // Private method to launch image capture software
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
 
     /**************************************************************************
      * onCreate()
@@ -114,12 +132,11 @@ public class ReceiptManualActivity extends Activity {
         // camera button, not implemented yet
         btnTakePicture.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-
-                Toast.makeText(getApplicationContext(),
-                        "Function not yet implemented",
-                        Toast.LENGTH_LONG).show();
+                dispatchTakePictureIntent();
             }
         });
+
+
 
         // save button
         btnSaveReceipt.setOnClickListener(new View.OnClickListener() {
