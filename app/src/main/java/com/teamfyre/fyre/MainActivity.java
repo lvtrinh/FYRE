@@ -507,12 +507,14 @@ public class  MainActivity extends AppCompatActivity
         return json;
     }
 
-    private void generateDemoList(int userId){
+    private ArrayList<Receipt> generateDemoList(int userId){
         GetReceiptActivity test = new GetReceiptActivity(db, session);
 
         //demoList = test.getReceipts(userId);
         //test.getReceipts(userId);
-        //demoList = db.getAllReceipts();
+        demoList = db.getAllReceipts();
+
+        /*
         int numDemos = 0;
         demoList = new ArrayList<>();
         Receipt demo1 = parseJson(loadJsonLocal(DEMO_JSON_FILENAME));
@@ -539,7 +541,10 @@ public class  MainActivity extends AppCompatActivity
             }
         }
         Log.d("demoList", "finished adding demos! num: " + numDemos);
-        /*Receipt demo3 = parseJson(loadJsonLocal("popeyesDemo.json"));
+       */
+
+        /*
+        Receipt demo3 = parseJson(loadJsonLocal("popeyesDemo.json"));
         demoList.add(demo3);
 
         Receipt demo4 = parseJson(loadJsonLocal("dlush.json"));
@@ -563,6 +568,7 @@ public class  MainActivity extends AppCompatActivity
         Receipt demo10 = parseJson(loadJsonLocal("tastyGardenDemo.json"));
         demoList.add(demo10);
 */
+        return demoList;
     }
 
     /**************************************************************************
