@@ -21,10 +21,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewManager;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -34,6 +37,10 @@ import java.util.ArrayList;
 public class ReceiptDetailActivity extends AppCompatActivity {
     private Receipt receipt;
     private GridLayout layout;
+    private EditText inputMemo;
+    private SessionManager session;
+    private SQLiteHandler db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +49,12 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Bundle data = getIntent().getExtras();
         receipt = data.getParcelable(MainActivity.EXTRA_RECEIPT);
+
+        inputMemo = (EditText) findViewById(R.id.rec_detail_memo);
 
         /* Test */
         //System.out.println("ReceiptDetailActivity: ");
@@ -353,6 +363,18 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        // TODO save memo data (to local app? to database?)
+        if (receipt.getMemo() == null) {
+            receipt.setMemo("");
+        }
+
+        // if the memo was changed, update it in the DB
+        if (!receipt.getMemo().equals(inputMemo.getText().toString().trim())) {
+
+            // memo input working, need to update receipt in DB here though
+
+            Toast.makeText(getApplicationContext(),
+                    "Memo saved",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }

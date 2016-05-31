@@ -68,6 +68,7 @@ public class GetReceiptActivity {
                             ArrayList<ReceiptItem> singleList = getItems(receiptId);
                             tmpReceipt.createItemList(singleList);
 
+                            tmpReceipt.setReceiptID(arrObj.get("receipt_id"));
                             tmpReceipt.setStoreName(arrObj.get("store_name"));
                             tmpReceipt.setStoreStreet(arrObj.get("store_street"));
                             tmpReceipt.setStoreCityState(arrObj.get("store_city_state"));
