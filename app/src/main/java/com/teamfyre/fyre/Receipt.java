@@ -255,7 +255,7 @@ public class Receipt implements Parcelable{
         for (int i = 0; i < timeArrTmp.length; i++) {
             timeArr[i] = Integer.parseInt(timeArrTmp[i]);
         }
-        dateTime = new GregorianCalendar(dateArr[2]+2000,(dateArr[0]) % 12,dateArr[1],timeArr[0],timeArr[1]);
+        dateTime = new GregorianCalendar(dateArr[2],(dateArr[0]) % 12,dateArr[1],timeArr[0],timeArr[1]);
     }
 
     public void setDateTimeDB(Object date, Object time) {

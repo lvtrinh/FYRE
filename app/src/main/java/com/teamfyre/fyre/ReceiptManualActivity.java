@@ -250,6 +250,7 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
                     }
 
                     receipt = new Receipt();
+                    receipt.setDateTime(date.toString(), "00:00");
                     receipt.setStoreName(store);
                     receipt.setTotalPrice(price);
                     receipt.setStoreCategory(category);
