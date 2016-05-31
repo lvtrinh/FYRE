@@ -36,6 +36,7 @@ public class SearchableActivity extends AppCompatActivity {
 
     private SQLiteHandler db;
     private SessionManager session;
+    private List<Receipt> recyclerList;
 
     private String query;
 
@@ -72,26 +73,39 @@ public class SearchableActivity extends AppCompatActivity {
         return true;
     }
 
+    private void updateRecyclerView(List<Receipt> recyclerList) {
+        mRecyclerView = (RecyclerView) findViewById(R.id.receipts_recycler_view);
+
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mAdapter = new ReceiptAdapter(recyclerList);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        List<Receipt> recyclerList;
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.date_asc) {
             recyclerList = db.getSearchReceiptsFilter(query, "ORDER BY date ASC");
+            updateRecyclerView(recyclerList);
         }
         else if(id == R.id.date_desc) {
             recyclerList = db.getSearchReceipts(query);
+            updateRecyclerView(recyclerList);
         }
         else if(id == R.id.price_asc) {
             recyclerList = db.getSearchReceiptsFilter(query, "ORDER BY total_price ASC");
+            updateRecyclerView(recyclerList);
         }
         else if(id == R.id.price_desc) {
             recyclerList = db.getSearchReceiptsFilter(query, "ORDER BY total_price DESC");
+            updateRecyclerView(recyclerList);
         }
         else if(id == R.id.filter_category) {
             // pop something up here to determine a spinner
@@ -100,7 +114,6 @@ public class SearchableActivity extends AppCompatActivity {
             final String[] types = {"Food and Drink", "Grocery", "Retail", "Misc"};
 
             b.setItems(types, new DialogInterface.OnClickListener() {
-
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -108,15 +121,23 @@ public class SearchableActivity extends AppCompatActivity {
                     switch(which){
                         case 0:
                             cat = types[0];
+                            recyclerList = db.getSearchReceiptsFilter(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC");
+                            updateRecyclerView(recyclerList);
                             break;
                         case 1:
                             cat = types[1];
+                            recyclerList = db.getSearchReceiptsFilter(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC");
+                            updateRecyclerView(recyclerList);
                             break;
                         case 2:
                             cat = types[2];
+                            recyclerList = db.getSearchReceiptsFilter(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC");
+                            updateRecyclerView(recyclerList);
                             break;
                         case 3:
                             cat = types[3];
+                            recyclerList = db.getSearchReceiptsFilter(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC");
+                            updateRecyclerView(recyclerList);
                             break;
                     }
                 }
@@ -124,7 +145,6 @@ public class SearchableActivity extends AppCompatActivity {
             });
 
             b.show();
-            recyclerList = db.getSearchReceiptsFilter(query, "AND store_category = " + cat + " ORDER BY total_price DESC");
         }
         else if(id == R.id.filter_price) {
             // pop something up here to determine
