@@ -8,6 +8,7 @@
  ******************************************************************************/
 package com.teamfyre.fyre;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -23,6 +24,7 @@ import java.math.BigDecimal;
  */
 public class Receipt implements Parcelable{
 
+    private Integer receiptID;
     private String storeName;
     private String storeStreet;
     private String storeCityState;
@@ -68,6 +70,7 @@ public class Receipt implements Parcelable{
      * @param in The Parcel with the receipt's data
      **************************************************************************/
     protected Receipt(Parcel in) {
+        receiptID = in.readByte() == 0x00 ? null : in.readInt();
         storeName = in.readString();
         storeStreet = in.readString();
         storeCityState = in.readString();
@@ -97,6 +100,14 @@ public class Receipt implements Parcelable{
     }
 
     // Setters
+    public void setReceiptID(Object id) {
+        if (id.toString().equals(null)) {
+            receiptID = 0;
+            return;
+        }
+        receiptID = Integer.parseInt(id.toString());
+    }
+
     public void setStoreName(Object name) {
         if (name.toString().equals("null")) {
             storeName = "";
@@ -363,6 +374,8 @@ public class Receipt implements Parcelable{
         return this.storeWebsite;
     }
 
+    public Integer getReceiptID() { return this.receiptID; }
+
     public String getStoreCategory() { return this.storeCategory; }
 
     public ArrayList<ReceiptItem> getItemList() { return this.itemList; }
@@ -420,6 +433,7 @@ public class Receipt implements Parcelable{
 
 
     public void printReceipt() {
+        System.out.println("Receipt ID:" + this.receiptID);
         System.out.println("Store Name: " + this.storeName);
         System.out.println("Store Street: " + this.storeStreet);
         System.out.println("Store City, State, ZIP: " + this.storeCityState);
@@ -463,6 +477,12 @@ public class Receipt implements Parcelable{
     // writes contents of Receipt into Parcel
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        if (receiptID == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(receiptID);
+        }
         dest.writeString(storeName);
         dest.writeString(storeStreet);
         dest.writeString(storeCityState);
