@@ -18,6 +18,8 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,8 @@ import java.util.List;
  */
 public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.RViewHolder> {
     private List<Receipt> receiptList;
+    private NumberFormat numFormat = new DecimalFormat("'$'0.00");
+
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
 
@@ -88,7 +92,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.RViewHol
         Receipt receipt = receiptList.get(position);
         holder.cv_name.setText(receipt.getStoreName());
         holder.cv_date.setText(receipt.getDateUI());
-        holder.cv_price.setText(receipt.getTotalPrice().toString());
+        holder.cv_price.setText(numFormat.format(receipt.getTotalPrice().doubleValue()));
     }
 
     @Override
