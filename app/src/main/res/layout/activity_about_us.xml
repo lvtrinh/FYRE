@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.teamfyre.fyre.AboutUs"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Free Your Receipts Electronically"
+                android:textSize="16sp"/>
+
+            <View android:layout_width="fill_parent"
+                android:layout_height="0.75dp"
+                android:background="#696969"
+                android:layout_margin="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mission Statement:"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="How many times have you been asked if you would like your receipt but you refused because you did not want to carry it around? For most of us, printed receipts lead to a bloated wallet, a messy car, or a filled trash can. For the rest of us, it is a liability that needs to be carefully, but not always tidily, stored for tax filings and audits.
+Now, how many times have you refused a receipt because you want to save paper, but the cashier prints it anyway and trashes it right in front of you? Paper receipts, needed or not, do not only bloat up your wallet, but also this lovely planet.
+They are undesirable and unsustainable:
+Receipts use 640,000 tons of paper per year leading to
+9.6 million trees to be cut down each year.
+250 million gallons of oil to be used each year.
+Producing CO2 equivalent of running 640,000 cars 24/7/365.
+1.2 billion gallons of water is used each year.
+1.5 million lbs of trash produced filling up our land each year.
+Lastly, presence of BPA, a harmful chemical, in receipts is linked to cancer.
+Which also disqualifies receipts from being recycled.
+Our app allows us to free your receipts electronically making:
+(1) Your finance management easier by digitizing your receipts giving you the ability to search and sort them from your smartphone.
+(2) This planet greener by eliminating paper receipts and beaming them directly to your smartphone.
+Our application will serve as a clutter-free digital organizer for ALL your receipts. And it will set the standards for merchants to directly beam all your e-receipts to your smartphone.  It’s about time receipts become digital, electronic and green.
+"/>
+        </LinearLayout>
+
+</ScrollView>
+</LinearLayout>
