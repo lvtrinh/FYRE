@@ -1,10 +1,12 @@
 package com.teamfyre.fyre;
 
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.nfc.NfcAdapter;
 import android.os.Debug;
 import android.support.v7.app.ActionBar;
@@ -15,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +28,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,6 +46,12 @@ public class SearchableActivity extends AppCompatActivity {
 
     private String cat;
 
+    private String low1;
+    private String high1;
+
+    private BigDecimal lowDec;
+    private BigDecimal highDec;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +66,30 @@ public class SearchableActivity extends AppCompatActivity {
 
         handleIntent(getIntent());
     }
+
+    /**@Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(SearchableActivity.this);
+        // Get the layout inflater
+        LayoutInflater inflater = LayoutInflater.from(SearchableActivity.this);
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.dialog_price, null))
+                // Add action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // sign in the user ...
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //LoginDialogFragment.this.getDialog().cancel();
+                    }
+                });
+        return builder.create();
+    }**/
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -147,7 +181,78 @@ public class SearchableActivity extends AppCompatActivity {
             b.show();
         }
         else if(id == R.id.filter_price) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(SearchableActivity.this);
+            // Get the layout inflater
+            LayoutInflater inflater = LayoutInflater.from(SearchableActivity.this);
+            builder.setTitle("Filter by Price");
+
+            final View layout = inflater.inflate(R.layout.dialog_price, null);
+            builder.setView(layout);
+            final EditText low = (EditText) layout.findViewById(R.id.start);
+            final EditText high = (EditText) layout.findViewById(R.id.end);
+            low.setRawInputType(Configuration.KEYBOARD_QWERTY);
+            high.setRawInputType(Configuration.KEYBOARD_QWERTY);
+
+            /**low.setInputType(InputType.TYPE_CLASS_NUMBER);
+            high.setInputType(InputType.TYPE_CLASS_NUMBER);**/
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            builder
+                    // Add action buttons
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            low1 = low.getText().toString();
+                            high1 = high.getText().toString();
+
+                            int length1 = low.length();
+                            int length2 = high.length();
+                            int count1 = 0;
+                            int countAfter1 = 0;
+                            int count2 = 0;
+                            int countAfter2 = 0;
+                            for(int i = 0; i < length1; i++) {
+                                if(count1 == 1)
+                                    countAfter1++;
+                                if(low1.charAt(i) == '.')
+                                    count1++;
+
+                            }
+                            for(int i = 0; i < length2; i++) {
+                                if(count2 == 1)
+                                    countAfter2++;
+                                if(high1.charAt(i) == '.')
+                                    count2++;
+                            }
+
+                            if(count1 > 1 || count2 > 1 || countAfter1 != 2 || countAfter2 != 2) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Please enter valid prices", Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                            else {
+                                lowDec = new BigDecimal(low1);
+                                highDec = new BigDecimal(high1);
+                            }
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //LoginDialogFragment.this.getDialog().cancel();
+                            dialog.cancel();
+                        }
+                    });
+            builder.show();
+
+            //******************************************
+            //CJ,
+            //big decimals to use are lowDec and highDec
+            //*******************
+
             // pop something up here to determine
+            /**
             AlertDialog.Builder b = new AlertDialog.Builder(this);
             b.setView(R.layout.filter_price);
             final TextView priceLoText = (TextView) findViewById(R.id.text_price_lo);
@@ -162,12 +267,16 @@ public class SearchableActivity extends AppCompatActivity {
             int priceFrom = Integer.parseInt(loInput.getText().toString());
             int priceTo = Integer.parseInt(hiInput.getText().toString());
             recyclerList = db.getSearchReceiptsFilter(query, "AND total_price > " + priceFrom +  " AND " + priceTo + " ORDER BY date DESC");
+
+             **/
         }
         else if(id == R.id.filter_date) {
+            /**
             // pop something up here to determine
             String dateFrom = "2011-00-11";
             String dateTo = "2014-00-12";
             recyclerList = db.getSearchReceiptsFilter(query, "AND total_price > " + dateFrom +  " AND " + dateTo + " ORDER BY date DESC");
+             **/
         }
 
         return super.onOptionsItemSelected(item);

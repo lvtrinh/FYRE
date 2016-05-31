@@ -30,6 +30,10 @@
     <string name="hint_password">Password</string>
     <string name="hint_name">Full Name</string>
     <string name="hint_search">Search Item/Merchant</string>
+    <string name="hint_low">Min</string>
+    <string name="hint_high">Max</string>
+    <string name="hint_sDate">Start</string>
+    <string name="hint_eDate">End</string>
 
     <string name="btn_login">LOGIN</string>
     <string name="btn_signup">SIGN UP</string>
