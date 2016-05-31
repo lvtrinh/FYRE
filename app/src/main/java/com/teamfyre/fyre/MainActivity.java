@@ -15,8 +15,19 @@
 package com.teamfyre.fyre;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -25,8 +36,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -36,11 +47,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,14 +56,14 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.math.BigDecimal;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.RunnableFuture;
 
-public class MainActivity extends AppCompatActivity
+public class  MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     // TODO create something that can hold/display many receipts, instead of just one
@@ -72,9 +80,14 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<Receipt> demoList;
 
     private Handler updateDataHandler = new Handler();
+    private NfcAdapter mNfcAdapter;
+
+    private Handler delayMain = new Handler();
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
-    public static final String DEMO_JSON_FILENAME = "primosDemo.json";
+    public static final String DEMO_JSON_FILENAME = "costcoDemo.json";
+    public static final String MIME_TEXT_PLAIN = "text/plain";
+    public static final String TAG = "NfcDemo";
 
     /**************************************************************************
      * onCreate()
@@ -145,6 +158,21 @@ public class MainActivity extends AppCompatActivity
 
         // Fetching user details from SQLite
         HashMap<String, String> user = db.getUserDetails();
+        List<Receipt> demoList;
+
+        int userId = Integer.parseInt(user.get("id"));
+        Intent intent = getIntent();
+        String checkFlag = intent.getStringExtra("flag");
+        GetReceiptActivity test = new GetReceiptActivity(db, session);
+
+        if (checkFlag == null) demoList = generateDemoList(userId);
+        else if (checkFlag.equals("justLoggedIn")) {
+            Log.d("JUST LOGGED IN", "WGHSLKJGHLKJHS");
+            demoList = test.getReceipts(userId);
+        }
+        else demoList = generateDemoList(userId);
+
+        Log.d("DEMO LIST SIZE", " " + demoList.size());
 
         String name = user.get("name");
         String email = user.get("email");
@@ -168,6 +196,7 @@ public class MainActivity extends AppCompatActivity
 
         userId = Integer.parseInt(user.get("id"));
         generateDemoList(userId);
+        //loadReceipts(demoList);
 
         mAdapter = new ReceiptAdapter(demoList);
         mRecyclerView.setAdapter(mAdapter);
@@ -196,6 +225,199 @@ public class MainActivity extends AppCompatActivity
 
         //GetReceiptActivity get = new GetReceiptActivity(db, session);
         //get.getReceipts(userId);
+
+        // Nfc additions
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        // If there is is an enabled NFC adapter, perform NFC actions
+        if (mNfcAdapter != null && mNfcAdapter.isEnabled()) {
+            handleIntent(getIntent());
+        }
+    }
+
+    /**************************************************************************
+     * NdefReaderTask
+     *
+     * This class is used to read and process NFC data. See method onPostExecute
+     * for the resulting string receipt processed.
+     **************************************************************************/
+
+    private class NdefReaderTask extends AsyncTask<Tag, Void, String> {
+
+        public static final String TAG = "NfcDemo";
+
+        @Override
+        protected String doInBackground(Tag... params) {
+            Tag tag = params[0];
+
+            Ndef ndef = Ndef.get(tag);
+            if (ndef == null) {
+                // NDEF is not supported by this Tag.
+                return null;
+            }
+
+            NdefMessage ndefMessage = ndef.getCachedNdefMessage();
+
+            NdefRecord[] records = ndefMessage.getRecords();
+            for (NdefRecord ndefRecord : records) {
+                if (ndefRecord.getTnf() == NdefRecord.TNF_WELL_KNOWN && Arrays.equals(ndefRecord.getType(), NdefRecord.RTD_TEXT)) {
+                    try {
+                        return readText(ndefRecord);
+                    } catch (UnsupportedEncodingException e) {
+                        Log.e(TAG, "Unsupported Encoding", e);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private String readText(NdefRecord record) throws UnsupportedEncodingException {
+            byte[] payload = record.getPayload();
+
+            // Get the Text Encoding
+            String textEncoding = ((payload[0] & 128) == 0) ? "UTF-8" : "UTF-16";
+
+            // Get the Language Code
+            int languageCodeLength = payload[0] & 0063;
+
+            // Get the Text
+            return new String(payload, languageCodeLength + 1, payload.length - languageCodeLength - 1, textEncoding);
+        }
+
+        /**************************************************************************
+         * onPostExecute()
+         *
+         * Turns the receipt string into a receipt object
+         * Asks if user wants to save the receipt
+         * Uploads the receipt to the database
+         * Displays the receipt in ReceiptDetailActivity
+         *
+         * @param result The received nfc data string
+         *************************************************************************/
+        @Override
+        protected void onPostExecute(final String result) {
+
+            // Button for when NFC transfer is detected
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        //Yes button clicked
+                        case DialogInterface.BUTTON_POSITIVE:
+
+                            // creates receipt object from NFC data
+                            Receipt nfcReceipt = parseJson(result);
+
+                            HashMap<String, String> user = db.getUserDetails();
+                            String id = user.get("id");
+
+                            // adds receipt to database
+                            ReceiptActivity receiptActivity = new ReceiptActivity(db, session);
+                            receiptActivity.addReceipt(Integer.parseInt(id), nfcReceipt);
+
+                            Toast.makeText(getApplicationContext(),
+                                    "Receipt from NFC saved",
+                                    Toast.LENGTH_LONG).show();
+
+                            // displays receipt details on screen
+                            Intent detailIntent = new Intent(MainActivity.this, ReceiptDetailActivity.class);
+                            detailIntent.putExtra(EXTRA_RECEIPT, nfcReceipt);
+                            startActivity(detailIntent);
+                            break;
+
+                        //No button clicked
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
+                    }
+                }
+            };
+
+            if (result != null) {
+                // Displays button asking if user wishes to add receipt
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("Accept NFC receipt transfer?")
+                        .setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mNfcAdapter != null && mNfcAdapter.isEnabled())
+            setupForegroundDispatch(this, mNfcAdapter);
+    }
+
+    @Override
+    protected void onPause() {
+        if (mNfcAdapter != null && mNfcAdapter.isEnabled())
+            stopForegroundDispatch(this, mNfcAdapter);
+
+        super.onPause();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (mNfcAdapter != null && mNfcAdapter.isEnabled())
+            handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        String action = intent.getAction();
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+
+            String type = intent.getType();
+            if (MIME_TEXT_PLAIN.equals(type)) {
+
+                Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+                new NdefReaderTask().execute(tag);
+
+            } else {
+                Log.d(TAG, "Wrong mime type: " + type);
+            }
+        } else if (NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
+
+            // In case we would still use the Tech Discovered Intent
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            String[] techList = tag.getTechList();
+            String searchedTech = Ndef.class.getName();
+
+            for (String tech : techList) {
+                if (searchedTech.equals(tech)) {
+                    new NdefReaderTask().execute(tag);
+                    break;
+                }
+            }
+        }
+    }
+
+    public static void setupForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        final Intent intent = new Intent(activity.getApplicationContext(), activity.getClass());
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        final PendingIntent pendingIntent = PendingIntent.getActivity(activity.getApplicationContext(), 0, intent, 0);
+
+        IntentFilter[] filters = new IntentFilter[1];
+        String[][] techList = new String[][]{};
+
+        // Notice that this is the same filter as in our manifest.
+        filters[0] = new IntentFilter();
+        filters[0].addAction(NfcAdapter.ACTION_NDEF_DISCOVERED);
+        filters[0].addCategory(Intent.CATEGORY_DEFAULT);
+        try {
+            filters[0].addDataType(MIME_TEXT_PLAIN);
+        } catch (IntentFilter.MalformedMimeTypeException e) {
+            throw new RuntimeException("Check your mime type.");
+        }
+
+        adapter.enableForegroundDispatch(activity, pendingIntent, filters, techList);
+    }
+
+    public static void stopForegroundDispatch(final Activity activity, NfcAdapter adapter) {
+        adapter.disableForegroundDispatch(activity);
     }
 
     /**************************************************************************
@@ -380,8 +602,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchableActivity.class)));
+        searchView.setQueryHint(getResources().getString(R.string.hint_search));
         return true;
     }
 
@@ -393,13 +619,27 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if(id == R.id.action_search) {
             return true;
         } else if (id == R.id.menu_refresh) {
             updateData();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void loadReceipts(final List<Receipt> demoList) {
+        delayMain.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAdapter = new ReceiptAdapter(demoList);
+                mRecyclerView.setAdapter(mAdapter);
+
+                ///////////////////////////////////////////////////
+                // end recycler view stuff
+                ///////////////////////////////////////////////////
+            }
+        }, 100);
     }
 
     // TODO display one receipt
@@ -435,15 +675,10 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_receipt) {
             // Handle the action
-        } else if (id == R.id.nav_categories) {
-
-        } else if (id == R.id.nav_search) {
-
         } else if (id == R.id.nav_settings) {
             Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
             startActivity(intent);
             //finish();
-
         }
         // only if we're placing logout in the hamburger menu
         else if (id == R.id.nav_logout) {

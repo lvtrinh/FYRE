@@ -20,6 +20,8 @@
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
+    <color name="text">#808080</color>
+    <color name="blue">#0066ff</color>
 
     <color name="price">#c62828</color>
     <!-- add general background color? tan like our money, maybe? -->

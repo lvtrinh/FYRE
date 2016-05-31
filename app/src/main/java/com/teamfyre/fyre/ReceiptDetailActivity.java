@@ -10,25 +10,37 @@
  ******************************************************************************/
 package com.teamfyre.fyre;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewManager;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class ReceiptDetailActivity extends AppCompatActivity {
     private Receipt receipt;
     private GridLayout layout;
+    private EditText inputMemo;
+    private SessionManager session;
+    private SQLiteHandler db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +49,12 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Bundle data = getIntent().getExtras();
         receipt = data.getParcelable(MainActivity.EXTRA_RECEIPT);
+
+        inputMemo = (EditText) findViewById(R.id.rec_detail_memo);
 
         /* Test */
         //System.out.println("ReceiptDetailActivity: ");
@@ -78,81 +93,133 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         TextView purchaseTax = (TextView) findViewById(R.id.rec_detail_purchase_tax);
         TextView purchaseTotal = (TextView) findViewById(R.id.rec_detail_purchase_total);
 
+        TextView staticTax = (TextView) findViewById(R.id.rec_detail_purchase_tax_lit);
+        TextView staticSubtotal = (TextView) findViewById(R.id.rec_detail_purchase_subtotal_lit);
+
         TextView paymentType = (TextView) findViewById(R.id.rec_detail_payment_type);
         // may need to delete these two, if not card
         TextView paymentCardMethod = (TextView) findViewById(R.id.rec_detail_payment_card_method);
         TextView paymentCardNum = (TextView) findViewById(R.id.rec_detail_payment_card_num);
 
-
         // replace data
         // for now, let's say everything's required and we can implement removing null fields later
 
-        if (receipt.getStoreName() != null) {
+        if (receipt.getStoreName() != "") {
             merchantName_header.setText(receipt.getStoreName());
             merchantName.setText(receipt.getStoreName());
         }
+        else {
+            ((ViewGroup) merchantName.getParent()).removeView(merchantName);
+        }
 
-        if (receipt.getTotalPrice() != null) {
+        if (receipt.getTotalPrice().toString() != "") {
             price_header.setText("$" + receipt.getTotalPrice().toString());
             purchaseTotal.setText("$" + receipt.getTotalPrice().toString());
         }
+        else {
+            ((ViewGroup) purchaseTotal.getParent()).removeView(purchaseTotal);
+        }
 
         // TODO build a string for date time first, replace body view
-        if (receipt.getDate() != null) {
+        if (receipt.getDate() != "-1--1--1") {
             date_header.setText(receipt.getDateUI());
             purchaseDateTime.setText(receipt.getDateUI());
         }
+        else {
+            ((ViewGroup) purchaseDateTime.getParent()).removeView(purchaseDateTime);
+        }
 
-        if (receipt.getTime() != null) {
+        if (receipt.getTime() != null && !receipt.getTime().equals("0:0")) {
            purchaseDateTime.append(" " + receipt.getTime());
         }
 
-        if (receipt.getStoreStreet() != null) {
+        if (!receipt.getStoreStreet().equals("")) {
             merchantAddress.setText(receipt.getStoreStreet());
         }
+        else {
+            ((ViewGroup) merchantAddress.getParent()).removeView(merchantAddress);
+        }
 
-        if (receipt.getStoreCityState() != null) {
+        if (!receipt.getStoreCityState().equals("")) {
             merchantCityState.setText(receipt.getStoreCityState());
         }
+        else {
+            ((ViewGroup) merchantCityState.getParent()).removeView(merchantCityState);
+        }
 
-        if (receipt.getStorePhone() != null) {
+        if (!receipt.getStorePhone().equals("")) {
             merchantPhone.setText(receipt.getStorePhone());
         }
-        if (receipt.getStoreWebsite() != null) {
+        else {
+            ((ViewGroup) merchantPhone.getParent()).removeView(merchantPhone);
+            merchantPhone.setVisibility(View.GONE);
+        }
+
+        if (!receipt.getStoreWebsite().equals("")) {
             merchantWeb.setText(receipt.getStoreWebsite());
         }
-        if (receipt.getStoreCategory() != null) {
+        else {
+            merchantWeb.setVisibility(View.GONE);
+        }
+
+        if (!receipt.getStoreCategory().equals("")) {
             merchantCategory.setText("Category: " + receipt.getStoreCategory());
         }
-
-        if (receipt.getCashier() != null) {
-            purchaseCashier.setText("Cashier: " + receipt.getCashier());
+        else {
+            merchantCategory.setVisibility(View.GONE);
         }
 
-        if (receipt.getOrderNumber() != 0) {
+        if (!receipt.getCashier().equals("")) {
+            purchaseCashier.setText("Cashier: " + receipt.getCashier());
+        }
+        else {
+            ((ViewGroup) purchaseCashier.getParent()).removeView(purchaseCashier);
+        }
+
+        if (receipt.getOrderNumber() != -1) {
             purchaseOrderNum.setText("Order Number: " + receipt.getOrderNumber());
+        }
+        else {
+            ((ViewGroup) purchaseOrderNum.getParent()).removeView(purchaseOrderNum);
         }
 
         fillItemList();
 
-        if (receipt.getSubtotal() != null) {
+        if (receipt.getSubtotal().toString() != "0") {
             purchaseSubtotal.setText("$" + receipt.getSubtotal().toString());
         }
+        else {
+            ((ViewGroup) purchaseSubtotal.getParent()).removeView(purchaseSubtotal);
+            ((ViewGroup) staticSubtotal.getParent()).removeView(staticSubtotal);
+        }
 
-        if (receipt.getTax() != null) {
+        if (receipt.getTax().toString() != "0") {
             purchaseTax.setText("$" + receipt.getTax().toString());
         }
+        else {
+            ((ViewGroup) purchaseTax.getParent()).removeView(purchaseTax);
+            ((ViewGroup) staticTax.getParent()).removeView(staticTax);
+        }
 
-        if (receipt.getCardType() != null){
+        if (!receipt.getCardType().equals("")){
             paymentType.setText("Paid with: " + receipt.getCardType());
         }
-
-        if (receipt.getPaymentMethod() != null) {
-            paymentCardMethod.setText("Card method: " + receipt.getPaymentMethod());
+        else {
+            ((ViewGroup) paymentType.getParent()).removeView(paymentType);
         }
 
-        if (receipt.getCardNum() != null) {
+        if (receipt.getPaymentMethod() != null && !receipt.getPaymentMethod().equals("")) {
+            paymentCardMethod.setText("Card method: " + receipt.getPaymentMethod());
+        }
+        else {
+            ((ViewGroup) paymentCardMethod.getParent()).removeView(paymentCardMethod);
+        }
+
+        if (receipt.getCardNum() != 0) {
             paymentCardNum.setText("Card ending in " + receipt.getCardNum());
+        }
+        else {
+            ((ViewGroup) paymentCardNum.getParent()).removeView(paymentCardNum);
         }
 
         // TODO if memo has data in it, populate the memo
@@ -168,6 +235,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
      *
      * This method is called within fillReceipt().
      **************************************************************************/
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void fillItemList() {
         ArrayList<ReceiptItem> itemList = receipt.getItemList();
         // this will get the number of rows we need to insert
@@ -223,13 +291,15 @@ public class ReceiptDetailActivity extends AppCompatActivity {
      * @param col The column the TextView should be in the GridLayout
      * @param weight The weight of the TextView
      ***************************************************************************/
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void addTextView(String text, int row, int col, float weight) {
         TextView toAdd = new TextView(this);
         GridLayout.Spec columnSpec = GridLayout.spec(col, GridLayout.LEFT, weight);
         GridLayout.Spec rowSpec = GridLayout.spec(row);
 
         toAdd.setText(text);
-        toAdd.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Medium);
+        toAdd.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+        toAdd.setTextColor(getResources().getColor(R.color.text));
         layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
     }
 
@@ -245,13 +315,15 @@ public class ReceiptDetailActivity extends AppCompatActivity {
      * @param row The row the TextView should be in the GridLayout
      * @param col The column the TextView should be in the GridLayout
      **************************************************************************/
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void addTextViewPrice(String text, int row, int col) {
         TextView toAdd = new TextView(this);
         GridLayout.Spec columnSpec = GridLayout.spec(col, GridLayout.RIGHT);
         GridLayout.Spec rowSpec = GridLayout.spec(row);
 
         toAdd.setText("$" + text);
-        toAdd.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Medium);
+        toAdd.setTextAppearance(this, android.R.style.TextAppearance_Medium);
+        toAdd.setTextColor(getResources().getColor(R.color.text));
         layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
     }
 
@@ -269,13 +341,14 @@ public class ReceiptDetailActivity extends AppCompatActivity {
      * @param col The column the TextView should be in
      * @param weight The TextView's weight
      **************************************************************************/
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void addTextViewDesc(String text, int row, int col, float weight) {
         TextView toAdd = new TextView(this);
         GridLayout.Spec columnSpec = GridLayout.spec(col, GridLayout.LEFT, weight);
         GridLayout.Spec rowSpec = GridLayout.spec(row);
 
         toAdd.setText(text);
-        toAdd.setTextAppearance(this, android.R.style.TextAppearance_DeviceDefault_Small);
+        toAdd.setTextAppearance(this, android.R.style.TextAppearance_Small);
         layout.addView(toAdd, new GridLayout.LayoutParams(rowSpec, columnSpec));
     }
 
@@ -290,6 +363,18 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        // TODO save memo data (to local app? to database?)
+        if (receipt.getMemo() == null) {
+            receipt.setMemo("");
+        }
+
+        // if the memo was changed, update it in the DB
+        if (!receipt.getMemo().equals(inputMemo.getText().toString().trim())) {
+
+            // memo input working, need to update receipt in DB here though
+
+            Toast.makeText(getApplicationContext(),
+                    "Memo saved",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 }

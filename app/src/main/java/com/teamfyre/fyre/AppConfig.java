@@ -18,4 +18,22 @@ public class AppConfig {
 
     // Server get items url
     public static String URL_GETITEMS = "http://13.93.202.168/android_login_api/getitems.php";
+
+    // Server update account url
+    public static String URL_UPDATEACCOUNT = "http://13.93.202.168/android_login_api/updateAccount.php";
+
+    // Server remove account url
+    public static String URL_REMOVEACCOUNT = "http://13.93.202.168/android_login_api/removeUser.php";
+
+    // Server password reset url
+    public static String URL_PASSWORDRESET = "http://13.93.202.168/android_login_api/forget.php";
+
+    // Server validate email url
+    public static String URL_VALIDATEEMAIL = "http://13.93.202.168/android_login_api/getSecurityQuestion.php";
+
+    // Server validate security question url
+    public static String URL_VALIDATESECURITYQUESTION = "http://13.93.202.168/android_login_api/validateSecurityQuestion.php";
+
+    // Server update memo url
+    public static String URL_UPDATEMEMO = "http://13.93.202.168/android_login_api/updateMemo.php";
 }

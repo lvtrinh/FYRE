@@ -3,18 +3,35 @@
     package="com.teamfyre.fyre">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.NFC" />
+
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
 
     <application
         android:name=".AppController"
         android:allowBackup="true"
-        android:icon="@drawable/ic_logo_fyre"
+        android:icon="@mipmap/ic_launcher_fyre"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/recent_receipts"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/label_recent_receipts"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED" />
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc_tech_filter" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchableActivity" />
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
@@ -26,27 +43,82 @@
         </activity>
         <activity
             android:name=".RegisterActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".SettingsActivity"
-            android:label="Settings"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/label_register"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".ReceiptManualActivity"
-            android:label="ReceiptManual"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/label_manual_add_receipt"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".SettingsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.SettingsActivity" />
+        </activity>
         <activity
             android:name=".ReceiptDetailActivity"
-            android:label="@string/title_activity_receipt_detail"
+            android:label="@string/label_receipt_detail"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.MainActivity" />
+        </activity>
+        <activity
+            android:name=".SearchableActivity"
+            android:label="@string/label_search_results"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.MainActivity" />
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/label_settings"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamfyre.fyre.MainActivity" />
         </activity>
-        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <activity
+            android:name=".AccountActivity"
+            android:label="@string/label_account_settings"
+            android:parentActivityName=".SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".PrivacyPolicy"
+            android:label="@string/label_privacy_policy"
+            android:parentActivityName=".SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.SettingsActivity" />
+        </activity>
+        <activity
+            android:name=".ContactUs"
+            android:label="@string/label_contact_us"
+            android:parentActivityName=".SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.SettingsActivity" />
+        </activity>
+        <!--
+             ATTENTION: This was auto-generated to add Google Play services to your project for
+             App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

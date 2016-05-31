@@ -68,6 +68,7 @@ public class GetReceiptActivity {
                             ArrayList<ReceiptItem> singleList = getItems(receiptId);
                             tmpReceipt.createItemList(singleList);
 
+                            tmpReceipt.setReceiptID(arrObj.get("receipt_id"));
                             tmpReceipt.setStoreName(arrObj.get("store_name"));
                             tmpReceipt.setStoreStreet(arrObj.get("store_street"));
                             tmpReceipt.setStoreCityState(arrObj.get("store_city_state"));
@@ -150,7 +151,7 @@ public class GetReceiptActivity {
 
             @Override
             public void onResponse(String response) {
-                Log.d(TAG, "Get Item Response: " + response.toString());
+                //Log.d(TAG, "Get Item Response: " + response.toString());
                 //hideDialog();
 
 
@@ -158,7 +159,6 @@ public class GetReceiptActivity {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
                     if (!error) {
-                        Log.d("SUCCESS", "Receipts were successfully retrieved.");
                         JSONArray itemsArr = jObj.getJSONArray("items");
 
                         for (int i = 0; i < itemsArr.length(); i++) {
@@ -175,6 +175,8 @@ public class GetReceiptActivity {
                             db.addReceiptItem(String.valueOf(receiptId), itemId, tmpItem);
                             itemList.add(tmpItem);
                         }
+
+                        Log.d("SUCCESS", "Receipts were successfully retrieved.");
 
                     } else {
 

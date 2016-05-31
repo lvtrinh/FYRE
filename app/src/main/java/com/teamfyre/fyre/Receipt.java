@@ -8,6 +8,7 @@
  ******************************************************************************/
 package com.teamfyre.fyre;
 
+import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
@@ -23,6 +24,7 @@ import java.math.BigDecimal;
  */
 public class Receipt implements Parcelable{
 
+    private Integer receiptID;
     private String storeName;
     private String storeStreet;
     private String storeCityState;
@@ -68,6 +70,7 @@ public class Receipt implements Parcelable{
      * @param in The Parcel with the receipt's data
      **************************************************************************/
     protected Receipt(Parcel in) {
+        receiptID = in.readByte() == 0x00 ? null : in.readInt();
         storeName = in.readString();
         storeStreet = in.readString();
         storeCityState = in.readString();
@@ -97,9 +100,17 @@ public class Receipt implements Parcelable{
     }
 
     // Setters
+    public void setReceiptID(Object id) {
+        if (id.toString().equals(null)) {
+            receiptID = 0;
+            return;
+        }
+        receiptID = Integer.parseInt(id.toString());
+    }
+
     public void setStoreName(Object name) {
         if (name.toString().equals("null")) {
-            storeName = null;
+            storeName = "";
             return;
         }
         storeName = name.toString();
@@ -107,7 +118,7 @@ public class Receipt implements Parcelable{
 
     public void setStoreStreet(Object location) {
         if (location.toString().equals("null")) {
-            storeStreet = null;
+            storeStreet = "";
             return;
         }
         storeStreet = location.toString();
@@ -115,7 +126,7 @@ public class Receipt implements Parcelable{
 
     public void setStoreCityState(Object location) {
         if (location.toString().equals("null")) {
-            storeCityState = null;
+            storeCityState = "";
             return;
         }
         storeCityState = location.toString();
@@ -123,7 +134,7 @@ public class Receipt implements Parcelable{
 
     public void setStorePhone(Object phone) {
         if (phone.toString().equals("null")) {
-            storePhone = null;
+            storePhone = "";
             return;
         }
         storePhone = phone.toString();
@@ -131,7 +142,7 @@ public class Receipt implements Parcelable{
 
     public void setStoreWebsite(Object website) {
         if (website.toString().equals("null")) {
-            storeWebsite = null;
+            storeWebsite = "";
             return;
         }
         storeWebsite = website.toString();
@@ -139,7 +150,7 @@ public class Receipt implements Parcelable{
 
     public void setStoreCategory(Object category) {
         if (category.toString().equals("null")) {
-            storeCategory = null;
+            storeCategory = "";
             return;
         }
         storeCategory = category.toString();
@@ -159,7 +170,7 @@ public class Receipt implements Parcelable{
 
     public void setCardType(Object type) {
         if (type.toString().equals("null")) {
-            cardType = null;
+            cardType = "";
             return;
         }
         cardType = type.toString();
@@ -167,7 +178,7 @@ public class Receipt implements Parcelable{
 
     public void setCardNum(Object num) {
         if (num.toString().equals("null")) {
-            cardNum = null;
+            cardNum = 0;
             return;
         }
         cardNum = Integer.parseInt(num.toString());
@@ -175,7 +186,7 @@ public class Receipt implements Parcelable{
 
     public void setPaymentMethod(Object meth) {
         if (meth.toString().equals("null")) {
-            paymentMethod = null;
+            paymentMethod = "";
             return;
         }
         paymentMethod = meth.toString();
@@ -183,7 +194,7 @@ public class Receipt implements Parcelable{
 
     public void setSubtotal(Object sub) {
         if (sub.toString().equals("null")) {
-            subtotal = null;
+            subtotal = BigDecimal.ZERO;
             return;
         }
         subtotal = new BigDecimal(sub.toString().replaceAll(",",""));
@@ -191,7 +202,7 @@ public class Receipt implements Parcelable{
 
     public void setTax(Object t) {
         if (t.toString().equals("null")) {
-            tax = null;
+            tax = BigDecimal.ZERO;
             return;
         }
         tax = new BigDecimal(t.toString().replaceAll(",",""));
@@ -199,7 +210,7 @@ public class Receipt implements Parcelable{
 
     public void setTotalPrice(Object total) {
         if (total.toString().equals("null")) {
-            totalPrice = null;
+            totalPrice = BigDecimal.ZERO;
             return;
         }
         totalPrice = new BigDecimal(total.toString().replaceAll(",",""));
@@ -207,7 +218,7 @@ public class Receipt implements Parcelable{
 
     public void setCashBack(Object cash) {
         if (cash.toString().equals("null")) {
-            cashBack = null;
+            cashBack = BigDecimal.ZERO;
             return;
         }
         cashBack = new BigDecimal(cash.toString().replaceAll(",",""));
@@ -220,10 +231,19 @@ public class Receipt implements Parcelable{
      */
     public void setDateTime(Object date, Object time) {
         if (date.toString().equals("null") || time.toString().equals("null")) {
-            dateTime = null;
+            dateTime = new GregorianCalendar(-1,-1,-1,-1,-1);
             return;
         }
-        String[] dateArrTmp = date.toString().split("-");
+        
+        // fixes input for date
+        StringBuilder sdate = new StringBuilder(date.toString());
+        for (int x = 0; x < sdate.toString().length(); x++) {
+            if (sdate.toString().charAt(x) == '/') {
+                sdate.setCharAt(x, '-');
+            }
+        }
+
+        String[] dateArrTmp = sdate.toString().split("-");
         int[] dateArr = new int[dateArrTmp.length];
 
         for (int i = 0; i < dateArrTmp.length; i++) {
@@ -235,12 +255,12 @@ public class Receipt implements Parcelable{
         for (int i = 0; i < timeArrTmp.length; i++) {
             timeArr[i] = Integer.parseInt(timeArrTmp[i]);
         }
-        dateTime = new GregorianCalendar(dateArr[2]+2000,dateArr[0],dateArr[1],timeArr[0],timeArr[1]);
+        dateTime = new GregorianCalendar(dateArr[2]+2000,(dateArr[0]) % 12,dateArr[1],timeArr[0],timeArr[1]);
     }
 
     public void setDateTimeDB(Object date, Object time) {
         if (date.toString().equals("null") || time.toString().equals("null")) {
-            dateTime = null;
+            dateTime = new GregorianCalendar(-1,-1,-1,-1,-1);
             return;
         }
         String[] dateArrTmp = date.toString().split("-");
@@ -258,9 +278,39 @@ public class Receipt implements Parcelable{
         dateTime = new GregorianCalendar(dateArr[0],dateArr[1],dateArr[2],timeArr[0],timeArr[1]);
     }
 
+
+    public void setDateTime2000(Object date, Object time) {
+        if (date.toString().equals("null") || time.toString().equals("null")) {
+            dateTime = new GregorianCalendar(-1,-1,-1,-1,-1);
+            return;
+        }
+
+        // fixes input for date
+        StringBuilder sdate = new StringBuilder(date.toString());
+        for (int x = 0; x < sdate.toString().length(); x++) {
+            if (sdate.toString().charAt(x) == '/') {
+                sdate.setCharAt(x, '-');
+            }
+        }
+
+        String[] dateArrTmp = sdate.toString().split("-");
+        int[] dateArr = new int[dateArrTmp.length];
+
+        for (int i = 0; i < dateArrTmp.length; i++) {
+            dateArr[i] = Integer.parseInt(dateArrTmp[i]);
+        }
+
+        String[] timeArrTmp = time.toString().split(":");
+        int[] timeArr = new int[timeArrTmp.length];
+        for (int i = 0; i < timeArrTmp.length; i++) {
+            timeArr[i] = Integer.parseInt(timeArrTmp[i]);
+        }
+        dateTime = new GregorianCalendar(dateArr[2],dateArr[0],dateArr[1],timeArr[0],timeArr[1]);
+    }
+
     public void setCashier(Object name) {
         if (name.toString().equals("null")) {
-            cashier = null;
+            cashier = "";
             return;
         }
         cashier = name.toString();
@@ -268,7 +318,7 @@ public class Receipt implements Parcelable{
 
     public void setCheckNumber(Object number) {
         if (number.toString().equals("null")) {
-            checkNumber = null;
+            checkNumber = "";
             return;
         }
         checkNumber = number.toString();
@@ -293,7 +343,7 @@ public class Receipt implements Parcelable{
 
     public void setMemo(Object m) {
         if (m.toString().equals("null")) {
-            this.memo = null;
+            this.memo = "";
             return;
         }
         memo = m.toString();
@@ -323,6 +373,8 @@ public class Receipt implements Parcelable{
     public String getStoreWebsite() {
         return this.storeWebsite;
     }
+
+    public Integer getReceiptID() { return this.receiptID; }
 
     public String getStoreCategory() { return this.storeCategory; }
 
@@ -354,6 +406,7 @@ public class Receipt implements Parcelable{
 
     public String getDateUI() {
         if (dateTime != null) {
+            if (this.dateTime.get(Calendar.MONTH)== 0) return "12/" + this.dateTime.get(Calendar.DAY_OF_MONTH)+ "/" + this.dateTime.get(Calendar.YEAR);
             return this.dateTime.get(Calendar.MONTH) + "/" + this.dateTime.get(Calendar.DAY_OF_MONTH)+ "/" + this.dateTime.get(Calendar.YEAR);
         }
         return null;
@@ -380,6 +433,7 @@ public class Receipt implements Parcelable{
 
 
     public void printReceipt() {
+        System.out.println("Receipt ID:" + this.receiptID);
         System.out.println("Store Name: " + this.storeName);
         System.out.println("Store Street: " + this.storeStreet);
         System.out.println("Store City, State, ZIP: " + this.storeCityState);
@@ -423,6 +477,12 @@ public class Receipt implements Parcelable{
     // writes contents of Receipt into Parcel
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        if (receiptID == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeInt(receiptID);
+        }
         dest.writeString(storeName);
         dest.writeString(storeStreet);
         dest.writeString(storeCityState);
