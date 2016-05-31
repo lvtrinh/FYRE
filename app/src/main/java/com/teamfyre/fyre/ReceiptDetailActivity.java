@@ -32,6 +32,8 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class ReceiptDetailActivity extends AppCompatActivity {
@@ -40,6 +42,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
     private EditText inputMemo;
     private SessionManager session;
     private SQLiteHandler db;
+    private NumberFormat d = new DecimalFormat("'$'0.00");
 
 
     @Override
@@ -113,8 +116,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         }
 
         if (receipt.getTotalPrice().toString() != "") {
-            price_header.setText("$" + receipt.getTotalPrice().toString());
-            purchaseTotal.setText("$" + receipt.getTotalPrice().toString());
+            price_header.setText(d.format(receipt.getTotalPrice()));
+            purchaseTotal.setText(d.format(receipt.getTotalPrice()));
         }
         else {
             ((ViewGroup) purchaseTotal.getParent()).removeView(purchaseTotal);
@@ -186,7 +189,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         fillItemList();
 
         if (receipt.getSubtotal().toString() != "0") {
-            purchaseSubtotal.setText("$" + receipt.getSubtotal().toString());
+            purchaseSubtotal.setText(d.format(receipt.getSubtotal()));
         }
         else {
             ((ViewGroup) purchaseSubtotal.getParent()).removeView(purchaseSubtotal);
@@ -194,7 +197,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         }
 
         if (receipt.getTax().toString() != "0") {
-            purchaseTax.setText("$" + receipt.getTax().toString());
+            purchaseTax.setText(d.format(receipt.getTax()));
         }
         else {
             ((ViewGroup) purchaseTax.getParent()).removeView(purchaseTax);
