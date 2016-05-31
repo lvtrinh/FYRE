@@ -86,6 +86,7 @@ public class GetReceiptActivity {
                             tmpReceipt.setCashier(arrObj.get("cashier"));
                             tmpReceipt.setCheckNumber(arrObj.get("check_number"));
                             tmpReceipt.setOrderNumber(arrObj.get("order_number"));
+                            tmpReceipt.setMemo(arrObj.get("memo"));
                             //TODO GET A SINGLE RECEIPT
                             receipt.add(tmpReceipt);
                             db.addReceiptLite(Integer.toString(receiptId), tmpReceipt);
