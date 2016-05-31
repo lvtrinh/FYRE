@@ -21,7 +21,6 @@ public class PrivacyPolicy extends AppCompatActivity {
         WebView privacyPolicy = (WebView) findViewById(R.id.webview);
         privacyPolicy.getSettings().setJavaScriptEnabled(true);
         privacyPolicy.setWebChromeClient(new WebChromeClient());
-        // privacyPolicy.setWebViewClient(new WebViewClient());
 
         privacyPolicy.loadUrl("file:///android_asset/privacy_policy/index.html");
     }
