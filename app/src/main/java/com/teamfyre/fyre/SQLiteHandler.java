@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class SQLiteHandler extends SQLiteOpenHelper {
@@ -489,6 +491,35 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             receipts.add(itemResult.get(i));
         }
 
+        if (filter == "ORDER BY date ASC") {
+            Collections.sort(receipts, new Comparator<Receipt>() {
+                public int compare(Receipt o1, Receipt o2) {
+                    return o1.getDateTime().compareTo(o2.getDateTime());
+                }
+            });
+        }
+        else if (filter == "ORDER BY total_price ASC") {
+            Collections.sort(receipts, new Comparator<Receipt>() {
+                public int compare(Receipt o1, Receipt o2) {
+                    return o1.getTotalPrice().compareTo(o2.getTotalPrice());
+                }
+            });
+        }
+        else if (filter == "ORDER BY total_price DESC") {
+            Collections.sort(receipts, new Comparator<Receipt>() {
+                public int compare(Receipt o1, Receipt o2) {
+                    return o2.getTotalPrice().compareTo(o1.getTotalPrice());
+                }
+            });
+        }
+        else {
+            Collections.sort(receipts, new Comparator<Receipt>() {
+                public int compare(Receipt o1, Receipt o2) {
+                    return o2.getDateTime().compareTo(o1.getDateTime());
+                }
+            });
+        }
+
         return receipts;
     }
 
@@ -572,6 +603,12 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         if (itemResult.size() != 0) for (int i = 0; i < itemResult.size(); i++) {
             receipts.add(itemResult.get(i));
         }
+
+        Collections.sort(receipts, new Comparator<Receipt>(){
+            public int compare(Receipt o1, Receipt o2){
+                return o2.getDateTime().compareTo(o1.getDateTime());
+            }
+        });
 
         return receipts;
     }
