@@ -15,7 +15,8 @@
         android:name="android.hardware.nfc"
         android:required="true" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Optional permission for Analytics to run. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+ <!-- Optional permission for Analytics to run. -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
@@ -32,7 +33,7 @@
     <application
         android:name="com.teamfyre.fyre.AppController"
         android:allowBackup="true"
-        android:icon="@drawable/ic_logo_fyre"
+        android:icon="@mipmap/ic_launcher_fyre"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
@@ -67,7 +68,8 @@
         <activity
             android:name="com.teamfyre.fyre.RegisterActivity"
             android:label="@string/label_register"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
         <activity
             android:name="com.teamfyre.fyre.ReceiptManualActivity"
             android:label="@string/label_manual_add_receipt"
@@ -122,7 +124,16 @@
         </activity>
         <activity
             android:name="com.teamfyre.fyre.PrivacyPolicy"
-            android:label="@string/label_account_settings"
+            android:label="@string/label_privacy_policy"
+            android:parentActivityName="com.teamfyre.fyre.SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.SettingsActivity" />
+        </activity>
+        <activity
+            android:name="com.teamfyre.fyre.ContactUs"
+            android:label="@string/label_contact_us"
             android:parentActivityName="com.teamfyre.fyre.SettingsActivity"
             android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
@@ -136,8 +147,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <activity android:name="com.teamfyre.fyre.ContactUs" />
         <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
@@ -247,7 +256,8 @@ Service handling Google Sign-In user revocation. For apps that do not integrate 
 
         <activity
             android:name="com.google.android.gms.tagmanager.TagManagerPreviewActivity"
-            android:noHistory="true" > <!-- optional, removes the previewActivity from the activity stack. -->
+            android:noHistory="true" >
+ <!-- optional, removes the previewActivity from the activity stack. -->
             <intent-filter>
                 <data android:scheme="tagmanager.c.com.teamfyre.fyre" />
 

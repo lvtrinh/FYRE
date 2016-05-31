@@ -1,3 +1,10 @@
+/******************************************************************************
+ * ReceiptAdapter.java
+ *
+ * This is the adapter for the RecyclerView used by the main and search activities.
+ * The adapter is the "brains" of the operation, recycling the cards that the user
+ * scrolls offscreen.
+ */
 package com.teamfyre.fyre;
 
 import android.content.Context;
@@ -11,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,12 +29,18 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.RViewHol
 
     public static final String EXTRA_RECEIPT = "com.teamfyre.fyre.RECEIPT";
 
-    // ViewHolder class definition
+    /* ViewHolder holds the views, reducing the number of times
+     * the system needs to call findViewById.
+     *
+     * Note that the OnClickListener is implemented here. That's the part that detects
+     * that the user has clicked on a card.
+     */
     public class RViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public CardView cv;
         public TextView cv_name, cv_date, cv_price;
         public Context context;
 
+        // Constructor
         public RViewHolder(View view) {
             super(view);
             cv = (CardView) view.findViewById(R.id.card_singleton);
@@ -37,6 +51,9 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.RViewHol
             view.setOnClickListener(this);
         }
 
+        // when we click a card, take us to the detailed receipt page
+        // use the receipt pertaining to the card we clicked
+        // ayyy lmao
         @Override
         public void onClick(View v) {
 
@@ -53,6 +70,12 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.RViewHol
         this.receiptList = receiptList;
     }
 
+
+    public void swapData(ArrayList<Receipt> otherList){
+        receiptList.clear();
+        receiptList.addAll(otherList);
+        notifyDataSetChanged();
+    }
     @Override
     public RViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();

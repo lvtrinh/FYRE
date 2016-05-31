@@ -238,6 +238,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
+        Log.d("getAllReceipts", "Getting all receipts...");
         // Move to first row
         if (cursor.moveToFirst()) {
             do {
