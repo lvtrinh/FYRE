@@ -152,6 +152,14 @@ public class AccountActivity extends AppCompatActivity {
                         qOption = 2;
                     else if (selectedQ.equals(getString(R.string.teacher_q)))
                         qOption = 3;
+                    else if (selectedQ.equals(getString(R.string.city_q)))
+                        qOption = 4;
+                    else if (selectedQ.equals(getString(R.string.school_q)))
+                        qOption = 5;
+                    else if (selectedQ.equals(getString(R.string.street_q)))
+                        qOption = 6;
+                    else if (selectedQ.equals(getString(R.string.color_q)))
+                        qOption = 7;
 
                     // Set up the input
                     final EditText input = new EditText(AccountActivity.this);

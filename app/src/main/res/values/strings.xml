@@ -51,11 +51,19 @@
         <item>What is your Mothers maiden name?</item>
         <item>What is your favorite food?</item>
         <item>Who was your favorite teacher growing up?</item>
+        <item>What city were you born in?</item>
+        <item>What high school did you attend?</item>
+        <item>What street did you grow up on?</item>
+        <item>What is your favorite color?</item>
     </string-array>
 
     <string name="maiden_q">What is your Mothers maiden name?</string>
     <string name="food_q">What is your favorite food?</string>
     <string name="teacher_q">Who was your favorite teacher growing up?</string>
+    <string name="city_q">What city were you born in?</string>
+    <string name="school_q">What high school did you attend?</string>
+    <string name="street_q">What street did you grow up on?</string>
+    <string name="color_q">What is your favorite color?</string>
 
     <string name="select_one">Select One</string>
     <string name="forgot_password"><u>Forgot Password</u></string>

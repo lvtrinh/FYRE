@@ -301,7 +301,7 @@ public class SettingsActivity extends AppCompatActivity {
                         Intent intent = new Intent(SettingsActivity.this,
                                 AccountActivity.class);
                         startActivity(intent);
-                        //finish();
+                        finish();
                     }
                     else {
                         // Error in login. Get the error message

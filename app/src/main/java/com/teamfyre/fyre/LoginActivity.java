@@ -272,8 +272,20 @@ public class LoginActivity extends AppCompatActivity {
                         else if(question == 2) {
                             secQuestion = getString(R.string.food_q);
                         }
-                        else {
+                        else if(question ==3){
                            secQuestion = getString(R.string.teacher_q);
+                        }
+                        else if(question == 4) {
+                            secQuestion = getString(R.string.city_q);
+                        }
+                        else if(question ==5){
+                            secQuestion = getString(R.string.school_q);
+                        }
+                        else if(question == 6) {
+                            secQuestion = getString(R.string.street_q);
+                        }
+                        else if(question ==7){
+                            secQuestion = getString(R.string.color_q);
                         }
                         builder2.setMessage(secQuestion);
 
