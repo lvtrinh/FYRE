@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:2:1-130:12
+ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:2:1-139:12
 	package
 		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:3:5-32
 		INJECTED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml
@@ -63,7 +63,7 @@ ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidMa
 	android:name
 		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:9:9-44
 application
-ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:12:5-128:19
+ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:12:5-137:19
 MERGED from [com.android.support:support-v4:23.4.0] /Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:appcompat-v7:23.4.0] /Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/AndroidManifest.xml:25:5-20
 MERGED from [com.android.support:animated-vector-drawable:23.4.0] /Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.4.0/AndroidManifest.xml:7:5-20
@@ -1349,8 +1349,18 @@ ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidMa
 		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:116:13-56
 	android:name
 		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:113:13-38
+activity#com.teamfyre.fyre.AboutUs
+ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:121:9-129:20
+	android:label
+		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:123:13-51
+	android:parentActivityName
+		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:124:13-59
+	android:theme
+		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:125:13-56
+	android:name
+		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:122:13-36
 meta-data#com.google.android.gms.version
-ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:125:9-127:69
+ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:134:9-136:69
 MERGED from [com.google.android.gms:play-services-basement:9.0.1] /Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.0.1/AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-basement:9.0.1] /Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.0.1/AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-basement:9.0.1] /Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.0.1/AndroidManifest.xml:21:9-23:69
@@ -1717,9 +1727,9 @@ MERGED from [com.google.android.gms:play-services-basement:9.0.1] /Users/taylort
 MERGED from [com.google.android.gms:play-services-basement:9.0.1] /Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.0.1/AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-basement:9.0.1] /Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.0.1/AndroidManifest.xml:21:9-23:69
 	android:value
-		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:127:13-66
+		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:136:13-66
 	android:name
-		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:126:13-58
+		ADDED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml:135:13-58
 uses-sdk
 INJECTED from /Users/taylortanita/AndroidStudioProjects/FYRE/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:support-v4:23.4.0] /Users/taylortanita/AndroidStudioProjects/FYRE/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.4.0/AndroidManifest.xml:20:5-43

@@ -49,8 +49,14 @@ public class SearchableActivity extends AppCompatActivity {
     private String low1;
     private String high1;
 
+    private String from1;
+    private String to1;
+
     private BigDecimal lowDec;
     private BigDecimal highDec;
+
+    private String dateFrom;
+    private String dateTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -271,6 +277,86 @@ public class SearchableActivity extends AppCompatActivity {
              **/
         }
         else if(id == R.id.filter_date) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(SearchableActivity.this);
+            // Get the layout inflater
+            LayoutInflater inflater = LayoutInflater.from(SearchableActivity.this);
+            builder.setTitle("Filter by Date");
+
+            final View layout = inflater.inflate(R.layout.dialog_date, null);
+            builder.setView(layout);
+            final EditText from = (EditText) layout.findViewById(R.id.from);
+            final EditText to = (EditText) layout.findViewById(R.id.to);
+            from.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+            to.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            builder
+                    // Add action buttons
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            from1 = from.getText().toString();
+                            to1 = to.getText().toString();
+
+                            String[] parts1 = from1.split("-");
+                            String[] parts2 = to1.split("-");
+                            int size1 = parts1.length;
+                            int size2 = parts2.length;
+
+                            if(size1 != 3 || size2 != 3) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Please enter valid dates in the form MM-DD-YYYY", Toast.LENGTH_LONG)
+                                        .show();
+                            }
+
+                            boolean goodDate = true;
+                            for(int i = 0; i < size1; i++) {
+                                if(i == 0 || i == 1) {
+                                    if(parts1[i].length() != 2 || parts2[i].length() != 2)
+                                        goodDate = false;
+                                }
+                                if(i == 2) {
+                                    if(parts1[i].length() != 4 || parts2[i].length() != 4)
+                                        goodDate = false;
+                                }
+                            }
+
+                            if(!goodDate) {
+                                Toast.makeText(getApplicationContext(),
+                                        "Please enter valid dates in the form MM-DD-YYYY", Toast.LENGTH_LONG)
+                                        .show();
+                            }
+                            else {
+                                String yearFrom = parts1[2];
+                                String monthFrom = parts1[0];
+                                String dayFrom = parts1[1];
+                                dateFrom = yearFrom + "-" + monthFrom + "-" + dayFrom;
+
+                                String yearTo = parts2[2];
+                                String monthTo = parts2[0];
+                                String dayTo = parts2[1];
+                                dateTo = yearTo + "-" + monthTo + "-" + dayTo;
+                            }
+
+
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //LoginDialogFragment.this.getDialog().cancel();
+                            dialog.cancel();
+                        }
+                    });
+            builder.show();
+
+            //******************
+            //CJ,
+            //fields you want to use are dateFrom and dateTo
+            //*************
+
             /**
             // pop something up here to determine
             String dateFrom = "2011-00-11";

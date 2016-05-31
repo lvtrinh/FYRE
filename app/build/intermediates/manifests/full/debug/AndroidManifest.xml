@@ -143,6 +143,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.teamfyre.fyre.SettingsActivity" />
         </activity>
+        <activity
+            android:name="com.teamfyre.fyre.AboutUs"
+            android:label="@string/label_about_us"
+            android:parentActivityName="com.teamfyre.fyre.SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.teamfyre.fyre.SettingsActivity" />
+        </activity>
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for
              App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
