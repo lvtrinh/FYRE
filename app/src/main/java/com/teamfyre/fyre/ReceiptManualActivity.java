@@ -224,6 +224,13 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
                             Toast.LENGTH_LONG).show();
                 }
 
+                // user had incorrect date format, display warning
+                else if (!date.toString().matches("\\d{2}-\\d{2}-\\d{4}")) {
+                    Toast.makeText(getApplicationContext(),
+                            "Incorrect date format",
+                            Toast.LENGTH_LONG).show();
+                }
+
                 // user properly added information, begin receipt addition process
                 else {
                     // hides keyboard after user entry complete
@@ -242,13 +249,7 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
                         price += ".00";
                     }
 
-                    // creates receipt object from information
                     receipt = new Receipt();
-                    if (date.toString().matches("\\d{2}-\\d{2}-\\d{2}")) {
-                        receipt.setDateTime(date.toString(), "0:0");
-                    } else {
-                        receipt.setDateTime2000(date.toString(), "0:0");
-                    }
                     receipt.setStoreName(store);
                     receipt.setTotalPrice(price);
                     receipt.setStoreCategory(category);
@@ -269,7 +270,6 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
                     receipt.setCheckNumber("");
                     receipt.setOrderNumber(-1);
                     receipt.setStarred(false);
-
 
                     HashMap<String, String> user = db.getUserDetails();
                     String id = user.get("id");
