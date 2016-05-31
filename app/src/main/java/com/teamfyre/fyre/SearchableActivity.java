@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.math.BigDecimal;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -73,30 +74,6 @@ public class SearchableActivity extends AppCompatActivity {
         handleIntent(getIntent());
     }
 
-    /**@Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(SearchableActivity.this);
-        // Get the layout inflater
-        LayoutInflater inflater = LayoutInflater.from(SearchableActivity.this);
-
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
-        builder.setView(inflater.inflate(R.layout.dialog_price, null))
-                // Add action buttons
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // sign in the user ...
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //LoginDialogFragment.this.getDialog().cancel();
-                    }
-                });
-        return builder.create();
-    }**/
-
     @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
@@ -132,7 +109,7 @@ public class SearchableActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.date_asc) {
-            recyclerList = db.getSearchReceiptsFilter(query, "ORDER BY date ASC");
+            recyclerList = db.getSearchReceiptsSort(query, "ORDER BY date ASC");
             updateRecyclerView(recyclerList);
         }
         else if(id == R.id.date_desc) {
@@ -140,11 +117,11 @@ public class SearchableActivity extends AppCompatActivity {
             updateRecyclerView(recyclerList);
         }
         else if(id == R.id.price_asc) {
-            recyclerList = db.getSearchReceiptsFilter(query, "ORDER BY total_price ASC");
+            recyclerList = db.getSearchReceiptsSort(query, "ORDER BY total_price ASC");
             updateRecyclerView(recyclerList);
         }
         else if(id == R.id.price_desc) {
-            recyclerList = db.getSearchReceiptsFilter(query, "ORDER BY total_price DESC");
+            recyclerList = db.getSearchReceiptsSort(query, "ORDER BY total_price DESC");
             updateRecyclerView(recyclerList);
         }
         else if(id == R.id.filter_category) {
@@ -161,22 +138,22 @@ public class SearchableActivity extends AppCompatActivity {
                     switch(which){
                         case 0:
                             cat = types[0];
-                            recyclerList = db.getSearchReceiptsFilter(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC");
+                            recyclerList = db.getSearchReceiptsCategory(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC", cat);
                             updateRecyclerView(recyclerList);
                             break;
                         case 1:
                             cat = types[1];
-                            recyclerList = db.getSearchReceiptsFilter(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC");
+                            recyclerList = db.getSearchReceiptsCategory(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC", cat);
                             updateRecyclerView(recyclerList);
                             break;
                         case 2:
                             cat = types[2];
-                            recyclerList = db.getSearchReceiptsFilter(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC");
+                            recyclerList = db.getSearchReceiptsCategory(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC", cat);
                             updateRecyclerView(recyclerList);
                             break;
                         case 3:
                             cat = types[3];
-                            recyclerList = db.getSearchReceiptsFilter(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC");
+                            recyclerList = db.getSearchReceiptsCategory(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC", cat);
                             updateRecyclerView(recyclerList);
                             break;
                     }
@@ -233,7 +210,7 @@ public class SearchableActivity extends AppCompatActivity {
                                     count2++;
                             }
 
-                            if(count1 > 1 || count2 > 1 || countAfter1 != 2 || countAfter2 != 2) {
+                            if(count1 > 1 || count2 > 1) {
                                 Toast.makeText(getApplicationContext(),
                                         "Please enter valid prices", Toast.LENGTH_LONG)
                                         .show();
@@ -241,6 +218,9 @@ public class SearchableActivity extends AppCompatActivity {
                             else {
                                 lowDec = new BigDecimal(low1);
                                 highDec = new BigDecimal(high1);
+
+                                recyclerList = db.getSearchReceiptsPrice(query, "AND total_price > " + lowDec.toString() +  " AND total_price < " + highDec.toString() + " ORDER BY date DESC", lowDec, highDec);
+                                updateRecyclerView(recyclerList);
                             }
                         }
                     })
@@ -251,30 +231,6 @@ public class SearchableActivity extends AppCompatActivity {
                         }
                     });
             builder.show();
-
-            //******************************************
-            //CJ,
-            //big decimals to use are lowDec and highDec
-            //*******************
-
-            // pop something up here to determine
-            /**
-            AlertDialog.Builder b = new AlertDialog.Builder(this);
-            b.setView(R.layout.filter_price);
-            final TextView priceLoText = (TextView) findViewById(R.id.text_price_lo);
-            final TextView priceHiText = (TextView) findViewById(R.id.text_price_hi);
-            final EditText loInput = (EditText) findViewById(R.id.input_price_lo);
-            final EditText hiInput = (EditText) findViewById(R.id.input_price_hi);
-
-            b.setTitle("Filter by Price");
-
-            b.show();
-
-            int priceFrom = Integer.parseInt(loInput.getText().toString());
-            int priceTo = Integer.parseInt(hiInput.getText().toString());
-            recyclerList = db.getSearchReceiptsFilter(query, "AND total_price > " + priceFrom +  " AND " + priceTo + " ORDER BY date DESC");
-
-             **/
         }
         else if(id == R.id.filter_date) {
 
@@ -293,7 +249,7 @@ public class SearchableActivity extends AppCompatActivity {
 
             // Inflate and set the layout for the dialog
             // Pass null as the parent view because its going in the dialog layout
-            builder
+            /*builder
                     // Add action buttons
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
@@ -350,19 +306,21 @@ public class SearchableActivity extends AppCompatActivity {
                             dialog.cancel();
                         }
                     });
-            builder.show();
+            builder.show();*/
 
             //******************
             //CJ,
             //fields you want to use are dateFrom and dateTo
             //*************
 
-            /**
+
             // pop something up here to determine
-            String dateFrom = "2011-00-11";
-            String dateTo = "2014-00-12";
-            recyclerList = db.getSearchReceiptsFilter(query, "AND total_price > " + dateFrom +  " AND " + dateTo + " ORDER BY date DESC");
-             **/
+            // also we really need to add something in sqlite handler to get things working well, not just for dates but also categoy and price
+            GregorianCalendar dateFrom = new GregorianCalendar(2012, 1, 1);
+            GregorianCalendar dateTo = new GregorianCalendar(2014, 1, 1);
+            Log.d("TEST", dateFrom.toString());
+            recyclerList = db.getSearchReceiptsDate(query, dateFrom, dateTo);
+            updateRecyclerView(recyclerList);
         }
 
         return super.onOptionsItemSelected(item);
