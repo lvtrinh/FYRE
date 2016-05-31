@@ -38,8 +38,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Send"
-        android:textSize="20dp"
-        android:textAllCaps="false"
+        android:textSize="16dp"
         android:fontFamily="sans-serif"
         android:id="@+id/sendBtn"/>
 
