@@ -185,9 +185,6 @@ public class SettingsActivity extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        modifyAccount.setBackgroundResource(0);
-        logout.setBackgroundResource(0);
-        removeAccount.setBackgroundResource(0);
         about.setBackgroundResource(0);
         contactUs.setBackgroundResource(0);
         privacyPolicy.setBackgroundResource(0);
@@ -280,6 +277,28 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
         });
+
+
+        //if the user wants to remove their account they click this ubtton
+        about.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, AboutUs.class);
+                startActivity(intent);
+            }
+
+        });
+
+        //if the user wants to contact people their they click this ubtton
+        contactUs.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                Intent intent = new Intent(SettingsActivity.this, ContactUs.class);
+                startActivity(intent);
+            }
+
+        });
+
 
         removeAccount.setOnClickListener(new View.OnClickListener() {
 
