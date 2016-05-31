@@ -59,6 +59,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String KEY_CASHIER = "cashier";
     private static final String KEY_CHECKNUM = "check_number";
     private static final String KEY_ORDERNUM = "order_number";
+    private static final String KEY_MEMO = "memo";
 
     // Receipt Item table column names
     private static final String TABLE_RECEIPT_ITEM = "item";
@@ -92,7 +93,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + KEY_PAYMENTMETHOD + " TEXT," + KEY_SUBTOTAL + " REAL,"
                 + KEY_TAX + " REAL," + KEY_TOTALPRICE + " REAL,"
                 + KEY_DATE + " TEXT," + KEY_TIME + " TEXT," + KEY_CASHIER + " TEXT,"
-                + KEY_CHECKNUM + " TEXT," + KEY_ORDERNUM + " INTEGER)";
+                + KEY_CHECKNUM + " TEXT," + KEY_ORDERNUM + " INTEGER," + KEY_MEMO + " TEXT)";
 
         String CREATE_RECEIPT_ITEM_TABLE = "CREATE TABLE " + TABLE_RECEIPT_ITEM + "("
                 + KEY_RECEIPTID + " INTEGER," + KEY_RECEIPTITEMID + " INTEGER PRIMARY KEY,"
@@ -203,6 +204,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_CASHIER, r.getCashier());
         values.put(KEY_CHECKNUM, r.getCheckNumber());
         values.put(KEY_ORDERNUM, String.valueOf(r.getOrderNumber()));
+        values.put(KEY_MEMO, r.getMemo());
 
         long receipt = db.insert(TABLE_RECEIPT, null, values);
         db.close(); // Closing database connection
@@ -300,6 +302,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 if (cursor.getString(18) == null) {}
                 else currReceipt.setOrderNumber(cursor.getString(18));
 
+                if (cursor.getString(19) == null) {}
+                else currReceipt.setMemo(cursor.getString(19));
+
                 if (cursor.getString(0) == null) { Log.d("WRONG", ""); }
                 else {
                     Log.d("SOMETHING IMPORTANT", cursor.getString(0));
@@ -375,6 +380,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
                 if (cursor.getString(18) == null) {}
                 else currReceipt.setOrderNumber(cursor.getString(18));
+
+                if (cursor.getString(19) == null) {}
+                else currReceipt.setMemo(cursor.getString(19));
 
                 if (cursor.getString(0) == null) { Log.d("WRONG", ""); }
                 else {
@@ -753,6 +761,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 if (cursor.getString(18) == null) {}
                 else currReceipt.setOrderNumber(cursor.getString(18));
 
+                if (cursor.getString(19) == null) {}
+                else currReceipt.setMemo(cursor.getString(19));
+
                 if (cursor.getString(0) == null) { Log.d("WRONG", ""); }
                 else {
                     Log.d("SOMETHING IMPORTANT", cursor.getString(0));
@@ -865,6 +876,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
                 if (cursor.getString(18) == null) {}
                 else currReceipt.setOrderNumber(cursor.getString(18));
+
+                if (cursor.getString(19) == null) {}
+                else currReceipt.setMemo(cursor.getString(19));
 
                 if (cursor.getString(0) == null) { Log.d("WRONG", ""); }
                 else {

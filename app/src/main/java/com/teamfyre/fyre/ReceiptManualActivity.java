@@ -234,8 +234,8 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
                 // user properly added information, begin receipt addition process
                 else {
                     // hides keyboard after user entry complete
-                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                    //InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    //imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
                     // fixes input for price
                     boolean decimalFound = false;
@@ -282,6 +282,12 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
                     Toast.makeText(getApplicationContext(),
                             "Receipt saved",
                             Toast.LENGTH_LONG).show();
+
+                    Intent intent = new Intent(
+                            ReceiptManualActivity.this,
+                            MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         });

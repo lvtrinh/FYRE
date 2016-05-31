@@ -29,14 +29,24 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReceiptDetailActivity extends AppCompatActivity {
+    private static final String TAG = RegisterActivity.class.getSimpleName();
     private Receipt receipt;
     private GridLayout layout;
     private EditText inputMemo;
@@ -225,6 +235,10 @@ public class ReceiptDetailActivity extends AppCompatActivity {
             ((ViewGroup) paymentCardNum.getParent()).removeView(paymentCardNum);
         }
 
+        if (receipt.getMemo() != null && !receipt.getMemo().equals("")) {
+            inputMemo.setText(receipt.getMemo());
+        }
+
         // TODO if memo has data in it, populate the memo
     }
 
@@ -374,10 +388,69 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         if (!receipt.getMemo().equals(inputMemo.getText().toString().trim())) {
 
             // memo input working, need to update receipt in DB here though
+            tempPasswordReset(receipt.getReceiptID(), inputMemo.getText().toString().trim());
 
             Toast.makeText(getApplicationContext(),
                     "Memo saved",
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    //Updates the memo in the database
+    private void tempPasswordReset(final int receipt_id, final String memo) {
+        String tag_string_req = "req_setmemo";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_UPDATEMEMO, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Update Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        System.out.println("Memo updated");
+
+                    } else {
+
+                        // Error occurred in password reset. Get the error
+                        // message
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Temp Password Reset Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                //hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("receipt_id", String.valueOf(receipt_id));
+                params.put("memo", memo);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 }
