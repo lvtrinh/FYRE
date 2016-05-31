@@ -3,10 +3,12 @@ package com.teamfyre.fyre;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Debug;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +16,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -33,6 +38,8 @@ public class SearchableActivity extends AppCompatActivity {
     private SessionManager session;
 
     private String query;
+
+    private String cat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,13 +95,52 @@ public class SearchableActivity extends AppCompatActivity {
         }
         else if(id == R.id.filter_category) {
             // pop something up here to determine a spinner
-            String cat = "Food and Drink";
+            AlertDialog.Builder b = new AlertDialog.Builder(this);
+            b.setTitle("Select Category to Filter By");
+            final String[] types = {"Food and Drink", "Grocery", "Retail", "Misc"};
+
+            b.setItems(types, new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    dialog.dismiss();
+                    switch(which){
+                        case 0:
+                            cat = types[0];
+                            break;
+                        case 1:
+                            cat = types[1];
+                            break;
+                        case 2:
+                            cat = types[2];
+                            break;
+                        case 3:
+                            cat = types[3];
+                            break;
+                    }
+                }
+
+            });
+
+            b.show();
             recyclerList = db.getSearchReceiptsFilter(query, "AND store_category = " + cat + " ORDER BY total_price DESC");
         }
         else if(id == R.id.filter_price) {
             // pop something up here to determine
-            int priceFrom = 0;
-            int priceTo = 100;
+            AlertDialog.Builder b = new AlertDialog.Builder(this);
+            b.setView(R.layout.filter_price);
+            final TextView priceLoText = (TextView) findViewById(R.id.text_price_lo);
+            final TextView priceHiText = (TextView) findViewById(R.id.text_price_hi);
+            final EditText loInput = (EditText) findViewById(R.id.input_price_lo);
+            final EditText hiInput = (EditText) findViewById(R.id.input_price_hi);
+
+            b.setTitle("Filter by Price");
+
+            b.show();
+
+            int priceFrom = Integer.parseInt(loInput.getText().toString());
+            int priceTo = Integer.parseInt(hiInput.getText().toString());
             recyclerList = db.getSearchReceiptsFilter(query, "AND total_price > " + priceFrom +  " AND " + priceTo + " ORDER BY date DESC");
         }
         else if(id == R.id.filter_date) {
