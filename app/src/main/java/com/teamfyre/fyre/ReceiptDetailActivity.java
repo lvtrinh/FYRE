@@ -63,6 +63,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        db = new SQLiteHandler(getApplicationContext());
 
         Bundle data = getIntent().getExtras();
         receipt = data.getParcelable(MainActivity.EXTRA_RECEIPT);
@@ -388,7 +389,8 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         if (!receipt.getMemo().equals(inputMemo.getText().toString().trim())) {
 
             // memo input working, need to update receipt in DB here though
-            tempPasswordReset(receipt.getReceiptID(), inputMemo.getText().toString().trim());
+            updateMemo(receipt.getReceiptID(), inputMemo.getText().toString().trim());
+            db.updateMemoLite(String.valueOf(receipt.getReceiptID()), inputMemo.getText().toString().trim());
 
             Toast.makeText(getApplicationContext(),
                     "Memo saved",
@@ -398,7 +400,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
 
     //Updates the memo in the database
-    private void tempPasswordReset(final int receipt_id, final String memo) {
+    private void updateMemo(final int receipt_id, final String memo) {
         String tag_string_req = "req_setmemo";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,

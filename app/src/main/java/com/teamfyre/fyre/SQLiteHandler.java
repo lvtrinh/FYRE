@@ -155,6 +155,23 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         Log.d(TAG, "User info was updated: " + id);
     }
 
+
+    /**
+     * Update the memo in SQLite
+     * */
+    public void updateMemoLite(String receipt_id, String memo) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_MEMO, memo);
+
+        long id = db.update(TABLE_RECEIPT, values, KEY_RECEIPTID + "=" + receipt_id, null);
+        db.close();
+
+        Log.d(TAG, "Receipt memo was updated.");
+    }
+
+
     /**
      * Getting user data from database
      * */
