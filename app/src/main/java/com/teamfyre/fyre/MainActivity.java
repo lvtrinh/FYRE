@@ -347,6 +347,7 @@ public class  MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        updateData();
 
         if (mNfcAdapter != null && mNfcAdapter.isEnabled())
             setupForegroundDispatch(this, mNfcAdapter);
