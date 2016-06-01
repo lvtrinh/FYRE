@@ -11,8 +11,10 @@ package com.teamfyre.fyre;
 import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.format.DateFormat;
 import android.util.Log;
 
+import java.text.*;
 import java.util.*;
 import java.math.BigDecimal;
 
@@ -41,6 +43,7 @@ public class Receipt implements Parcelable{
     private BigDecimal totalPrice;
     private BigDecimal cashBack;
     private GregorianCalendar dateTime;
+    private GregorianCalendar dateTimeDB;
     private String cashier;
     private String checkNumber; //Are we changing this type in the database?
     private Integer orderNumber;
@@ -236,14 +239,14 @@ public class Receipt implements Parcelable{
         }
         
         // fixes input for date
-        StringBuilder sdate = new StringBuilder(date.toString());
+        /*StringBuilder sdate = new StringBuilder(date.toString());
         for (int x = 0; x < sdate.toString().length(); x++) {
             if (sdate.toString().charAt(x) == '/') {
                 sdate.setCharAt(x, '-');
             }
-        }
+        }*/
 
-        String[] dateArrTmp = sdate.toString().split("-");
+        String[] dateArrTmp = date.toString().split("-");
         int[] dateArr = new int[dateArrTmp.length];
 
         for (int i = 0; i < dateArrTmp.length; i++) {
@@ -255,9 +258,12 @@ public class Receipt implements Parcelable{
         for (int i = 0; i < timeArrTmp.length; i++) {
             timeArr[i] = Integer.parseInt(timeArrTmp[i]);
         }
-        dateTime = new GregorianCalendar(dateArr[2],(dateArr[0]) % 12,dateArr[1],timeArr[0],timeArr[1]);
+
+        int month = dateArr[0] - 1; //The adjustment for Gregorian calendars
+        dateTime = new GregorianCalendar(dateArr[2],month,dateArr[1],timeArr[0],timeArr[1]);
     }
 
+    //Sets the date for the format that we get back from MYSQL (YYYY-MM-DD)
     public void setDateTimeDB(Object date, Object time) {
         if (date.toString().equals("null") || time.toString().equals("null")) {
             dateTime = new GregorianCalendar(-1,-1,-1,-1,-1);
@@ -275,7 +281,10 @@ public class Receipt implements Parcelable{
         for (int i = 0; i < timeArrTmp.length; i++) {
             timeArr[i] = Integer.parseInt(timeArrTmp[i]);
         }
-        dateTime = new GregorianCalendar(dateArr[0],dateArr[1],dateArr[2],timeArr[0],timeArr[1]);
+
+
+        int month = dateArr[1]-1; //The adjustment for Gregorian calendars
+        dateTime = new GregorianCalendar(dateArr[0],month,dateArr[2],timeArr[0],timeArr[1]);
     }
 
 
@@ -406,15 +415,17 @@ public class Receipt implements Parcelable{
 
     public String getDateUI() {
         if (dateTime != null) {
-            if (this.dateTime.get(Calendar.MONTH)== 0) return "12/" + this.dateTime.get(Calendar.DAY_OF_MONTH)+ "/" + this.dateTime.get(Calendar.YEAR);
-            return this.dateTime.get(Calendar.MONTH) + "/" + this.dateTime.get(Calendar.DAY_OF_MONTH)+ "/" + this.dateTime.get(Calendar.YEAR);
+            //if (this.dateTime.get(Calendar.MONTH)== 0) return "12/" + this.dateTime.get(Calendar.DAY_OF_MONTH)+ "/" + this.dateTime.get(Calendar.YEAR);
+            //Add one to month to adjust for Gregorian calendars
+            return (this.dateTime.get(Calendar.MONTH)+1) + "/" + this.dateTime.get(Calendar.DAY_OF_MONTH)+ "/" + this.dateTime.get(Calendar.YEAR);
         }
         return null;
     }
 
     public String getDate() {
         if (dateTime != null) {
-            return this.dateTime.get(Calendar.YEAR) + "-" + this.dateTime.get(Calendar.MONTH) + "-" + this.dateTime.get(Calendar.DAY_OF_MONTH);
+            //Add one to month to adjust for Gregorian calendars
+            return String.valueOf(this.dateTime.get(Calendar.YEAR)) + "-" + String.valueOf(this.dateTime.get(Calendar.MONTH)+1) + "-" + String.valueOf(this.dateTime.get(Calendar.DAY_OF_MONTH));
         }
         return null;
     }
