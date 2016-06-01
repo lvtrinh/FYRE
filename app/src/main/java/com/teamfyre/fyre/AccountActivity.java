@@ -99,8 +99,12 @@ public class AccountActivity extends AppCompatActivity {
                 String e = email1.getText().toString();
                 String p = password.getText().toString();
 
+                int question = qOption;
+                String qAnswer = answer;
+
                 if(ans)
-                    //updateSecurityQuestion(qOption, answer);
+                    updateSecurityPreferences(id, question, qAnswer);
+
                 updateAccount(n, e, p, id);
             }
         });
@@ -334,6 +338,68 @@ public class AccountActivity extends AppCompatActivity {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email", email);
+
+                return params;
+            }
+
+        };
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
+    }
+
+
+    //Updates a users security question and answer
+    private void updateSecurityPreferences(final int id, final int security_question, final String security_answer) {
+        String tag_string_req = "req_updatesecurity";
+
+        StringRequest strReq = new StringRequest(Request.Method.POST,
+                AppConfig.URL_UPDATESECURITY, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "Update Response: " + response.toString());
+
+                try {
+                    JSONObject jObj = new JSONObject(response);
+                    boolean error = jObj.getBoolean("error");
+                    if (!error) {
+                        System.out.println("User info succesfully updated.");
+
+                        // Launch login activity
+                        Intent intent = new Intent(
+                                AccountActivity.this,
+                                SettingsActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        String errorMsg = jObj.getString("error_msg");
+                        Toast.makeText(getApplicationContext(),
+                                errorMsg, Toast.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Update Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+                //hideDialog();
+            }
+        }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                // Posting params to register url
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", String.valueOf(id));
+                params.put("security_question", String.valueOf(security_question));
+                params.put("security_answer", security_answer);
 
                 return params;
             }

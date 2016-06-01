@@ -36,4 +36,7 @@ public class AppConfig {
 
     // Server update memo url
     public static String URL_UPDATEMEMO = "http://13.93.202.168/android_login_api/updateMemo.php";
+
+    // Server update security preferences url
+    public static String URL_UPDATESECURITY = "http://13.93.202.168/android_login_api/updateSecurityPreferences.php";
 }

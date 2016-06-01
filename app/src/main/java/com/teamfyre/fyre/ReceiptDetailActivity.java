@@ -418,8 +418,6 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
                     } else {
 
-                        // Error occurred in password reset. Get the error
-                        // message
                         String errorMsg = jObj.getString("error_msg");
                         Toast.makeText(getApplicationContext(),
                                 errorMsg, Toast.LENGTH_LONG).show();
@@ -433,7 +431,7 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Temp Password Reset Error: " + error.getMessage());
+                Log.e(TAG, "Memo Update Error: " + error.getMessage());
                 Toast.makeText(getApplicationContext(),
                         error.getMessage(), Toast.LENGTH_LONG).show();
                 //hideDialog();
