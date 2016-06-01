@@ -56,8 +56,8 @@ public class SearchableActivity extends AppCompatActivity {
     private BigDecimal lowDec;
     private BigDecimal highDec;
 
-    private String dateFrom;
-    private String dateTo;
+    GregorianCalendar dateFrom;
+    GregorianCalendar dateTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,7 +249,7 @@ public class SearchableActivity extends AppCompatActivity {
 
             // Inflate and set the layout for the dialog
             // Pass null as the parent view because its going in the dialog layout
-            /*builder
+            builder
                     // Add action buttons
                     .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
@@ -289,12 +289,16 @@ public class SearchableActivity extends AppCompatActivity {
                                 String yearFrom = parts1[2];
                                 String monthFrom = parts1[0];
                                 String dayFrom = parts1[1];
-                                dateFrom = yearFrom + "-" + monthFrom + "-" + dayFrom;
+
+                                dateFrom = new GregorianCalendar(Integer.parseInt(yearFrom), Integer.parseInt(monthFrom), Integer.parseInt(dayFrom));
 
                                 String yearTo = parts2[2];
                                 String monthTo = parts2[0];
                                 String dayTo = parts2[1];
-                                dateTo = yearTo + "-" + monthTo + "-" + dayTo;
+                                dateFrom = new GregorianCalendar(Integer.parseInt(yearTo), Integer.parseInt(monthTo), Integer.parseInt(dayTo));
+
+                                recyclerList = db.getSearchReceiptsDate(query, dateFrom, dateTo);
+                                updateRecyclerView(recyclerList);
                             }
 
 
@@ -306,21 +310,11 @@ public class SearchableActivity extends AppCompatActivity {
                             dialog.cancel();
                         }
                     });
-            builder.show();*/
-
-            //******************
-            //CJ,
-            //fields you want to use are dateFrom and dateTo
-            //*************
+            builder.show();
 
 
             // pop something up here to determine
             // also we really need to add something in sqlite handler to get things working well, not just for dates but also categoy and price
-            GregorianCalendar dateFrom = new GregorianCalendar(2012, 1, 1);
-            GregorianCalendar dateTo = new GregorianCalendar(2014, 1, 1);
-            Log.d("TEST", dateFrom.toString());
-            recyclerList = db.getSearchReceiptsDate(query, dateFrom, dateTo);
-            updateRecyclerView(recyclerList);
         }
 
         return super.onOptionsItemSelected(item);

@@ -683,19 +683,28 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             receipts.add(itemResult.get(i));
         }
 
+        for (int i = 0; i < receipts.size(); i++) {
+            Log.d("DATE THINGS HERE", receipts.get(i).getDate() + " lo: " + receipts.get(i).getDateTime().compareTo(lo) + " hi: " + receipts.get(i).getDateTime().compareTo(hi));
+        }
+
+        ArrayList<Receipt> goodReceipts = new ArrayList<Receipt>();
+
         if (receipts.size() != 0) for (int i = 0; i < receipts.size(); i++) {
-            if (receipts.get(i).getDateTime().compareTo(lo) == -1 || receipts.get(i).getDateTime().compareTo(hi) == 1) {
-                receipts.remove(i);
+            if (receipts.get(i).getDateTime().compareTo(lo) == -1 && receipts.get(i).getDateTime().compareTo(hi) == 1) {
+                goodReceipts.add(receipts.get(i));
+            }
+            else if (receipts.get(i).getDateTime().compareTo(lo) == 1 && receipts.get(i).getDateTime().compareTo(hi) == -1) {
+                goodReceipts.add(receipts.get(i));
             }
         }
 
-        Collections.sort(receipts, new Comparator<Receipt>() {
+        Collections.sort(goodReceipts, new Comparator<Receipt>() {
             public int compare(Receipt o1, Receipt o2) {
                 return o2.getDateTime().compareTo(o1.getDateTime());
             }
         });
 
-        return receipts;
+        return goodReceipts;
     }
 
     public ArrayList<Receipt> getSearchReceiptsSort(String query, String filter) {
