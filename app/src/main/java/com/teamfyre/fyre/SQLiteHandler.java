@@ -671,7 +671,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 else currReceipt.setTotalPrice(cursor.getString(13));
 
                 if (cursor.getString(14) == null || cursor.getString(15) == null) {}
-                else currReceipt.setDateTimeDB(cursor.getString(14), cursor.getString(15));
+                else {
+                    currReceipt.setDateTimeDB(cursor.getString(14), cursor.getString(15));
+                }
 
                 if (cursor.getString(16) == null) {}
                 else currReceipt.setCashier(cursor.getString(16));
@@ -707,7 +709,10 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         ArrayList<Receipt> goodReceipts = new ArrayList<Receipt>();
 
         if (receipts.size() != 0) for (int i = 0; i < receipts.size(); i++) {
-            if (receipts.get(i).getDateTime().compareTo(lo) == -1 && receipts.get(i).getDateTime().compareTo(hi) == 1) {
+            /**if (receipts.get(i).getDateTime().compareTo(lo) == -1 && receipts.get(i).getDateTime().compareTo(hi) == 1) {
+                goodReceipts.add(receipts.get(i));
+            }**/
+            if (receipts.get(i).getDateTime().compareTo(lo) >= 0 && receipts.get(i).getDateTime().compareTo(hi) <= 0) {
                 goodReceipts.add(receipts.get(i));
             }
             else if (receipts.get(i).getDateTime().compareTo(lo) == 1 && receipts.get(i).getDateTime().compareTo(hi) == -1) {

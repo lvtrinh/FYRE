@@ -288,14 +288,16 @@ public class SearchableActivity extends AppCompatActivity {
                             else {
                                 String yearFrom = parts1[2];
                                 String monthFrom = parts1[0];
+                                int mFrom = Integer.parseInt(monthFrom)-1;
                                 String dayFrom = parts1[1];
 
-                                dateFrom = new GregorianCalendar(Integer.parseInt(yearFrom), Integer.parseInt(monthFrom), Integer.parseInt(dayFrom));
+                                dateFrom = new GregorianCalendar(Integer.parseInt(yearFrom), mFrom, Integer.parseInt(dayFrom));
 
                                 String yearTo = parts2[2];
                                 String monthTo = parts2[0];
+                                int mTo = Integer.parseInt(monthTo)-1;
                                 String dayTo = parts2[1];
-                                dateFrom = new GregorianCalendar(Integer.parseInt(yearTo), Integer.parseInt(monthTo), Integer.parseInt(dayTo));
+                                dateTo = new GregorianCalendar(Integer.parseInt(yearTo), mTo, Integer.parseInt(dayTo));
 
                                 recyclerList = db.getSearchReceiptsDate(query, dateFrom, dateTo);
                                 updateRecyclerView(recyclerList);

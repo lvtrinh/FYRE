@@ -81,11 +81,14 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //linking java file to screen
         setContentView(R.layout.activity_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //accessing all fields on screen
         modifyAccount = (Button) findViewById(R.id.modifyAccount);
         logout = (Button) findViewById(R.id.logout);
         removeAccount = (Button) findViewById(R.id.removeAccount);
@@ -100,8 +103,6 @@ public class SettingsActivity extends AppCompatActivity {
         about.setBackgroundResource(0);
         contactUs.setBackgroundResource(0);
         privacyPolicy.setBackgroundResource(0);
-
-     //   setupActionBar();
 
         //launches sqLite database
         db = new SQLiteHandler(getApplicationContext());
@@ -154,6 +155,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 // Set up the input
                 final EditText input = new EditText(SettingsActivity.this);
+
                 // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
                 input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 builder.setView(input);
@@ -201,7 +203,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         });
 
-        //if the user wants to contact people their they click this ubtton
+        //if the user wants to contact people their they click this button
         contactUs.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -212,9 +214,11 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
+        //if the user click remove account
         removeAccount.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
+                //prompts user to enter password
                 AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
                 builder.setTitle("Enter Password");
 
@@ -343,7 +347,7 @@ public class SettingsActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-    //This method verifies if the email is asociated with the password and then prompts the user
+    //This method verifies if the email is associated with the password and then prompts the user
     //to ensure they actually want to delete their account
     private void checkPassword2(final String email, final String password) {
         // Tag used to cancel the request
