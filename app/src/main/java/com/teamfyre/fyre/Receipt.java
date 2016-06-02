@@ -314,7 +314,8 @@ public class Receipt implements Parcelable{
         for (int i = 0; i < timeArrTmp.length; i++) {
             timeArr[i] = Integer.parseInt(timeArrTmp[i]);
         }
-        dateTime = new GregorianCalendar(dateArr[2],dateArr[0],dateArr[1],timeArr[0],timeArr[1]);
+        int month = dateArr[0]-1; //The adjustment for Gregorian calendars
+        dateTime = new GregorianCalendar(dateArr[2]+2000,month,dateArr[1],timeArr[0],timeArr[1]);
     }
 
     public void setCashier(Object name) {

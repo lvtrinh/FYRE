@@ -453,7 +453,7 @@ public class  MainActivity extends AppCompatActivity
             receipt.setTax(obj.get("tax"));
             receipt.setTotalPrice(obj.get("totalPrice"));
             receipt.setCashBack(obj.get("cashBack"));
-            receipt.setDateTime(obj.get("date"), obj.get("time"));
+            receipt.setDateTime2000(obj.get("date"), obj.get("time"));
             receipt.setCashier(obj.get("cashier"));
             receipt.setCheckNumber(obj.get("checkNumber"));
             receipt.setOrderNumber(obj.get("orderNumber"));
