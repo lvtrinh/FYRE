@@ -47,4 +47,5 @@
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
         android:hint="@string/hint_date"/>
+
 </LinearLayout>
