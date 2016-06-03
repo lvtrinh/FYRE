@@ -22,7 +22,6 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -32,7 +31,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -62,7 +60,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.RunnableFuture;
 
 public class  MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -221,7 +218,7 @@ public class  MainActivity extends AppCompatActivity
         // TODO and basically its own file, and thread
         Receipt testReceipt = parseJson(jsonString);
 
-        ReceiptActivity add = new ReceiptActivity(db, session);
+        ReceiptHandler add = new ReceiptHandler(db, session);
         //add.addReceipt(userId, testReceipt);
 
         //GetReceiptActivity get = new GetReceiptActivity(db, session);
@@ -314,8 +311,8 @@ public class  MainActivity extends AppCompatActivity
                             String id = user.get("id");
 
                             // adds receipt to database
-                            ReceiptActivity receiptActivity = new ReceiptActivity(db, session);
-                            receiptActivity.addReceipt(Integer.parseInt(id), nfcReceipt);
+                            ReceiptHandler receiptHandler = new ReceiptHandler(db, session);
+                            receiptHandler.addReceipt(Integer.parseInt(id), nfcReceipt);
 
                             Toast.makeText(getApplicationContext(),
                                     "Receipt from NFC saved",

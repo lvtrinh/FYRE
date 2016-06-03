@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,7 +20,7 @@ import java.util.Map;
  * Created by claytonyamaguchi on 5/22/16.
  */
 public class GetReceiptActivity {
-    private static final String TAG = ReceiptActivity.class.getSimpleName();
+    private static final String TAG = ReceiptHandler.class.getSimpleName();
     private SQLiteHandler db;
     private SessionManager session;
 
