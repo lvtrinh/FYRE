@@ -1,3 +1,8 @@
+/******************************************************************************
+ * GetReceiptActivity.java
+ *
+ * This activity will retreive an array of receipts from the database.
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.util.Log;
@@ -16,14 +21,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-/**
- * Created by claytonyamaguchi on 5/22/16.
- */
 public class GetReceiptActivity {
     private static final String TAG = ReceiptHandler.class.getSimpleName();
     private SQLiteHandler db;
     private SessionManager session;
-
+    
     public GetReceiptActivity(SQLiteHandler database, SessionManager currSession) {
         session = currSession;
 
@@ -31,6 +33,13 @@ public class GetReceiptActivity {
         db = database;
     }
 
+    /**************************************************************************
+     * getReceipts()
+     * 
+     * This function gets an arraylist of the user's receipts from the database.
+     * 
+     * @param userId The id associated with the user's account
+     **************************************************************************/
     public ArrayList<Receipt> getReceipts(final int userId) {
         // Tag used to cancel the request
         String tag_string_req = "req_getreceipts";
@@ -42,14 +51,11 @@ public class GetReceiptActivity {
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 AppConfig.URL_GETRECEIPTS, new Response.Listener<String>() {
 
-
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "Get Receipt Response: " + response.toString());
                 //hideDialog();
-
-
-
+                
                 try {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
@@ -92,9 +98,7 @@ public class GetReceiptActivity {
                         }
 
                     } else {
-
-                        // Error occurred in registration. Get the error
-                        // message
+                        // Error occurred in registration. Get the error message
                         String errorMsg = jObj.getString("error_msg");
                         Log.d("FAILURE", errorMsg);
                         //Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
@@ -130,7 +134,6 @@ public class GetReceiptActivity {
 
                 return params;
             }
-
         };
 
         // Adding request to request queue
@@ -138,13 +141,18 @@ public class GetReceiptActivity {
         return receipt;
     }
 
-    //TODO THIS NEEDS HELP IDK
-
+    /**************************************************************************
+     * getItems()
+     * 
+     * This function gets the individiual receipts from the database based on
+     * their id.
+     * 
+     * @param int receiptId
+     **************************************************************************/
     public ArrayList<ReceiptItem> getItems(final int receiptId) {
         // Tag used to cancel the request
         String tag_string_req = "req_getitems";
         final ArrayList<ReceiptItem> itemList = new ArrayList<ReceiptItem>();
-
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
                 AppConfig.URL_GETITEMS, new Response.Listener<String>() {
@@ -153,7 +161,6 @@ public class GetReceiptActivity {
             public void onResponse(String response) {
                 //Log.d(TAG, "Get Item Response: " + response.toString());
                 //hideDialog();
-
 
                 try {
                     JSONObject jObj = new JSONObject(response);
@@ -179,9 +186,7 @@ public class GetReceiptActivity {
                         Log.d("SUCCESS", "Receipts were successfully retrieved.");
 
                     } else {
-
-                        // Error occurred in registration. Get the error
-                        // message
+                        // Error occurred in registration. Get the error message
                         String errorMsg = jObj.getString("error_msg");
                         Log.d("FAILURE", errorMsg);
                         //Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
@@ -217,7 +222,6 @@ public class GetReceiptActivity {
 
                 return params;
             }
-
         };
 
         // Adding request to request queue

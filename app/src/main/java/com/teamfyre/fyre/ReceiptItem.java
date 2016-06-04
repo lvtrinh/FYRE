@@ -22,8 +22,18 @@ public class ReceiptItem implements Parcelable {
     private Integer quantity;
     private Character taxType;
 
+    /**************************************************************************
+     * ReceiptItem constructor
+     *
+     * empty constructor, probably never used as we'll be using
+     * the parcelable one instead
+     *
+     **************************************************************************/
     public ReceiptItem() { }
 
+    /**************************************************************************
+     * Lots of setter methods ahead
+     **************************************************************************/
     public void setName(Object n) {
         if (n.toString().equals("null")) {
             name = null;
@@ -64,9 +74,9 @@ public class ReceiptItem implements Parcelable {
         quantity = Integer.parseInt(q.toString());
     }
 
-    // TODO decide which letter is best for "null"
-    // we need a non-null Character object for parceling
+    // we need a non-null character for parceling
     // I'm just using Z because nobody uses Z. Ever.
+    // note: this is for "taxtype doesn't exist", not "no tax"
     public void setTaxType(Object tax) {
         if (tax.toString().equals("null")) {
             taxType = 'Z';
@@ -74,6 +84,10 @@ public class ReceiptItem implements Parcelable {
         }
         taxType = tax.toString().charAt(0);
     }
+
+    /**************************************************************************
+     * Lots of getter methods
+     **************************************************************************/
 
     /**
      *
@@ -108,7 +122,6 @@ public class ReceiptItem implements Parcelable {
     public Integer getQuantity() { return quantity; }
 
     // Parcel Stuff
-    //
     protected ReceiptItem(Parcel in) {
         name = in.readString();
         price = (BigDecimal) in.readValue(BigDecimal.class.getClassLoader());

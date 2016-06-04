@@ -1,7 +1,8 @@
 /******************************************************************************
  * RegisterActivity.java
  *
- * ThisActivity handles a user's registration.
+ * This activity handles a user's registration by presenting the visual view and
+ * access to the database to create the user's account.
  ******************************************************************************/
 package com.teamfyre.fyre;
 
@@ -49,7 +50,20 @@ public class RegisterActivity extends AppCompatActivity{
     private String answer;
     private int qOption;
     private boolean ans;
-
+    
+    /**************************************************************************
+     * onCreate()
+     * 
+     * This function sets up the activity. It populates the screen with the input
+     * fields for the receipt's manual additions.
+     * 
+     * This function is called when the activity starts. For more on what this
+     * means, see:
+     * http://developer.android.com/training/basics/activity-lifecycle/starting.html
+     * (protip: ctrl/cmd-click in android studio to open the link!)
+     *
+     * @param savedInstanceState The saved instance state
+     **************************************************************************/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +129,6 @@ public class RegisterActivity extends AppCompatActivity{
 
         // Link to Login Screen
         btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(),
                         LoginActivity.class);
@@ -125,16 +138,14 @@ public class RegisterActivity extends AppCompatActivity{
         });
 
         //handles security question field
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
-            {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 //gets which question they selected to answer
                 selectedQ = parent.getSelectedItem().toString();
 
                 //if they have picked one other than default "select one" prompt for an answer
-                if(!selectedQ.equals(getString(R.string.select_one))){
+                if(!selectedQ.equals(getString(R.string.select_one))) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setTitle(selectedQ);
 
@@ -185,23 +196,21 @@ public class RegisterActivity extends AppCompatActivity{
                     });
 
                     builder.show();
-
                 }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-                //do nothing
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
     }
 
-    /**
+    /**************************************************************************
+     * registerUser()
+     * 
      * Function to store user in MySQL database will post params(tag, name,
-     * email, password) to register url
-     * */
+     * email, password) to register url.
+     **************************************************************************/
     private void registerUser(final String name, final String email,
                               final String password, final int security_question, final String security_answer) {
         // Tag used to cancel the request
@@ -223,6 +232,7 @@ public class RegisterActivity extends AppCompatActivity{
                 try {
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
+                    
                     if (!error) {
                         // User successfully stored in MySQL
                         // Now store the user in sqlite
@@ -240,15 +250,13 @@ public class RegisterActivity extends AppCompatActivity{
                         Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
 
                         // Launch login activity
-                        Intent intent = new Intent(
-                                RegisterActivity.this,
-                                LoginActivity.class);
+                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
-                    } else {
-
-                        // Error occurred in registration. Get the error
-                        // message
+                    }
+                    
+                    else {
+                        // Error occurred in registration. Get the errormessage
                         String errorMsg = jObj.getString("error_msg");
                         Toast.makeText(getApplicationContext(),
                                 errorMsg, Toast.LENGTH_LONG).show();
@@ -256,10 +264,8 @@ public class RegisterActivity extends AppCompatActivity{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
-
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.e(TAG, "Registration Error: " + error.getMessage());
@@ -268,7 +274,6 @@ public class RegisterActivity extends AppCompatActivity{
                 hideDialog();
             }
         }) {
-
             @Override
             protected Map<String, String> getParams() {
                 // Posting params to register url
@@ -281,18 +286,27 @@ public class RegisterActivity extends AppCompatActivity{
 
                 return params;
             }
-
         };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
+    /**************************************************************************
+     * showDialog()
+     * 
+     * Function to create the progress dialog on the screen.
+     **************************************************************************/
     private void showDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
     }
 
+    /**************************************************************************
+     * hideDialog()
+     * 
+     * Function to hide the progress dialog on the screen.
+     **************************************************************************/
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();

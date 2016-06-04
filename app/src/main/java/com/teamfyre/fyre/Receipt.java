@@ -1,10 +1,9 @@
 /******************************************************************************
  * Receipt.java
  *
- * An internal class to create the Receipt object. It has all the basic needs
- * of a receipt.
- *
- * Parcelable: used to store Receipt data into an intent
+ * This is the module the user is taken to when they create a new receipt.
+ * This module contains the getters and setters for each parameter of a
+ * receipt.
  ******************************************************************************/
 package com.teamfyre.fyre;
 
@@ -237,14 +236,6 @@ public class Receipt implements Parcelable{
             dateTime = new GregorianCalendar(-1,-1,-1,-1,-1);
             return;
         }
-        
-        // fixes input for date
-        /*StringBuilder sdate = new StringBuilder(date.toString());
-        for (int x = 0; x < sdate.toString().length(); x++) {
-            if (sdate.toString().charAt(x) == '/') {
-                sdate.setCharAt(x, '-');
-            }
-        }*/
 
         String[] dateArrTmp = date.toString().split("-");
         int[] dateArr = new int[dateArrTmp.length];
@@ -478,7 +469,6 @@ public class Receipt implements Parcelable{
 
 
     // Parcel stuff
-    //
 
     // ignore this, hardly ever used
     @Override
@@ -535,16 +525,5 @@ public class Receipt implements Parcelable{
             return new Receipt[size];
         }
     };
-
-    public int getColumnCount() {
-        int columnCount = 0;
-
-        if (itemList.get(0).getTaxType() != 'Z') columnCount++;
-        if (itemList.get(0).getItemNum() != -1) columnCount++;
-        if (itemList.get(0).getName() != null) columnCount++;
-        if (itemList.get(0).getPrice() != null) columnCount++;
-        if (itemList.get(0).getQuantity() != -1) columnCount++;
-
-        return columnCount;
-    }
+    
 }
