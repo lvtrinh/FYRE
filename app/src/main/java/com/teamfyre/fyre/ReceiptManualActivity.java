@@ -70,7 +70,6 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
         }
     }
 
-
     /**************************************************************************
      * onCreate()
      * 
