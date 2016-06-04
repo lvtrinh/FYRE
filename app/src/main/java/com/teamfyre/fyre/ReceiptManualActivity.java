@@ -8,8 +8,6 @@
 
 package com.teamfyre.fyre;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
@@ -26,14 +23,9 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ImageView;
 import android.widget.ArrayAdapter;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.provider.MediaStore;
-import android.graphics.Bitmap;
-import android.view.View;
-import android.graphics.Color;
 
 
 import com.google.android.gms.appindexing.Action;
@@ -278,8 +270,8 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
                     String id = user.get("id");
 
                     // adds receipt to database
-                    ReceiptActivity receiptActivity = new ReceiptActivity(db, session);
-                    receiptActivity.addReceipt(Integer.parseInt(id), receipt);
+                    ReceiptHandler receiptHandler = new ReceiptHandler(db, session);
+                    receiptHandler.addReceipt(Integer.parseInt(id), receipt);
 
                     Toast.makeText(getApplicationContext(),
                             "Receipt saved",

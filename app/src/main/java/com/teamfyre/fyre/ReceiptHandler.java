@@ -1,18 +1,7 @@
 package com.teamfyre.fyre;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
@@ -30,13 +19,13 @@ import java.util.Iterator;
 /**
  * Created by claytonyamaguchi on 5/12/16.
  */
-public class ReceiptActivity extends AppCompatActivity {
-    private static final String TAG = ReceiptActivity.class.getSimpleName();
+public class ReceiptHandler extends AppCompatActivity {
+    private static final String TAG = ReceiptHandler.class.getSimpleName();
     private SessionManager session;
     private SQLiteHandler db;
     int receiptId;
 
-    public ReceiptActivity(SQLiteHandler database, SessionManager currSession) {
+    public ReceiptHandler(SQLiteHandler database, SessionManager currSession) {
         //pDialog = new ProgressDialog(this);
         //pDialog.setCancelable(false);
 

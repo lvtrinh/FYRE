@@ -2,6 +2,7 @@ package com.teamfyre.fyre;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,6 +15,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class SQLiteHandler extends SQLiteOpenHelper {
 
@@ -334,6 +337,12 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         cursor.close();
 
         db.close();
+
+        Collections.sort(receipts, new Comparator<Receipt>() {
+            public int compare(Receipt o1, Receipt o2) {
+                return o2.getDateTime().compareTo(o1.getDateTime());
+            }
+        });
 
         return receipts;
     }
@@ -925,6 +934,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.close();
 
         ArrayList<Receipt> itemResult = getSearchItems(query);
+        ArrayList<Receipt> finalResults = new ArrayList<Receipt>();
+
         if (itemResult.size() != 0) for (int i = 0; i < itemResult.size(); i++) {
             receipts.add(itemResult.get(i));
         }
