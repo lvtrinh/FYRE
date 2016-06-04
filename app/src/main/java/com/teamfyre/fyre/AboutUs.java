@@ -1,3 +1,12 @@
+/******************************************************************************
+ * AboutUs.java
+ *
+ * This class shows the "about us" page.
+ * If it looks pretty static, it is! Everything's pretty much done in the xml
+ * layout files, this class just puts it on the screen.
+ *
+ * (✿◠‿◠)
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.support.v7.app.AppCompatActivity;
