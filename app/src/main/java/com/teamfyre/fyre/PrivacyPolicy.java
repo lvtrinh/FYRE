@@ -1,3 +1,9 @@
+/******************************************************************************
+ * PrivacyPolicy.java
+ *
+ * This is the activity the user is taken to when they are viewing the privacy
+ * policy, which is generated on screen.
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.net.Uri;
@@ -13,6 +19,19 @@ import java.io.File;
 
 public class PrivacyPolicy extends AppCompatActivity {
 
+    /**************************************************************************
+     * onCreate()
+     * 
+     * This function sets up the activity. It populates the screen with the input
+     * fields for the receipt's manual additions.
+     * 
+     * This function is called when the activity starts. For more on what this
+     * means, see:
+     * http://developer.android.com/training/basics/activity-lifecycle/starting.html
+     * (protip: ctrl/cmd-click in android studio to open the link!)
+     *
+     * @param savedInstanceState The saved instance state
+     **************************************************************************/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +44,7 @@ public class PrivacyPolicy extends AppCompatActivity {
         privacyPolicy.getSettings().setJavaScriptEnabled(true);
         privacyPolicy.setWebViewClient(new WebViewClient());
 
+        // loads privacy html file for display on screen
         privacyPolicy.loadUrl("file:///android_asset/privacy_policy/index.html");
     }
 
