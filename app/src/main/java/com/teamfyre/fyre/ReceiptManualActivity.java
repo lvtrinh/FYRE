@@ -3,7 +3,6 @@
  *
  * This is the activity the user is taken to when they wish to manually add a
  * receipt.
- *
  ******************************************************************************/
 
 package com.teamfyre.fyre;
