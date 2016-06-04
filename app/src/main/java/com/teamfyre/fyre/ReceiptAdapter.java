@@ -2,9 +2,12 @@
  * ReceiptAdapter.java
  *
  * This is the adapter for the RecyclerView used by the main and search activities.
- * The adapter is the "brains" of the operation, recycling the cards that the user
- * scrolls offscreen.
- */
+ * The adapter is the "brains" of the RecyclerView, recycling the cards that the user
+ * scrolls offscreen and replacing their data with new info.
+ *
+ * Each card contains the major fields of each Receipt: the merchant, the date,
+ * and the price.
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.content.Context;
@@ -75,11 +78,29 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.RViewHol
     }
 
 
+    /**************************************************************************
+     * swapData
+     *
+     * Replaces the list stored in this adapter with another list
+     *
+     * @param otherList the list contining the new data
+     **************************************************************************/
     public void swapData(ArrayList<Receipt> otherList){
         receiptList.clear();
         receiptList.addAll(otherList);
         notifyDataSetChanged();
     }
+
+    /**************************************************************************
+     * onCreateViewHolder
+     *
+     * Creates the ViewHolder containing a singleton card element, and puts
+     * it into view.
+     *
+     * @param parent the parent ViewGroup
+     * @param viewType the ViewType
+     * @return The ViewHolder
+     **************************************************************************/
     @Override
     public RViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -87,6 +108,13 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.RViewHol
         return new RViewHolder(itemView);
     }
 
+    /**************************************************************************
+     * onBindViewHolder
+     *
+     * Displays data. Reloads receipt data.
+     * @param holder
+     * @param position
+     **************************************************************************/
     @Override
     public void onBindViewHolder(RViewHolder holder, int position) {
         Receipt receipt = receiptList.get(position);
