@@ -25,9 +25,12 @@ public class ReceiptHandler extends AppCompatActivity {
     private SQLiteHandler db;
     int receiptId;
 
+    /**
+     * Creates a ReceiptHandler by passing in the database and session
+     * @param database The database to be used (SQLite)
+     * @param currSession The session of the app
+     */
     public ReceiptHandler(SQLiteHandler database, SessionManager currSession) {
-        //pDialog = new ProgressDialog(this);
-        //pDialog.setCancelable(false);
 
         // Session manager
         session = currSession;
@@ -36,17 +39,20 @@ public class ReceiptHandler extends AppCompatActivity {
         db = database;
     }
 
-
+    /**
+     * Add a receipt to the mySQL database as well as the SQLite database.
+     * @param userId The id of the user in the mySQL database
+     * @param r The receipt that you are adding
+     */
     public void addReceipt(final int userId, final Receipt r) {
         // Tag used to cancel the request
         String tag_string_req = "req_addreceipt";
 
-        //pDialog.setMessage("Adding Receipt ...");
-        //showDialog();
-
+        // Get the URL for add receipt and add it to the database
         StringRequest strReq = new StringRequest(Method.POST,
                 AppConfig.URL_ADDRECEIPT, new Response.Listener<String>() {
 
+            // Get the response from the addReceipt.php file.
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "Add Receipt Response: " + response.toString());
@@ -95,7 +101,7 @@ public class ReceiptHandler extends AppCompatActivity {
 
             @Override
             protected Map<String, String> getParams() {
-                // Posting params to register url
+                // Posting params to addreceipt url. Puts all of these in the mySQL database
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("id", String.valueOf(userId));
                 params.put("storeName", r.getStoreName());
@@ -135,7 +141,11 @@ public class ReceiptHandler extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-
+    /**
+     * Add a receipt item to the mySQL and SQLite databases
+     * @param item The receiptItem to add to the mySQL and SQLite database
+     * @param receiptId The id of the receipt to attach the ReceiptItem to
+     */
     public void addItem(final ReceiptItem item, final int receiptId) {
         // Tag used to cancel the request
         String tag_string_req = "req_additem";
@@ -234,22 +244,5 @@ public class ReceiptHandler extends AppCompatActivity {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
-
-    private void setReceiptId (int id) {
-        this.receiptId = id;
-    }
-
-    private int getReceiptId () {return this.receiptId;}
-
-    /*private void showDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
-    private void hideDialog() {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-    }*/
-
 
 }
