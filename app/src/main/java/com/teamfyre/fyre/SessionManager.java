@@ -1,3 +1,9 @@
+/******************************************************************************
+ * SessionManager.java
+ *
+ * This class handles the account session of a user on the database. It can be 
+ * used to determine if a user is logged in.
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.content.Context;
@@ -20,7 +26,6 @@ public class SessionManager {
 
     // Shared preferences file name
     private static final String PREF_NAME = "AndroidHiveLogin";
-
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
 
     public SessionManager(Context context) {
@@ -28,7 +33,14 @@ public class SessionManager {
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
     }
-
+    
+    /**************************************************************************
+     * setLogin()
+     * 
+     * Changes the variable tracking whether or not the user is logged in.
+     * 
+     * @param isLoggedIn If the user is logged in
+     **************************************************************************/
     public void setLogin(boolean isLoggedIn) {
 
         editor.putBoolean(KEY_IS_LOGGED_IN, isLoggedIn);
@@ -38,7 +50,12 @@ public class SessionManager {
 
         Log.d(TAG, "User login session modified!");
     }
-
+    
+    /**************************************************************************
+     * isLoggedIn()
+     * 
+     * Checks whether the user is logged in or not.
+     **************************************************************************/
     public boolean isLoggedIn(){
         return pref.getBoolean(KEY_IS_LOGGED_IN, false);
     }

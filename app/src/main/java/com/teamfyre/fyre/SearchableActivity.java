@@ -1,3 +1,9 @@
+/**
+ * SearchableActivity.java is a controller file that handles our search and sorting filter on our
+ * search results page.  It allows users to better organize their receipts or view them in a
+ * custom way.
+ */
+
 package com.teamfyre.fyre;
 
 import android.app.Dialog;
@@ -59,9 +65,15 @@ public class SearchableActivity extends AppCompatActivity {
     GregorianCalendar dateFrom;
     GregorianCalendar dateTo;
 
+    /**
+     * Sets up search filter
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //links controller to xml file
         setContentView(R.layout.activity_searchable);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -100,6 +112,10 @@ public class SearchableActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    /**
+     * @param which item they click on the drop down
+     * The onOptionsSelected method handles which drop down they select when filtering or sorting
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -107,23 +123,28 @@ public class SearchableActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //each if/if else statement controls when an each option from the drop down is selected
+        //sort by ascending date
         if (id == R.id.date_asc) {
             recyclerList = db.getSearchReceiptsSort(query, "ORDER BY date ASC");
             updateRecyclerView(recyclerList);
         }
+        //sort by descending date
         else if(id == R.id.date_desc) {
             recyclerList = db.getSearchReceipts(query);
             updateRecyclerView(recyclerList);
         }
+        //sort by ascending price
         else if(id == R.id.price_asc) {
             recyclerList = db.getSearchReceiptsSort(query, "ORDER BY total_price ASC");
             updateRecyclerView(recyclerList);
         }
+        //sort by descending price
         else if(id == R.id.price_desc) {
             recyclerList = db.getSearchReceiptsSort(query, "ORDER BY total_price DESC");
             updateRecyclerView(recyclerList);
         }
+        //selects which category to show
         else if(id == R.id.filter_category) {
             // pop something up here to determine a spinner
             AlertDialog.Builder b = new AlertDialog.Builder(this);
@@ -136,21 +157,25 @@ public class SearchableActivity extends AppCompatActivity {
 
                     dialog.dismiss();
                     switch(which){
+                        //if food an drink, show all food and drink receipts
                         case 0:
                             cat = types[0];
                             recyclerList = db.getSearchReceiptsCategory(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC", cat);
                             updateRecyclerView(recyclerList);
                             break;
+                        //if grocery, show all grocery receipts
                         case 1:
                             cat = types[1];
                             recyclerList = db.getSearchReceiptsCategory(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC", cat);
                             updateRecyclerView(recyclerList);
                             break;
+                        //if retail, show all retail receipts
                         case 2:
                             cat = types[2];
                             recyclerList = db.getSearchReceiptsCategory(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC", cat);
                             updateRecyclerView(recyclerList);
                             break;
+                        //if misc, show all misc receipts
                         case 3:
                             cat = types[3];
                             recyclerList = db.getSearchReceiptsCategory(query, "AND store_category = '" + cat + "' ORDER BY total_price DESC", cat);
@@ -163,6 +188,7 @@ public class SearchableActivity extends AppCompatActivity {
 
             b.show();
         }
+        //filters search results by price
         else if(id == R.id.filter_price) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(SearchableActivity.this);
@@ -170,15 +196,17 @@ public class SearchableActivity extends AppCompatActivity {
             LayoutInflater inflater = LayoutInflater.from(SearchableActivity.this);
             builder.setTitle("Filter by Price");
 
+            //get layout
             final View layout = inflater.inflate(R.layout.dialog_price, null);
             builder.setView(layout);
+
+            //getting access to layout items on screen
             final EditText low = (EditText) layout.findViewById(R.id.start);
             final EditText high = (EditText) layout.findViewById(R.id.end);
+
+            //controlling input
             low.setRawInputType(Configuration.KEYBOARD_QWERTY);
             high.setRawInputType(Configuration.KEYBOARD_QWERTY);
-
-            /**low.setInputType(InputType.TYPE_CLASS_NUMBER);
-            high.setInputType(InputType.TYPE_CLASS_NUMBER);**/
 
             // Inflate and set the layout for the dialog
             // Pass null as the parent view because its going in the dialog layout
@@ -190,8 +218,14 @@ public class SearchableActivity extends AppCompatActivity {
                             low1 = low.getText().toString();
                             high1 = high.getText().toString();
 
+                            //length of inputs
                             int length1 = low.length();
                             int length2 = high.length();
+
+                            //count1 and count2 keep track of how many '.' there are in the input-
+                            // there can only be one
+                            //countAfter1 and countAfter2 determines how many characters are after
+                            // the '.'- it should only be two
                             int count1 = 0;
                             int countAfter1 = 0;
                             int count2 = 0;
@@ -210,20 +244,25 @@ public class SearchableActivity extends AppCompatActivity {
                                     count2++;
                             }
 
-                            if(count1 > 1 || count2 > 1) {
+                            //checks if the input is valid if it is not give an error
+                            if(count1 > 1 || count2 > 1 || length1 == 0 || length2 == 0 || countAfter1 != 2 || countAfter2 != 2 ) {
                                 Toast.makeText(getApplicationContext(),
                                         "Please enter valid prices", Toast.LENGTH_LONG)
                                         .show();
                             }
+                            //if the input is valid continue with filter process
                             else {
+                                //assigns values for the two prices for the filter to be bounded by
                                 lowDec = new BigDecimal(low1);
                                 highDec = new BigDecimal(high1);
 
+                                //prompts search results
                                 recyclerList = db.getSearchReceiptsPrice(query, "AND total_price > " + lowDec.toString() +  " AND total_price < " + highDec.toString() + " ORDER BY date DESC", lowDec, highDec);
                                 updateRecyclerView(recyclerList);
                             }
                         }
                     })
+                    //if cancel button is clicked
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             //LoginDialogFragment.this.getDialog().cancel();
@@ -232,6 +271,7 @@ public class SearchableActivity extends AppCompatActivity {
                     });
             builder.show();
         }
+        //filters search results by date
         else if(id == R.id.filter_date) {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(SearchableActivity.this);
@@ -239,10 +279,15 @@ public class SearchableActivity extends AppCompatActivity {
             LayoutInflater inflater = LayoutInflater.from(SearchableActivity.this);
             builder.setTitle("Filter by Date");
 
+            //getting screen dialog should be
             final View layout = inflater.inflate(R.layout.dialog_date, null);
             builder.setView(layout);
+
+            //getting access to fields on screen
             final EditText from = (EditText) layout.findViewById(R.id.from);
             final EditText to = (EditText) layout.findViewById(R.id.to);
+
+            //controlling input type
             from.setRawInputType(InputType.TYPE_CLASS_NUMBER);
             to.setRawInputType(InputType.TYPE_CLASS_NUMBER);
 
@@ -257,17 +302,22 @@ public class SearchableActivity extends AppCompatActivity {
                             from1 = from.getText().toString();
                             to1 = to.getText().toString();
 
+                            //split the string inputs around '-'
                             String[] parts1 = from1.split("-");
                             String[] parts2 = to1.split("-");
+
+                            //gets number of splits
                             int size1 = parts1.length;
                             int size2 = parts2.length;
 
+                            //should only be 3 splits- month, day, year.  if not give an error
                             if(size1 != 3 || size2 != 3) {
                                 Toast.makeText(getApplicationContext(),
                                         "Please enter valid dates in the form MM-DD-YYYY", Toast.LENGTH_LONG)
                                         .show();
                             }
 
+                            //checks to make sure correct format- ie ##-##-####
                             boolean goodDate = true;
                             for(int i = 0; i < size1; i++) {
                                 if(i == 0 || i == 1) {
@@ -280,11 +330,13 @@ public class SearchableActivity extends AppCompatActivity {
                                 }
                             }
 
+                            //if not in correct format give an error
                             if(!goodDate) {
                                 Toast.makeText(getApplicationContext(),
                                         "Please enter valid dates in the form MM-DD-YYYY", Toast.LENGTH_LONG)
                                         .show();
                             }
+                            //if in good format create gregorian calendar objects to continue with filter
                             else {
                                 String yearFrom = parts1[2];
                                 String monthFrom = parts1[0];
@@ -306,6 +358,7 @@ public class SearchableActivity extends AppCompatActivity {
 
                         }
                     })
+                    //if click cancel, stop filter process
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             //LoginDialogFragment.this.getDialog().cancel();
@@ -322,6 +375,10 @@ public class SearchableActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * handleIntent loads receipts into the recycler view to be displayed
+     * @param intent
+     */
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
@@ -347,13 +404,14 @@ public class SearchableActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * generateDemoList takes in a search query that is called to the SQLite database
+     * @param query
+     * @return an array list to feed to the recycler view
+     */
     private List<Receipt> generateDemoList(String query) {
         List<Receipt> recList;
         GetReceiptActivity test = new GetReceiptActivity(db, session);
-
-
-        //recList = test.getReceipts(userId);
-        //test.getReceipts(userId);
         recList = db.getSearchReceipts(query);
 
         return recList;
