@@ -208,8 +208,18 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
-    //Updates a user account information
+    /**************************************************************************
+     * updateAccount
+     *
+     * Updates the user's account information
+     *
+     * @param name User's name
+     * @param email User's email
+     * @param password User's password
+     * @param id User's database ID
+     **************************************************************************/
     private void updateAccount(final String name, final String email, final String password, final int id) {
+
         String tag_string_req = "req_updatename";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -282,9 +292,15 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
-
-    //Updates a user account information
+    /**************************************************************************
+     * removeAccount
+     *
+     * Method used to remove the account from the system.
+     *
+     * @param email The user's email address
+     **************************************************************************/
     private void removeAccount(final String email) {
+
         String tag_string_req = "req_updatename";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -349,8 +365,17 @@ public class AccountActivity extends AppCompatActivity {
     }
 
 
-    //Updates a users security question and answer
+    /**************************************************************************
+     * updateSecurityPreferences
+     *
+     * Updates a user's security question/answer
+     *
+     * @param id User's database ID
+     * @param security_question User's security question
+     * @param security_answer User's security answer
+     **************************************************************************/
     private void updateSecurityPreferences(final int id, final int security_question, final String security_answer) {
+
         String tag_string_req = "req_updatesecurity";
 
         StringRequest strReq = new StringRequest(Request.Method.POST,

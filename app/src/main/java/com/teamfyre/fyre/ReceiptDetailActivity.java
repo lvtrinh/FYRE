@@ -70,9 +70,6 @@ public class ReceiptDetailActivity extends AppCompatActivity {
 
         inputMemo = (EditText) findViewById(R.id.rec_detail_memo);
 
-        /* Test */
-        //System.out.println("ReceiptDetailActivity: ");
-        //receipt.printReceipt();
         layout = (GridLayout) findViewById(R.id.itemized_layout);
         fillReceipt();
     }
@@ -134,7 +131,6 @@ public class ReceiptDetailActivity extends AppCompatActivity {
             ((ViewGroup) purchaseTotal.getParent()).removeView(purchaseTotal);
         }
 
-        // TODO build a string for date time first, replace body view
         if (receipt.getDate() != "-1--1--1") {
             date_header.setText(receipt.getDateUI());
             purchaseDateTime.setText(receipt.getDateUI());
@@ -239,8 +235,6 @@ public class ReceiptDetailActivity extends AppCompatActivity {
         if (receipt.getMemo() != null && !receipt.getMemo().equals("")) {
             inputMemo.setText(receipt.getMemo());
         }
-
-        // TODO if memo has data in it, populate the memo
     }
 
     /**************************************************************************
