@@ -1,3 +1,9 @@
+/******************************************************************************
+ * AppConfig.java
+ *
+ * Constant static strings that reference our php files.
+ *
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 public class AppConfig {

@@ -44,6 +44,19 @@ public class LoginActivity extends AppCompatActivity {
     private SQLiteHandler db;
     private boolean validEmail;
 
+    /**************************************************************************
+     * onCreate()
+     * 
+     * This function sets up the activity. It populates the screen with the input
+     * fields for the receipt's manual additions.
+     * 
+     * This function is called when the activity starts. For more on what this
+     * means, see:
+     * http://developer.android.com/training/basics/activity-lifecycle/starting.html
+     * (protip: ctrl/cmd-click in android studio to open the link!)
+     *
+     * @param savedInstanceState The saved instance state
+     **************************************************************************/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,9 +158,14 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * function to verify login details in mysql db
-     * */
+    /**************************************************************************
+     * checkLogin()
+     * 
+     * This function verifys the user's details in the mysql database.
+     * 
+     * @param email The user's email
+     * @param password The user's password
+     **************************************************************************/
     private void checkLogin(final String email, final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_login";
@@ -205,7 +223,6 @@ public class LoginActivity extends AppCompatActivity {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
-
             }
         }, new Response.ErrorListener() {
 
@@ -227,16 +244,20 @@ public class LoginActivity extends AppCompatActivity {
 
                 return params;
             }
-
         };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-
-    //Checks whether the entered email is in the database
-    //If it is in the database, we receive the code for the security question in response
+    /**************************************************************************
+     * validateEmail()
+     * 
+     * This function verifys that an email is in the database, and if so, it
+     * receives the code for the security requestion in response.
+     * 
+     * @param email The email to check
+     **************************************************************************/
     private void validateEmail(final String email) {
         String tag_string_req = "req_validateemail";
 
@@ -311,10 +332,7 @@ public class LoginActivity extends AppCompatActivity {
                                 dialog.cancel();
                             }
                         });
-
                         builder2.show();
-
-
 
                     } else {
 
@@ -327,7 +345,6 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
 
@@ -348,16 +365,21 @@ public class LoginActivity extends AppCompatActivity {
 
                 return params;
             }
-
         };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-
-    //Validates the answer to the security question
-    //If the security answer is correct, tempPassword reset is called
+    /**************************************************************************
+     * validateSecurityQuestion()
+     * 
+     * This function makes sure the answer to the security questions is correct.
+     * If it is, tempPassword reset is called.
+     * 
+     * @param email The email associated with the question
+     * @param security_answer The answer to the security question
+     **************************************************************************/
     private void validateSecurityQuestion(final String email, final String security_answer) {
         String tag_string_req = "req_validatesecurity";
 
@@ -391,7 +413,6 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
 
@@ -413,15 +434,20 @@ public class LoginActivity extends AppCompatActivity {
 
                 return params;
             }
-
         };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-
-    //Loads a temporary password into the database. Sends an email to the user with the temp pw
+    /**************************************************************************
+     * tempPasswordReset()
+     * 
+     * This function loads a temporary password into the database, and then
+     * sends an email to the user with the temporary password.
+     * 
+     * @param email The email tto send the temp pw to
+     **************************************************************************/
     private void tempPasswordReset(final String email) {
         String tag_string_req = "req_temppasswordreset";
 
@@ -445,8 +471,7 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);*/
                     } else {
 
-                        // Error occurred in password reset. Get the error
-                        // message
+                        // Error occurred in password reset. Get the error message
                         String errorMsg = jObj.getString("error_msg");
                         Toast.makeText(getApplicationContext(),
                                 errorMsg, Toast.LENGTH_LONG).show();
@@ -475,19 +500,27 @@ public class LoginActivity extends AppCompatActivity {
 
                 return params;
             }
-
         };
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
     }
 
-
+    /**************************************************************************
+     * showDialog()
+     * 
+     * Function to show the progress dialog on the screen.
+     **************************************************************************/
     private void showDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
     }
-
+    
+    /**************************************************************************
+     * hideDialog()
+     * 
+     * Function to hide the progress dialog on the screen.
+     **************************************************************************/
     private void hideDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();

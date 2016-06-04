@@ -1,7 +1,7 @@
 /******************************************************************************
  * RegisterActivity.java
  *
- * ThisActivity handles a user's registration by presenting the visual view and
+ * This activity handles a user's registration by presenting the visual view and
  * access to the database to create the user's account.
  ******************************************************************************/
 package com.teamfyre.fyre;
