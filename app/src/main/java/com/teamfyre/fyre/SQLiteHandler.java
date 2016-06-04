@@ -384,13 +384,10 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         // Move to first row
         if (cursor.moveToFirst()) {
             do {
-<<<<<<< HEAD
                 if (cursor.getString(0) == null) {}
                 else currReceipt.setReceiptID(cursor.getString(0));
 
-=======
                 // Create a receipt from all the data from sqlite
->>>>>>> 21ab25ce053dbc5ec28e893401ed82b1d960b631
                 if (cursor.getString(1) == null) {}
                 else currReceipt.setStoreName(cursor.getString(1));
 
