@@ -1,3 +1,11 @@
+/******************************************************************************
+ * ContactUs.java
+ *
+ * Activity that allows the user to send feedback straight to the inbox of our
+ * very own Christopher Lew! DO IT
+ *
+ * (◕‿◕✿)
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.content.Intent;
@@ -31,6 +39,14 @@ public class ContactUs extends AppCompatActivity {
         });
     }
 
+    /**************************************************************************
+     * sendBtn
+     *
+     * callback method when the user clicks the button. Produces an implicit
+     * intent to send an email. This will take the user to their email app.
+     *
+     * @param message The message Chris should receive
+     **************************************************************************/
     private void sendBtn(String message) {
         String[] to = new String[]{"lew.christoph@gmail.com"};
         String subject = ("Feedback from FYRE");
