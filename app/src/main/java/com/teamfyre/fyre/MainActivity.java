@@ -64,7 +64,6 @@ import java.util.List;
 public class  MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    // TODO create something that can hold/display many receipts, instead of just one
     private Receipt receipt;
     private SQLiteHandler db;
     private SessionManager session;
@@ -163,12 +162,12 @@ public class  MainActivity extends AppCompatActivity
         String checkFlag = intent.getStringExtra("flag");
         GetReceiptActivity test = new GetReceiptActivity(db, session);
 
-        if (checkFlag == null) demoList = generateDemoList(userId);
+        if (checkFlag == null) demoList = getList(userId);
         else if (checkFlag.equals("justLoggedIn")) {
             Log.d("JUST LOGGED IN", "WGHSLKJGHLKJHS");
             demoList = test.getReceipts(userId);
         }
-        else demoList = generateDemoList(userId);
+        else demoList = getList(userId);
 
         Log.d("DEMO LIST SIZE", " " + demoList.size());
 
@@ -183,7 +182,7 @@ public class  MainActivity extends AppCompatActivity
         headerSub.setText(email);
 
         /////////////////////////////////////////////////////
-        //  recycler view stuff
+        //  set up recycler view
         /////////////////////////////////////////////////////
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.receipts_swipe_refresh_layout);
         mRecyclerView = (RecyclerView) findViewById(R.id.receipts_recycler_view);
@@ -193,7 +192,7 @@ public class  MainActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         userId = Integer.parseInt(user.get("id"));
-        generateDemoList(userId);
+        getList(userId);
         //loadReceipts(demoList);
 
         mAdapter = new ReceiptAdapter(demoList);
@@ -209,13 +208,7 @@ public class  MainActivity extends AppCompatActivity
             }
         );
 
-        ///////////////////////////////////////////////////
-        // end recycler view stuff
-        ///////////////////////////////////////////////////
-
         jsonString = loadJsonLocal(DEMO_JSON_FILENAME);
-        // TODO put this into a variable that persists past onCreate
-        // TODO and basically its own file, and thread
         Receipt testReceipt = parseJson(jsonString);
 
         ReceiptHandler add = new ReceiptHandler(db, session);
@@ -339,7 +332,7 @@ public class  MainActivity extends AppCompatActivity
                         .setNegativeButton("No", dialogClickListener).show();
             }
         }
-    }
+    } // end NdefReaderTask class
 
     @Override
     protected void onResume() {
@@ -506,67 +499,17 @@ public class  MainActivity extends AppCompatActivity
         return json;
     }
 
-    private ArrayList<Receipt> generateDemoList(int userId){
-        GetReceiptActivity test = new GetReceiptActivity(db, session);
-
-        //demoList = test.getReceipts(userId);
-        //test.getReceipts(userId);
+    /**************************************************************************
+     * getList
+     *
+     * Gets a list of the user's receipts, delegates to SQLiteHandler
+     *
+     * @param userId The id of the user in the database
+     * @return Returns the list of receipts (it's also stored as a class var)
+     **************************************************************************/
+    private ArrayList<Receipt> getList(int userId){
         demoList = db.getAllReceipts();
 
-        /*
-        int numDemos = 0;
-        demoList = new ArrayList<>();
-        Receipt demo1 = parseJson(loadJsonLocal(DEMO_JSON_FILENAME));
-        Receipt demo2 = parseJson(loadJsonLocal("chipotleDemo.json"));
-        Receipt demo3 = parseJson(loadJsonLocal("costcoDemo.json"));
-        Receipt demo4 = parseJson(loadJsonLocal("ucsandiegobookstore.json"));
-
-        while (Math.random() > 0.1) {
-            numDemos++;
-            double rand2 = Math.random();
-            Log.d("demoList", "rand = " + rand2);
-            if (rand2 > .75) {
-                Log.d("demoList", "Adding demo1");
-                demoList.add(demo1);
-            } else if (rand2 > .5){
-                Log.d("demoList", "Adding demo2");
-                demoList.add(demo2);
-            } else if (rand2 > .25) {
-                Log.d("demoList", "Adding demo3");
-                demoList.add(demo3);
-            } else {
-                Log.d("demoList", "Adding demo4");
-                demoList.add(demo4);
-            }
-        }
-        Log.d("demoList", "finished adding demos! num: " + numDemos);
-       */
-
-        /*
-        Receipt demo3 = parseJson(loadJsonLocal("popeyesDemo.json"));
-        demoList.add(demo3);
-
-        Receipt demo4 = parseJson(loadJsonLocal("dlush.json"));
-        demoList.add(demo4);
-
-        Receipt demo5 = parseJson(loadJsonLocal("primosDemo.json"));
-        demoList.add(demo5);
-
-        Receipt demo6 = parseJson(loadJsonLocal("innoutburger.json"));
-        demoList.add(demo6);
-
-        Receipt demo7 = parseJson(loadJsonLocal("costcoDemo.json"));
-        demoList.add(demo7);
-
-        Receipt demo8 = parseJson(loadJsonLocal("pandaexpress.json"));
-        demoList.add(demo8);
-
-        Receipt demo9 = parseJson(loadJsonLocal("safewayDemo.json"));
-        demoList.add(demo9);
-
-        Receipt demo10 = parseJson(loadJsonLocal("tastyGardenDemo.json"));
-        demoList.add(demo10);
-*/
         return demoList;
     }
 
@@ -582,7 +525,7 @@ public class  MainActivity extends AppCompatActivity
             @Override
             public void run() {
 
-                generateDemoList(userId);
+                getList(userId);
                 mAdapter.swapData(demoList);
                 runOnUiThread(new Runnable() {
                     @Override
@@ -616,6 +559,13 @@ public class  MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**************************************************************************
+     * onOptionsItemSelected
+     *
+     * Callback method that handles clicks on the action bar
+     *
+     * @param item The item that the user clicked
+     **************************************************************************/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -629,7 +579,6 @@ public class  MainActivity extends AppCompatActivity
         } else if (id == R.id.menu_refresh) {
             updateData();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -639,17 +588,10 @@ public class  MainActivity extends AppCompatActivity
             public void run() {
                 mAdapter = new ReceiptAdapter(demoList);
                 mRecyclerView.setAdapter(mAdapter);
-
-                ///////////////////////////////////////////////////
-                // end recycler view stuff
-                ///////////////////////////////////////////////////
             }
         }, 100);
     }
 
-    // TODO display one receipt
-    // TODO make a button or something (temporary) to get into detailed receipt
-    // TODO make a "detailed receipt" activity (this is probably gonna be permanent
 
     /**************************************************************************
      * onCardClicked()
@@ -668,10 +610,6 @@ public class  MainActivity extends AppCompatActivity
         startActivity(detailIntent);
     }
 
-    /*
-        TODO: fill in actions once we implement them (start activity, most likely)
-        TODO: remove @SuppressWarnings once everything's implemented
-     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -685,7 +623,6 @@ public class  MainActivity extends AppCompatActivity
             startActivity(intent);
             finish();
         }
-        // only if we're placing logout in the hamburger menu
         else if (id == R.id.nav_logout) {
             new AlertDialog.Builder(MainActivity.this) //changed to MainActivity.this from context
                     .setTitle("Logout")

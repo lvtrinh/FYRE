@@ -3,7 +3,6 @@
  *
  * This is the activity the user is taken to when they wish to manually add a
  * receipt.
- *
  ******************************************************************************/
 
 package com.teamfyre.fyre;
@@ -74,10 +73,10 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
 
     /**************************************************************************
      * onCreate()
-     * <p/>
+     * 
      * This function sets up the activity. It populates the screen with the input
      * fields for the receipt's manual additions.
-     * <p/>
+     * 
      * This function is called when the activity starts. For more on what this
      * means, see:
      * http://developer.android.com/training/basics/activity-lifecycle/starting.html
@@ -158,6 +157,7 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
 
             @Override
             public void afterTextChanged(Editable s) {
+                // this will automatically add dollar sign to the price display
                 txtPrice.setText('$' + inputPrice.getText().toString().trim());
             }
         });
@@ -243,6 +243,7 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
                         price += ".00";
                     }
 
+                    // creates receipt object
                     receipt = new Receipt();
                     receipt.setDateTime(date.toString(), "00:00");
                     receipt.setStoreName(store);
@@ -290,17 +291,20 @@ public class ReceiptManualActivity extends AppCompatActivity implements OnItemSe
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    /**************************************************************************
+     * onItemSeleected()
+     * 
+     * This function sets the spinner item to the selected spinner from the list.
+     **************************************************************************/
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // On selecting a spinner item
         // ((TextView)parent.getChildAt(position)).setTextColor(Color.parseColor("#808080"));
         item = parent.getItemAtPosition(position).toString();
-
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
     }
-
 
     @Override
     public void onStart() {
