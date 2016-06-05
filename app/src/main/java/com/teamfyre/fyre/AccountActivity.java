@@ -103,8 +103,6 @@ public class AccountActivity extends AppCompatActivity {
         UpdateAccount = (Button) findViewById(R.id.updateAccount);
         RemoveAccount = (Button) findViewById(R.id.RemoveAccount);
 
-        UpdateAccount.setBackgroundResource(0);
-        RemoveAccount.setBackgroundResource(0);
 
         //setting EditText so that the user's current information is stored there
         name1.setText(name);

@@ -37,7 +37,7 @@
                 android:text="Update Name"
                 android:id="@+id/newName"
                 android:layout_weight="0.07"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:gravity="center_vertical|bottom"
                 android:paddingTop="15dp" />
 
@@ -54,7 +54,7 @@
                 android:text="Update Email"
                 android:id="@+id/newEmail"
                 android:layout_weight="0.07"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:gravity="center_vertical|bottom"
                 android:paddingTop="15dp" />
 
@@ -71,7 +71,7 @@
                 android:text="Update Password"
                 android:id="@+id/newPass"
                 android:layout_weight="0.05"
-                android:textSize="20dp"
+                android:textSize="16dp"
                 android:gravity="bottom"
                 android:paddingLeft="0.1dp"
                 android:paddingTop="15dp" />
@@ -90,6 +90,7 @@
                 android:text="Update Security Question"
                 android:fontFamily="sans-serif"
                 android:id="@+id/textView2"
+                android:textSize="16sp"
                 android:paddingTop="15dp" />
 
             <Spinner
@@ -97,6 +98,7 @@
                 android:layout_height="wrap_content"
                 android:prompt="@string/security_question_title"
                 android:id="@+id/security"
+                android:layout_marginTop="15sp"
                 android:entries="@array/security_questions"
                 android:spinnerMode="dropdown" />
 
@@ -106,6 +108,7 @@
                 android:text="Update Account"
                 android:id="@+id/updateAccount"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15sp"
                 android:layout_weight="0.07" />
 
             <Space
