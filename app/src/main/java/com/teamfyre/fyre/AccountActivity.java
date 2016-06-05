@@ -1,3 +1,8 @@
+/******************************************************************************
+ * AccountActivity.java
+ *
+ * This is the activity the user is taken to when they wish to create an account.
+ ******************************************************************************/
 package com.teamfyre.fyre;
 
 import android.app.AlertDialog;
@@ -50,6 +55,19 @@ public class AccountActivity extends AppCompatActivity {
     private SQLiteHandler db;
     private static final String TAG = RegisterActivity.class.getSimpleName();
 
+    /**************************************************************************
+     * onCreate()
+     * 
+     * This function sets up the activity. It populates the screen with the input
+     * fields for the receipt's manual additions.
+     * 
+     * This function is called when the activity starts. For more on what this
+     * means, see:
+     * http://developer.android.com/training/basics/activity-lifecycle/starting.html
+     * (protip: ctrl/cmd-click in android studio to open the link!)
+     *
+     * @param savedInstanceState The saved instance state
+     **************************************************************************/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,7 +227,7 @@ public class AccountActivity extends AppCompatActivity {
 
 
     /**************************************************************************
-     * updateAccount
+     * updateAccount()
      *
      * Updates the user's account information
      *
@@ -293,7 +311,7 @@ public class AccountActivity extends AppCompatActivity {
 
 
     /**************************************************************************
-     * removeAccount
+     * removeAccount()
      *
      * Method used to remove the account from the system.
      *
@@ -366,7 +384,7 @@ public class AccountActivity extends AppCompatActivity {
 
 
     /**************************************************************************
-     * updateSecurityPreferences
+     * updateSecurityPreferences()
      *
      * Updates a user's security question/answer
      *

@@ -1,8 +1,29 @@
-# FYRE
-FYRE - Free Your Receipts Electronically
+# FYRE README
+### FYRE: Free Your Receipts Electronically
+
+#### Team Members:
+Taylor Tanita:          Project Manager
+
+Julian Williams-Lanier: Senior Systems Analyst
+
+Julian Jacobs:          Software Architect
+
+Austine Lee:            Software Development Lead
+
+Christopher Pais:       Software Development Lead
+
+Clayton Yamaguchi:      Database Specialist
+
+Daniel Sonnier:         Algorithm Specialist
+
+Christopher Lew:        User Interface Specialist
+
+Irfan Haider:           Business Analyst
+
+Leon Trinh:             Quality Assurance Lead
 
 
-####Server Deets:
+##### Server Details:
 IP: 13.93.202.168/phpmyadmin/
 
 User: fyre

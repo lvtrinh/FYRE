@@ -182,7 +182,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         });
 
-        //if the user wants to remove their account they click this ubtton
+        //if the user wants to remove their account they click this button
         privacyPolicy.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -193,7 +193,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-        //if the user wants to remove their account they click this ubtton
+        //if the user wants to remove their account they click this button
         about.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -430,7 +430,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     /**************************************************************************
      * logoutUser()
-     * <p/>
+     *
      * Logs out the user. Also deletes the database data, because we shouldn't
      * be keeping that if the user logged out, right?
      **************************************************************************/

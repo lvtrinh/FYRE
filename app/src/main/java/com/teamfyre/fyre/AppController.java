@@ -21,6 +21,7 @@ public class AppController extends Application {
         mInstance = this;
     }
 
+    /** Get Instance of AppController **/
     public static synchronized AppController getInstance() {
         return mInstance;
     }
