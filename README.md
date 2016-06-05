@@ -39,7 +39,7 @@ Leon Trinh:             Quality Assurance Lead
 #### Test Account Credentials:
 
 | Full Name | Email | FYRE Password | Gmail Password | Security Question | Answer |
-| --- | --- | --- |
+| --- | --- | --- | --- | --- | --- |
 | Fyre Tester | fyretest1@gmail.com | fyretester | 20Fyre@09 | What city did you grow up in? | fyre |
 | Final Test User | Test5645@example.com | password | *not needed* | Who was your favorite teacher growing up? | Cherry Chilespie |  
 
