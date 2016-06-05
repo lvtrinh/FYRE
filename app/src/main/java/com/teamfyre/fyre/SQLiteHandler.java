@@ -384,6 +384,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         // Move to first row
         if (cursor.moveToFirst()) {
             do {
+                if (cursor.getString(0) == null) {}
+                else currReceipt.setReceiptID(cursor.getString(0));
+
                 // Create a receipt from all the data from sqlite
                 if (cursor.getString(1) == null) {}
                 else currReceipt.setStoreName(cursor.getString(1));
@@ -496,6 +499,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Receipt currReceipt = new Receipt();
+                if (cursor.getString(0) == null) {}
+                else currReceipt.setReceiptID(cursor.getString(0));
 
                 if (cursor.getString(1) == null) {}
                 else currReceipt.setStoreName(cursor.getString(1));
@@ -596,6 +601,8 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Receipt currReceipt = new Receipt();
+                if (cursor.getString(0) == null) {}
+                else currReceipt.setReceiptID(cursor.getString(0));
 
                 if (cursor.getString(1) == null) {}
                 else currReceipt.setStoreName(cursor.getString(1));
@@ -695,6 +702,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Receipt currReceipt = new Receipt();
+
+                if (cursor.getString(0) == null) {}
+                else currReceipt.setReceiptID(cursor.getString(0));
 
                 if (cursor.getString(1) == null) {}
                 else currReceipt.setStoreName(cursor.getString(1));
@@ -812,6 +822,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             do {
                 Receipt currReceipt = new Receipt();
 
+                if (cursor.getString(0) == null) {}
+                else currReceipt.setReceiptID(cursor.getString(0));
+
                 if (cursor.getString(1) == null) {}
                 else currReceipt.setStoreName(cursor.getString(1));
 
@@ -922,7 +935,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
      * @return An ArrayList of receipts that contain the users search query.
      */
     public ArrayList<Receipt> getSearchReceipts(String query) {
+        //ArrayList holds receipts to be displayed, HashSet ensures duplicate receipts not added
         ArrayList<Receipt> receipts = new ArrayList<Receipt>();
+        HashSet<Integer> receiptsHash = new HashSet<Integer>();
 
         String selectQuery = "SELECT * FROM " + TABLE_RECEIPT
                 + " WHERE store_name like '%" + query + "%' ORDER BY date DESC";
@@ -933,6 +948,9 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Receipt currReceipt = new Receipt();
+
+                if (cursor.getString(0) == null) {}
+                else currReceipt.setReceiptID(cursor.getString(0));
 
                 if (cursor.getString(1) == null) {}
                 else currReceipt.setStoreName(cursor.getString(1));
@@ -1003,8 +1021,12 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
         ArrayList<Receipt> itemResult = getSearchItems(query);
 
+        //adds receipts to arrayList to be returned but checks to make sure no duplicates added
         if (itemResult.size() != 0) for (int i = 0; i < itemResult.size(); i++) {
-            receipts.add(itemResult.get(i));
+            if(!receiptsHash.contains(itemResult.get(i).getReceiptID())) {
+                receiptsHash.add(itemResult.get(i).getReceiptID());
+                receipts.add(itemResult.get(i));
+            }
         }
 
         Collections.sort(receipts, new Comparator<Receipt>(){
