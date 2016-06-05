@@ -37,6 +37,7 @@ Leon Trinh:             Quality Assurance Lead
 | 2. Tap the FYRE icon to run the application. |
 
 #### Test Account Credentials:
+
 | Full Name | Email | FYRE Password | Gmail Password | Security Question | Answer |
 | --- | --- | --- |
 | Fyre Tester | fyretest1@gmail.com | fyretester | 20Fyre@09 | What city did you grow up in? | fyre |
