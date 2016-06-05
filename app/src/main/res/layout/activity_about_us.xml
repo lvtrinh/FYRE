@@ -37,6 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Free Your Receipts Electronically"
+                android:textColor="#000000"
                 android:textSize="16sp"/>
 
             <View android:layout_width="fill_parent"
@@ -47,12 +48,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="#000000"
                 android:text="Mission Statement:"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
+                android:textColor="#000000"
                 android:text="How many times have you been asked if you would like your receipt but you refused because you did not want to carry it around? For most of us, printed receipts lead to a bloated wallet, a messy car, or a filled trash can. For the rest of us, it is a liability that needs to be carefully, but not always tidily, stored for tax filings and audits.
 Now, how many times have you refused a receipt because you want to save paper, but the cashier prints it anyway and trashes it right in front of you? Paper receipts, needed or not, do not only bloat up your wallet, but also this lovely planet.
 They are undesirable and unsustainable:
