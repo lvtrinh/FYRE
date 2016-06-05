@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tell us what you love, or what we could improve."
+            android:textColor="#000000"
             android:textSize="15dp"
             android:fontFamily="sans-serif"/>
 
@@ -41,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Your message"
+
             android:fontFamily="sans-serif"
             android:inputType="textMultiLine" />
 
