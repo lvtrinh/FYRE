@@ -54,7 +54,8 @@ Leon Trinh:             Quality Assurance Lead
 | 2. If you want to refresh data across multiple devices, you must log out and then log back in to see the receipt added from the other device |
 
 #### Notes
-Please do not remove the fyretest1@gmail.com account
+Please do not remove the fyretest1@gmail.com account.
+The salt in the database in real iterations would be hidden. We didn't get the time to move to a newer schema.
 
 ##### Contact Info
 | Name | Role | Phone Number |
