@@ -8,7 +8,7 @@
         android:icon="@drawable/ic_filter"
         android:title="@string/label_filter"
         app:showAsAction="ifRoom"
-        app:actionViewClass="android.support.v7.widget.SearchView">
+        >
         <menu>
             <item
                 android:id="@+id/date_asc"
