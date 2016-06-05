@@ -113,7 +113,7 @@ public class SearchableActivity extends AppCompatActivity {
     }
 
     /**
-     * @param which item they click on the drop down
+     * @param item item they click on the drop down
      * The onOptionsSelected method handles which drop down they select when filtering or sorting
      */
     @Override

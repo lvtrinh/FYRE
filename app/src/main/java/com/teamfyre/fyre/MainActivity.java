@@ -553,7 +553,7 @@ public class  MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchableActivity.class)));
         searchView.setQueryHint(getResources().getString(R.string.hint_search));
         return true;
