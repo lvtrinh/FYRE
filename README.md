@@ -58,13 +58,8 @@ Please do not remove the fyretest1@gmail.com account.
 The salt in the database in real iterations would be hidden. We didn't get the time to move to a newer schema.
 
 ##### Contact Info
-| Name | Role | Phone Number |
-| --- | --- | --- |
-| Taylor Tanita | Project Manager | (310)-968-7139 |
-| Christopher Pais | Software Development Lead | (916)-622-6023 |
-| Austine Lee | Software Development Lead | (510)-304-7696 |
-
-##### Server Details:
-IP: 13.93.202.168/phpmyadmin/  
-User: fyre  
-Pass: 20Fyre@09
+| Name | Role |
+| --- | --- |
+| Taylor Tanita | Project Manager |
+| Christopher Pais | Software Development Lead |
+| Austine Lee | Software Development Lead |
